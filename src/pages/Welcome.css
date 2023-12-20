@@ -1,0 +1,10 @@
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.btn {
+    color: white;
+    font-family: "Raleway";
+}
