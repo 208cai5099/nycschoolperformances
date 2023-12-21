@@ -1,29 +1,28 @@
 import * as React from 'react';
-import './Welcome.css'
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
+import { layout, title, school, highlight } from "./Welcome-Styling.js";
+import NavBar from './NavBar.jsx';
 
-function NavBar() {
-
-  const pages = ["Home", "Search", "Methods", "Quick Stats", "Contact"]
+function Welcome() {
 
   return (
 
-    <div className="navbar">
-      <AppBar>
-        {pages.map((page) => {
-          return(
-            <div className="btn">
-            <Button>
-              {page}
-            </Button>
-            </div>
-          )
-        })}
-      </AppBar>
+    <div style={layout}>
+
+      <NavBar />
+
+      <div style={title}>
+        <h1>Welcome!</h1>
+
+        <p>This website is designed to provide information about the performances of NYC schools on the annual NYS Regents exams. </p>
+        <p>Click <span style={highlight}>Search</span> to get started.</p>
+
+      </div>
+
+      <img src = "https://cdn.pixabay.com/photo/2020/10/04/04/41/school-5625219_1280.png" alt='school' style={school}/>
+    
     </div>
 
   );
 }
 
-export default NavBar;
+export default Welcome;
