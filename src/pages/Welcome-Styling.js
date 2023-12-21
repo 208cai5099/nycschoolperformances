@@ -27,7 +27,6 @@ export const title = {
 }
 
 export const school = {
-    display: "block",
     marginLeft: "auto",
     marginRight: "auto",
     height: "50vh",
@@ -39,7 +38,7 @@ export const navBar = {
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    height: "10vh",
+    height: "7vh",
     textAlign: "center",
     position: "fixed",
     backgroundColor: "#6CADDC"
