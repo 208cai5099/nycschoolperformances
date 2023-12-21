@@ -1,12 +1,28 @@
 import './App.css';
-import NavBar from './pages/Welcome';
-
+import Welcome from './pages/Welcome';
+import NavBar from './components/NavBar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Contact from './pages/Contact';
+import Methods from './pages/Methods'
+import Search from './pages/Search'
 
 function App() {
 
   return (
     <div>
-      <NavBar />
+      
+      <Router>
+        <div>
+          <NavBar />
+        </div>
+        <Routes>
+          <Route path="/" element={<Welcome />}></Route>
+          <Route path="/home" element={<Welcome />}></Route>
+          <Route path="/search" element={<Search />}></Route>
+          <Route path="/methods" element={<Methods />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+        </Routes>
+      </Router>
     </div>
 
   )
