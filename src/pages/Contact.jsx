@@ -41,7 +41,6 @@ function Contact() {
 
                 </Card>     
             </div>
-
         </div>
   
     )

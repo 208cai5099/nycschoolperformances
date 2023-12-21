@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { title, school, highlight } from "./Welcome-Styling.js";
+import { title, school, highlight, footer } from "./Welcome-Styling.js";
 
 function Welcome() {
 
@@ -12,7 +12,11 @@ function Welcome() {
       <p>Click <span style={highlight}>Search</span> to get started.</p>
       <img src = "https://cdn.pixabay.com/photo/2020/10/04/04/41/school-5625219_1280.png" alt='school' style={school}/>
 
+      <footer style={footer}>Made with ❤️ in NYC</footer>
+
     </div>
+
+    
 
   );
 }

@@ -17,3 +17,10 @@ export const highlight = {
     color: "#25519E",
     fontWeight: "900"
 }
+
+export const footer = {
+    position: "absolute",
+    bottom: "0",
+    textAlign: "center",
+    width: "100%"
+}
