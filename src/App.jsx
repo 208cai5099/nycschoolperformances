@@ -23,7 +23,10 @@ function App() {
           <Route path="/contact" element={<Contact />}></Route>
         </Routes>
       </Router>
+
+      <footer>Made with ❤️ in NYC</footer>
     </div>
+
 
   )
 

@@ -12,7 +12,7 @@ function NavBarButton(props) {
     }
 
     function redirect() {
-        const url = `/${props.text}`
+        const url = `/${props.text.toLowerCase()}`;
         navigator(url);
     }
 
