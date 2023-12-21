@@ -16,7 +16,7 @@ export const btnNotHover = {
 
 export const layout = {
     display: "grid",
-    gridTemplateRows: "0.5fr 1fr 2fr",
+    gridTemplateRows: "0.5fr 2fr",
 }
 
 export const title = {
@@ -39,7 +39,7 @@ export const navBar = {
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    height: "7vh",
+    height: "10vh",
     textAlign: "center",
     position: "fixed",
     backgroundColor: "#6CADDC"
