@@ -1,3 +1,4 @@
+const Pool = require("pg").Pool;
 require("dotenv").config();
 
 // set up a pool to connect to database
