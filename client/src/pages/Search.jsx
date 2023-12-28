@@ -1,8 +1,17 @@
-import {React, useState} from "react";
-import { heading } from "./Search-Styling.js";
+import { React, useState, useEffect } from "react";
+import { heading, inputRow, input, button } from "./Search-Styling.js";
+import { examList, yearList } from "../util.js";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 function Search() {
 
+    // represents the list of unique schools
+    const [schoolList, setSchoolList] = useState([])
+
+    // represents the user inputs
     const [schoolName, setSchoolName] = useState("");
     const [testName, setTestName] = useState("");
     const [toYear, setToYear] = useState("");
@@ -13,27 +22,94 @@ function Search() {
             const url = `http://localhost:5000/search/${schoolName}/${testName}/${fromYear}/${toYear}`;
             const response = await fetch(url);
             const data = await response.json();
-            console.log(data);
 
         } catch (error) {
-            console.log(error.message);
+            console.error(error.message);
         }
-    }
+    };
+
+
+    const getSchoolList = async() => {
+        try {
+            const url = 'http://localhost:5000/search/'
+            const response = await fetch(url);
+            const data = await response.json();
+
+            setSchoolList(data);
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    // request to get list of unique school names
+    useEffect(() => {
+        getSchoolList();
+    }, []);
 
     return (
-        <div>
+        <Stack spacing={3}>
             <h1 style={heading}>Look up schools!</h1>
-            <input placeholder="School (ex: Fort Hamilton High School)" onChange={(event) => {setSchoolName(event.target.value)}}></input>
 
-            <input placeholder="Test (ex: Common Core Algebra)" onChange={(event) => {setTestName(event.target.value)}}></input>
+            { schoolList.length === 0 ? null :
+                <div style={inputRow}>
+                    <Autocomplete 
+                        multiple
+                        id="tags-standard"
+                        options={schoolList}
+                        getOptionLabel={(option) => option.school_name}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="School Name"
+                            >
+                            </TextField>
+                        )}
+                        style={input}
+                    >
+                    </Autocomplete>
 
-            <input placeholder="From (ex: 2015)" onChange={(event) => {setFromYear(event.target.value)}}></input>
+                    <Autocomplete 
+                        multiple
+                        id="tags-standard"
+                        options={examList}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Exam Name"
+                            >
+                            </TextField>
+                        )}
+                        style={input}
+                    >
+                    </Autocomplete>
 
-            <input placeholder="To (ex: 2019)" onChange={(event) => {setToYear(event.target.value)}}></input>
+                    <Autocomplete 
+                        multiple
+                        id="tags-standard"
+                        options={yearList}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Year"
+                            >
+                            </TextField>
+                        )}
+                        style={input}
+                    >
+                    </Autocomplete>
+                </div>
+            }
 
-            <button onClick={fetchData}>Search</button>
+            <Button 
+                variant="contained" 
+                style={button}
+            >
+                Search
+            </Button>
 
-        </div>
+
+        </Stack>
     )
     
 

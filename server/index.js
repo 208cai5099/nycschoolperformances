@@ -10,10 +10,10 @@ server.use(function (req, res, next) {
     next();
 });
 
-// create a GET request to get all the data
-server.get("/search", async (request, response) => {
+// create a GET request to get alL distinct schools
+server.get("/search/", async (request, response) => {
     try {
-        const allData = await pool.query("SELECT * FROM schools");
+        const allData = await pool.query("SELECT * FROM (SELECT DISTINCT CONCAT(school_dbn, ': ', school_name) AS school_name FROM schools) AS tb1 ORDER BY school_name");
         response.json(allData.rows);
     } catch (error) {
         console.error(error.message);
