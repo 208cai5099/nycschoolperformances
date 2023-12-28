@@ -54,11 +54,11 @@ with open("school_names.txt", "w") as file:
 ## fix some school names that are misspelled or truncated
 ## map original name to its corrected name
 original_names = []
-with open("original_names.txt", "r") as file:
+with open("data\original_names.txt", "r") as file:
     original_names.extend(file.readlines())
 
 corrected_names = []
-with open("corrected_names.txt", "r") as file:
+with open("data\corrected_names.txt", "r") as file:
     corrected_names.extend(file.readlines())
 
 name_corrections_dict = {}
@@ -93,9 +93,15 @@ with open("updated_school_names.txt", "w") as file:
     
     file.close()
 
-## fix the formatting for the Algebra 2 exam
-algebra_2_dict = {"Common Core Algebra2" : "Common Core Algebra 2", "Algebra2/Trigonometry" : "Algebra 2/Trigonometry"}
-exam_col = target_df["regents_exam"].apply(lambda x : correctValue(x, algebra_2_dict))
+## fix the formatting for specific Regents exam names to get rid of backslash
+reformatted_exam_names = {"Common Core Algebra2" : "Common Core Algebra 2", 
+                          "Algebra2/Trigonometry" : "Algebra 2 (Trigonometry)",
+                          "Physical Settings/Chemistry": "Chemistry",
+                          "Physical Settings/Physics" : "Physics",
+                          "Physical Settings/Earth Science": "Earth Science"
+                          }
+
+exam_col = target_df["regents_exam"].apply(lambda x : correctValue(x, reformatted_exam_names))
 target_df["regents_exam"] = exam_col
 
 ## export the cleaned dataset
