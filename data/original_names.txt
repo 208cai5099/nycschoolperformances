@@ -1,151 +1,192 @@
-P.S. 184m Shuang Wen
-47 The American Sign Language and English Secondar
-Stephen T. Mather Building Arts & Craftsmanship Hi
-Facing History School, The
-Urban Assembly Academy of Government and Law, The
-Urban Assembly School of Design and Construction,
-James Baldwin School, The: A School for Expedition
-Urban Assembly School of Business for Young Women,
-The 47 American Sign Language & English Lower Scho
-High School for Health Professions and Human Servi
-Ballet Tech, NYC Public School for Dance
-Washington Irving Yabc
-Urban Assembly School for Media Studies, The
-Wadleigh Secondary School for the Performing & Vis
-Fiorello H. LaGuardia High School of Music & Art a
-High School for Law, Advocacy and Community Justic
-P.S. 108 Assemblyman Angelo Del Toro Educational C
-Heritage School, The
-High School for Mathematics, Science and Engineeri
-P.S./I.S. 210 - Twenty-first Century Academy for C
-Inwood Early College for Health and Information Te
-George Washington Yabc
-Gregorio Luperon High School for Science and Mathe
-The Laboratory School of Finance and Technology: X
-H.E.R.O. High (Health, Education, and Research Occ
-Alfred E. Smith Career and Technical Education Hig
-Samuel Gompers Career and Technical Education High
-Renaissance High School for Musical Theater and th
-Gateway School for Environmental Research and Tech
-Archimedes Academy for Math, Science and Technolog
-Antonia Pantoja Preparatory Academy: A College Boa
-Herbert H. Lehman Yabc
-Stevenson Yabc
-Felisa Rincon de Gautier Institute for Law and Pub
-P.S./I.S. 218 Rafael Hernandez Dual Language Magne
-Eximius College Preparatory Academy: A College Boa
-Bronx Early College Academy for Teaching & Learnin
-Jonathan Levin High School for Media and Communica
-Riverdale / Kingsbridge Academy (Middle School / H
-The Marie Curie School for Medicine, Nursing, and
-Knowledge and Power Preparatory Academy Internatio
-English Language Learners and International Suppor
-Celia Cruz Bronx High School of Music, The
-Walton Yabc
-Kennedy Yabc
-Grace Dodge Career and Technical Education High Sc
-Grace Dodge Yabc
-Bronx High School for Writing and Communication Ar
-Academy for Scholarship and Entrepreneurship: A Co
-C Columbus Hs Yabc
-Cornerstone Academy for Social Action Middle Schoo
-Pelham Academy of Academics and Community Engageme
-M.S. 129 Academy for Independent Learning and Lead
-Metropolitan High School, The
-Learning To Work Yabc At Monroe Academy
-Science Skills Center High School for Science, Tec
-Urban Assembly Institute of Math and Science for Y
-Downtown Brooklyn Yabc
-City Polytechnic High School of Engineering, Archi
-P.S./I.S. 157 The Benjamin Franklin Health & Scien
-Brooklyn Latin School, The
-The High School for Enterprise, Business and Techn
-Williamsburg High School for Architecture and Desi
-Automotive High School Yabc
-Pathways in Technology Early College High School (
-Academy for College Preparation and Career Explora
-Erasmus Yabc
-School for Human Rights, The
-High School for Youth and Community Development at
-Science, Technology and Research Early College Hig
-Brooklyn Community High School for Excellence and
-High School for Innovation in Advertising and Medi
-South Shore Educational Complex Yabc
-Thomas Jefferson Yabc
-FDNY - Captain Vernon A. Richard High School for F
-World Academy for Total Community Health High Scho
-Transit Tech Career and Technical Education High S
-W. H. Maxwell Career and Technical Education High
-The Christa McAuliffe School\I.S. 187
-High School of Telecommunication Arts and Technolo
-Urban Assembly School for Leadership and Empowerme
-Abraham Lincoln Yabc
-William E. Grady Career and Technical Education Hi
-The Gregory Jocko Jackson School of Sports, Art, a
-P.S. 128 The Lorraine Tuzzo, Juniper Valley Elemen
-H.S. Arts & Business Yabc
-International High School at LaGuardia Community C
-Robert F. Wagner, Jr. Secondary School for Arts an
-P.S./M.S. 200 - The Magnet School of Global Studie
-I.S. 250 The Robert F. Kennedy Community Middle Sc
-Queens School of Inquiry, The
-World Journalism Preparatory: A College Board Scho
-Flushing Yabc
-The Queens College School for Math, Science and Te
-Queens High School of Teaching, Liberal Arts and t
-Queens High School for Information, Research, and
-Academy of Medical Technology: A College Board Sch
-Rockaway Park High School for Environmental Sustai
-John Adams Yabc
-High School for Construction Trades, Engineering a
-Thomas A. Edison Career and Technical Education Hi
-Queens High School for the Sciences at York Colleg
-Young Women's Leadership School, Queens
-Pathways College Preparatory School: A College Boa
-George Washington Carver High School for the Scien
-Preparatory Academy for Writers: A College Board S
-Benjamin Franklin High School for Finance & Inform
-Mathematics, Science Research and Technology Magne
-Albert Shanker School for Visual and Performing Ar
-The 30th Avenue School (G&T Citywide)
-Ralph R. McKee Career and Technical Education High
-Staten Island Yabc
-I.S. 349 Math, Science & Tech.
-Bushwick Leaders High School for Academic Excellen
-EMBER Charter School for Mindful Education, Innova
-Leadership Prep Bedford Stuyvesant Uncommon Prep C
-Leadership Prep Canarsie Charter School (Leadershi
-Math, Engineering, and Science Academy Charter Hig
-Success Academy Charter School - Bergen Beach - Ne
-Achievement First North Brooklyn Prep Charter Scho
-Collegiate Academy for Mathematics and Personal Aw
-Edmund W. Gordon Brooklyn Laboratory Charter Schoo
-Brooklyn Prospect Charter School 15.2
-Success Academy Charter School - Springfield Garde
-Lois and Richard Nicotra Early College Charter Sch
-NYC Charter High School for Architecture, Engineer
-Dr. Richard Izquierdo Health and Science Charter S
-AECI II: NYC Charter High School for Computer Engi
-Earl Monroe New Renaissance Basketball Charter Sch
-I.S. 289
-Middle School 322
-I.S. 232
-Comprehensive Model School Project M.S. 327
-E.S.M.T- I.S. 190
-P.S. 214
-M.S. 582
-I. S. 381
-I.S. 237
-P.S./ IS 178 Holliswood
-P.S. 043
-M.S. 358
-P.S. /I.S. 384 Frances E. Carter
-P.S. 138 Brooklyn
-P.S. 181 Brooklyn
-John Ericsson Middle School 126
-P.S. 089 Bronx
-Thomas C. Giordano Middle School 45
-P.S. K225 - The Eileen E. Zaglin
-Joseph F. Quinn Intermediate School 77
-Irwin Altman Middle School 172
-Catherine & Count Basie Middle School 72
+['01M184']: P.S. 184m Shuang Wen
+['02M047']: 47 The American Sign Language and English Secondar
+['02M139']: Stephen T. Mather Building Arts & Craftsmanship Hi
+['02M300']: Urban Assembly School of Design and Construction,
+['02M303']: Facing History School, The
+['02M305']: Urban Assembly Academy of Government and Law, The
+['02M312']: New York City Lab Middle School for Collaborative
+['02M313']: James Baldwin School, The: A School for Expedition
+['02M316']: Urban Assembly School of Business for Young Women,
+['02M347']: The 47 American Sign Language & English Lower Scho
+['02M420']: High School for Health Professions and Human Servi
+['03M258']: Community Action School - MS 258
+['03M307']: Urban Assembly School for Media Studies, The
+['03M415']: Wadleigh Secondary School for the Performing & Vis
+['03M485']: Fiorello H. LaGuardia High School of Music & Art a
+['03M492']: High School for Law, Advocacy and Community Justic
+['03M541']: Manhattan / Hunter Science High School
+['04M108']: P.S. 108 Assemblyman Angelo Del Toro Educational C
+['04M224']: M.S. 224 Manhattan East School for Arts & Academic
+['04M680']: Heritage School, The
+['05M371']: School of Earth Exploration and Discovery Harlem (
+['05M670']: Thurgood Marshall Academy for Learning and Social
+['05M692']: High School for Mathematics, Science and Engineeri
+['06M210']: P.S./I.S. 210 - Twenty-first Century Academy for C
+['06M211']: Inwood Early College for Health and Information Te
+['06M322']: Middle School 322
+['06M552']: Gregorio Luperon High School for Science and Mathe
+['07X223']: The Laboratory School of Finance and Technology: X
+['07X259']: H.E.R.O. High (Health, Education, and Research Occ
+['07X600']: Alfred E. Smith Career and Technical Education Hig
+['07X655']: Samuel Gompers Career and Technical Education High
+['08X293']: Renaissance High School for Musical Theater and th
+['08X295']: Gateway School for Environmental Research and Tech
+['08X367']: Archimedes Academy for Math, Science and Technolog
+['08X376']: Antonia Pantoja Preparatory Academy: A College Boa
+['08X519']: Felisa Rincon de Gautier Institute for Law and Pub
+['09X218']: P.S./I.S. 218 Rafael Hernandez Dual Language Magne
+['09X250']: Eximius College Preparatory Academy: A College Boa
+['09X324']: Bronx Early College Academy for Teaching & Learnin
+['09X327']: Comprehensive Model School Project M.S. 327
+['09X414']: Jonathan Levin High School for Media and Communica
+['10X045']: Thomas C. Giordano Middle School 45
+['10X141']: Riverdale / Kingsbridge Academy (Middle School / H
+['10X237']: The Marie Curie School for Medicine, Nursing, and
+['10X319']: Providing Urban Learners Success In Education High
+['10X368']: In-Tech Academy (M.S. / High School 368)
+['10X374']: Knowledge and Power Preparatory Academy Internatio
+['10X397']: English Language Learners and International Suppor
+['10X442']: Celia Cruz Bronx High School of Music, The
+['10X660']: Grace Dodge Career and Technical Education High Sc
+['11X253']: Bronx High School for Writing and Communication Ar
+['11X270']: Academy for Scholarship and Entrepreneurship: A Co
+['11X462']: Cornerstone Academy for Social Action Middle Schoo
+['11X468']: Pelham Academy of Academics and Community Engageme
+['12X248']: Metropolitan High School, The
+['13K419']: Science Skills Center High School for Science, Tec
+['13K527']: Urban Assembly Institute of Math and Science for Y
+['13K674']: City Polytechnic High School of Engineering, Archi
+['14K126']: John Ericsson Middle School 126
+['14K157']: P.S./I.S. 157 The Benjamin Franklin Health & Scien
+['14K449']: Brooklyn Latin School, The
+['14K478']: The High School for Enterprise, Business and Techn
+['14K558']: Williamsburg High School for Architecture and Desi
+['16K959']: BOYS AND GIRLS YABC
+['17K122']: Pathways in Technology Early College High School (
+['17K531']: School for Human Rights, The
+['17K537']: High School for Youth and Community Development at
+['17K543']: Science, Technology and Research Early College Hig
+['18K566']: Brooklyn Community High School for Excellence and
+['18K617']: High School for Innovation in Advertising and Medi
+['19K502']: FDNY - Captain Vernon A. Richard High School for F
+['19K510']: World Academy for Total Community Health High Scho
+['19K615']: Transit Tech Career and Technical Education High S
+['19K660']: W. H. Maxwell Career and Technical Education High
+['20K187']: The Christa McAuliffe School\I.S. 187
+['20K485']: High School of Telecommunication Arts and Technolo
+['20K609']: Urban Assembly School for Leadership and Empowerme
+['20K936']: MS 936 Arts Off 3rd
+['21K239']: Mark Twain I.S. 239 for the Gifted & Talented
+['21K620']: William E. Grady Career and Technical Education Hi
+['23K284']: The Gregory Jocko Jackson School of Sports, Art, a
+['24Q128']: P.S. 128 The Lorraine Tuzzo, Juniper Valley Elemen
+['24Q530']: International High School at LaGuardia Community C
+['24Q560']: Robert F. Wagner, Jr. Secondary School for Arts an
+['25Q250']: I.S. 250 The Robert F. Kennedy Community Middle Sc
+['25Q252']: Queens School of Inquiry, The
+['25Q285']: World Journalism Preparatory: A College Board Scho
+['25Q499']: The Queens College School for Math, Science and Te
+['26Q172']: Irwin Altman Middle School 172
+['26Q566']: Queens High School of Teaching, Liberal Arts and t
+['27Q302']: Queens High School for Information, Research, and
+['27Q309']: Academy of Medical Technology: A College Board Sch
+['27Q324']: Rockaway Park High School for Environmental Sustai
+['27Q650']: High School for Construction Trades, Engineering a
+['28Q072']: Catherine & Count Basie Middle School 72
+['28Q620']: Thomas A. Edison Career and Technical Education Hi
+['28Q687']: Queens High School for the Sciences at York Colleg
+['28Q896']: Young Women's Leadership School, Queens
+['29Q259']: Pathways College Preparatory School: A College Boa
+['29Q272']: George Washington Carver High School for the Scien
+['29Q283']: Preparatory Academy for Writers: A College Board S
+['29Q313']: Benjamin Franklin High School for Finance & Inform
+['29Q492']: Mathematics, Science Research and Technology Magne
+['30Q126']: Albert Shanker School for Visual and Performing Ar
+['30Q286']: Young Women's Leadership School, Astoria
+['32K349']: I.S. 349 Math, Science & Tech.
+['32K556']: Bushwick Leaders High School for Academic Excellen
+['84K359']: The Uft Charter School
+['84K367']: Success Academy Charter School - Bed Stuy 1
+['84K406']: EMBER Charter School for Mindful Education, Innova
+['84K593']: Excellence Boys Charter School of Bedford Stuyvesa
+['84K733']: Math, Engineering, and Science Academy Charter Hig
+['84K784']: Achievement First North Brooklyn Preparatory Chart
+['84K807']: Collegiate Academy for Mathematics and Personal Aw
+['84K883']: Success Academy Charter School - Bed Stuy 3
+['84K911']: Edmund W. Gordon Brooklyn Laboratory Charter Schoo
+['84M284']: Harlem Children's Zone Promise Academy Charter Sch
+['84Q339']: Success Academy Charter School - Springfield Garde
+['84R070']: Lois and Richard Nicotra Early College Charter Sch
+['84X309']: South Bronx Charter School for International Cultu
+['84X395']: NYC Charter High School for Architecture, Engineer
+['84X482']: Dr. Richard Izquierdo Health and Science Charter S
+['84X611']: AECI II: NYC Charter High School for Computer Engi
+['84X635']: Earl Monroe New Renaissance Basketball Charter Sch
+['02M473']: Washington Irving Yabc
+['06M457']: George Washington Yabc
+['08X408']: Herbert H. Lehman Yabc
+['08X507']: Stevenson Yabc
+['10X503']: Walton Yabc
+['10X504']: Kennedy Yabc
+['10X667']: Grace Dodge Yabc
+['11X417']: C Columbus Hs Yabc
+['12X428']: Learning To Work Yabc At Monroe Academy
+['13K657']: Downtown Brooklyn Yabc
+['14K923']: Automotive High School Yabc
+['17K467']: Erasmus Yabc
+['18K922']: South Shore Educational Complex Yabc
+['19K431']: Thomas Jefferson Yabc
+['21K411']: Abraham Lincoln Yabc
+['24Q457']: H.S. Arts & Business Yabc
+['25Q467']: Flushing Yabc
+['27Q487']: John Adams Yabc
+['31R607']: Staten Island Yabc
+['02M427']: Manhattan Academy For Arts & Language
+['04M825']: Isaac Newton Middle School for Math & Science
+['05M685']: Bread & Roses Integrated Arts High School
+['09X303']: I.S. X303 Leadership & Community Service
+['12X318']: I.S. X318 Math, Science & Technology Through Arts
+['12X692']: Monroe Academy for Visual Arts & Design
+['13K412']: Brooklyn Community Arts & Media High School (BCAM)
+['15K443']: New Voices School of Academic & Creative Arts
+['15K447']: The Math & Science Exploratory School
+['16K267']: M.S. 267 Math, Science & Technology
+['17K539']: High School for Service & Learning at Erasmus
+['17K548']: Brooklyn School for Music & Theatre
+['18K589']: Arts & Media Preparatory Academy
+['24Q311']: Corona Arts & Sciences Academy
+['24Q610']: Aviation Career & Technical Education High School
+['28Q325']: Hillside Arts & Letters Academy
+['29Q496']: Business, Computer Applications & Entrepreneurship
+['30Q300']: The 30th Avenue School (G&T Citywide)
+['08X101']: M.S. X101 Edward R. Byrne
+['10X015']: P.S. X015 Institute for Environmental Learning
+['10X037']: P.S. X037 - Multiple Intelligence School
+['11X498']: P.S./M.S. 11X498 - Van Nest Academy
+['02M217']: P.S./I.S. 217 Roosevelt Island
+['06M187']: P.S./I.S. 187 Hudson Cliffs
+['07X029']: P.S./M.S. 029 Melrose School
+['07X031']: P.S./M.S. 031 The William Lloyd Garrison
+['10X280']: P.S./M.S. 280 Mosholu Parkway
+['11X194']: P.S./M.S. 194
+['20K030']: P.S./I.S. 30 Mary White Ovington
+['20K104']: P.S./I.S. 104 The Fort Hamilton School
+['23K137']: P.S./I.S. 137 Rachel Jean Mitchell
+['23K155']: P.S./ I.S. 155 Nicholas Herkimer
+['24Q087']: P.S./I.S. 087 Middle Village
+['24Q113']: P.S./I.S. 113 Anthony J. Pranzo
+['24Q119']: P.S./I.S. 119 The Glendale
+['25Q200']: P.S./M.S. 200 - The Magnet School of Global Studie
+['26Q178']: P.S./ IS 178 Holliswood
+['26Q266']: P.S./I.S. 266
+['27Q042']: P.S./M.S 042 R. Vernam
+['27Q114']: P.S./M.S. 114 Belle Harbor
+['29Q116']: P.S./I.S. 116 William C. Hughley
+['29Q138']: P.S./M.S. 138 Sunrise
+['29Q147']: P.S./M.S. 147 Ronald McNair
+['29Q208']: P.S./I.S. 208
+['29Q268']: P.S./I.S. 268
+['29Q295']: P.S./I.S. 295
+['30Q078']: P.S./I.S. 78Q
+['32K045']: P.S./I.S. 045 Horace E. Greene
+['32K384']: P.S. /I.S. 384 Frances E. Carter

@@ -35,30 +35,35 @@ target_df = target_df.astype({"school_dbn" : "str",
                               "total_tested" : "int32",
                               "percent_65_or_above" : "float32"})
 
-# print(target_df.dtypes)
-# print(target_df.head())
-
 ## add a column of ID numbers for each record
 target_df["id"] = [n for n in range(target_df.shape[0])]
 
 ## reorder the columns
 target_df = target_df.loc[:, ["id", "school_dbn", "school_name", "year", "regents_exam", "total_tested", "mean_score", "percent_65_or_above"]]
 
+# print(target_df.dtypes)
+# print(target_df.head())
+
+
 ## get all school names
 with open("school_names.txt", "w") as file:
     for name in target_df["school_name"].unique():
-        file.write(f"{name}\n")
+
+        ## get the school's DBN
+        dbn = target_df[target_df["school_name"] == name]["school_dbn"].unique()
+
+        file.write(f"{dbn}: {name}\n")
     
     file.close()
 
-## fix some school names that are misspelled or truncated
-## map original name to its corrected name
+## reformat some school names that are misspelled or truncated
+## map original name to its reformatted name
 original_names = []
 with open("data\original_names.txt", "r") as file:
     original_names.extend(file.readlines())
 
 corrected_names = []
-with open("data\corrected_names.txt", "r") as file:
+with open("data\new_names.txt", "r") as file:
     corrected_names.extend(file.readlines())
 
 name_corrections_dict = {}
@@ -68,30 +73,20 @@ if len(original_names) != len(corrected_names):
 else:
     # print(f"There are a total of {len(corrected_names)} corrections.")
     for i in range(len(corrected_names)):
-        original_name = original_names[i].strip().strip("\n")
-        corrected_name = corrected_names[i].strip().strip("\n")
+        original_name = original_names[i][12:].strip().strip("\n")
+        corrected_name = corrected_names[i][12:].strip().strip("\n")
         name_corrections_dict[original_name] = corrected_name
 
-def correctValue(x, correction_dictionary):
+def updateValue(x, correction_dictionary):
 
     if correction_dictionary.get(x) is None:
         return x
     else:
         return correction_dictionary.get(x)
 
-name_col = target_df["school_name"].apply(lambda x : correctValue(x, name_corrections_dict))
-
-# replace all "&" with "and" in the name
-name_col = name_col.apply(lambda x : x if "&" not in x else x.replace("&", "and"))
+name_col = target_df["school_name"].apply(lambda x : updateValue(x, name_corrections_dict))
 
 target_df["school_name"] = name_col
-
-## get list of all names after the corrections
-with open("updated_school_names.txt", "w") as file:
-    for name in target_df["school_name"].unique():
-        file.write(f"{name}\n")
-    
-    file.close()
 
 ## fix the formatting for specific Regents exam names to get rid of backslash
 reformatted_exam_names = {"Common Core Algebra2" : "Common Core Algebra 2", 
@@ -101,7 +96,7 @@ reformatted_exam_names = {"Common Core Algebra2" : "Common Core Algebra 2",
                           "Physical Settings/Earth Science": "Earth Science"
                           }
 
-exam_col = target_df["regents_exam"].apply(lambda x : correctValue(x, reformatted_exam_names))
+exam_col = target_df["regents_exam"].apply(lambda x : updateValue(x, reformatted_exam_names))
 target_df["regents_exam"] = exam_col
 
 ## export the cleaned dataset
