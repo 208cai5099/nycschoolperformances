@@ -21,13 +21,13 @@ server.get("/search/", async (request, response) => {
 
 })
 
-// create a GET request to get data based on school, exam, from year, and to year inputs
-server.get("/search/:school/:exam/:fromYear/:toYear", async (request, response) => {
+// create a GET request to get data based on school, exam, and year inputs
+server.get("/search/:school/:exam/:year", async (request, response) => {
     try {
-        const { school, exam, fromYear, toYear } = request.params;
+        const { school, exam, year} = request.params;
         console.log(request.params);
 
-        const query = `SELECT * FROM schools WHERE school_name IN ${school} AND regents_exam IN ${exam} and year BETWEEN ${fromYear} AND ${toYear}`;
+        const query = `SELECT * FROM schools WHERE school_name IN ${school} AND regents_exam IN ${exam} and year IN ${year}`;
         console.log(query);
 
         const results = await pool.query(query)
