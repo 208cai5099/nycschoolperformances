@@ -1,24 +1,14 @@
 import { React, useState, useEffect } from "react";
-import { heading, inputRow, input, button } from "./Search-Styling.js";
+import { heading, inputRow, input, button, graph } from "./Search-Styling.js";
 import { examList, yearList } from "../util.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import Chart from "../components/Chart.jsx"
-
+import Chart from "chart.js/auto"
 
 function Search() {
-
-    const test = [
-        {name: "A", uv: 100},
-        {name: "B", uv: -100},
-        {name: "C", uv: 0},
-        {name: "D", uv: 89},
-        {name: "E"},
-        {name: "A", uv: -20},
-    ]
 
     // represents the list of unique schools
     const [schoolList, setSchoolList] = useState([])
@@ -49,74 +39,123 @@ function Search() {
 
     // represents the user inputs
     const [schoolInput, setSchoolInput] = useState([]);
-    const [examInput, setExamInput] = useState([]);
-    const [yearInput, setYearInput] = useState([]);
+    const [examInput, setExamInput] = useState("");
 
-
-    function processData(data) {
-
-        console.log(data);
-
-        var processedData = []
-
-        yearInput.map((year) => {
-
-            var labelList = []
-            var meanScoreList = []
-            
-            data.map((item) => {
-
-                if (item.year === parseInt(year)) {
-
-                    labelList.push(item.school_dbn.concat(" - ", item.regents_exam));
-                    meanScoreList.push(item.mean_score);
-
-                }
-            })
-
-        })
-
-        console.log(processedData);
-
-    }
-
-    function formatInput(input, type) {
+    function formatInput(input) {
         var formattedInput = ""
 
-        if (type === "school") {
-            input.forEach((element) => {
-                formattedInput = formattedInput.concat("'", element.slice(8, element.length), "'", ", ");
-            })
-        } else {
-            input.forEach((element) => {
-                formattedInput = formattedInput.concat("'", element, "'", ", ");
-            })
-        }
+        input.forEach((element) => {
+            formattedInput = formattedInput.concat("'", element.slice(8, element.length), "'", ", ");
+        })
 
         return formattedInput.slice(0, formattedInput.length - 2);
 
     }
 
+    // represent the processed data for graphing
+    const [dataPoints, setDataPoints] = useState({})
+
     const fetchData = async() => {
         try {
             var schools = formatInput(schoolInput, "school");
-            var exams = formatInput(examInput, "exam");
-            var years = formatInput(yearInput, "year");
     
-            const url = `http://localhost:5000/search/(${schools})/(${exams})/(${years})`;
+            const url = `http://localhost:5000/search/(${schools})/'${examInput}'`;
             console.log(url);
             const response = await fetch(url);
-            const data = await response.json();
+            const rawData = await response.json();
 
-            console.log(data);
-
-            // processData(data);
-
+            console.log(rawData);
+            
+            return rawData;
 
         } catch (error) {
             console.error(error.message);
         }
     };
+
+    function processData(data) {
+
+        // iterate through each test result to organize the data in a map
+        // group the data by its school name, which is the key
+        // each key is mapped to another map that maps a year to the year's mean score
+        const gradesBySchool = new Map();
+        data.forEach((item) => {
+
+            const identifier = item.school_name;
+            if (gradesBySchool.get(identifier) === undefined) {
+                gradesBySchool.set(identifier, new Map().set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))))
+            } else {
+                const currentMap = gradesBySchool.get(identifier);
+                gradesBySchool.set(identifier, currentMap.set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))));
+            }
+            
+        })
+
+        // console.log(gradesBySchoolAndExam);
+
+        // make the data for graphing
+        const datasets = []
+
+        gradesBySchool.forEach((value, key) => {
+
+            const set = {
+                label: key,
+                data: []
+            }
+
+            yearList.forEach((year) => {
+                if (value.get(year) === undefined) {
+                    set.data.push(NaN);
+                } else {
+                    set.data.push(value.get(year));
+                }
+            })
+
+            datasets.push(set);
+
+        })
+
+        const processedData = {
+            labels: yearList,
+            datasets: datasets
+        }
+
+        return processedData;
+
+
+
+    }
+
+    const [lineGraph, setLineGraph] = useState(null);
+
+    const graphData = async() => {
+
+        console.log(dataPoints);
+        const rawData = await fetchData();
+        const processedData = processData(rawData);
+
+        console.log(processedData);
+
+        if (lineGraph === null) {
+            const graphInstance = new Chart(
+                document.getElementById("graph"),
+                {
+                    type: "line",
+                    data: processedData,
+                    options: {maintainAspectRatio: false}
+                }
+            )
+    
+            setLineGraph(graphInstance);
+        } else {
+
+            lineGraph.data = processedData;
+            lineGraph.update();
+
+        }
+
+            
+    }
 
     return (
         <div>
@@ -144,7 +183,6 @@ function Search() {
                         </Autocomplete>
 
                         <Autocomplete
-                            multiple={true}
                             id="tags-standard"
                             options={examList}
                             renderInput={(params) => (
@@ -161,23 +199,6 @@ function Search() {
                         >
                         </Autocomplete>
 
-                        <Autocomplete 
-                            multiple={true}
-                            id="tags-standard"
-                            options={yearList}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Year"
-                                >
-                                </TextField>
-                            )}
-                            onChange={(event, value) => {
-                                setYearInput(value);
-                            }}
-                            style={input}
-                        >
-                        </Autocomplete>
                     </div>
                 }
 
@@ -185,13 +206,16 @@ function Search() {
                     variant="contained" 
                     style={button}
                     endIcon={<QueryStatsIcon />}
-                    onClick={fetchData}
+                    onClick={graphData}
 
                 >
                     Search
                 </Button>
 
-                <Chart data={test} />
+                <div style={graph}>
+                    <canvas id="graph" />
+                </div>
+
 
             </Stack>
 

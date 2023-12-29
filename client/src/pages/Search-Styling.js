@@ -23,3 +23,11 @@ export const button = {
     marginRight: "auto",
     maxWidth: "100px"
 }
+
+export const graph = {
+    position: "relative",
+    marginLeft: "auto",
+    marginRight: "auto",
+    height: "50vh",
+    width: "50%"
+}
