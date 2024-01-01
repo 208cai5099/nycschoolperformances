@@ -118,6 +118,14 @@ function Search() {
             const set = {
                 label: key,
                 data: [],
+                spanGaps: true,
+                segment: {
+                            borderDash: (seg) => {
+                                return (
+                                    seg.p0.skip || seg.p1.skip ? [18,6] : undefined
+                                )
+                            }
+                        },
                 borderColor: null,
                 backgroundColor: null
             }
@@ -143,6 +151,11 @@ function Search() {
             datasets.forEach((element) => {
                 element.borderColor = colorList.at(index);
                 element.backgroundColor = colorList.at(index);
+                element.segment.borderColor = (seg) => {
+                                            return (
+                                                seg.p0.skip || seg.p1.skip ? colorList.at(index) : undefined
+                                            )
+                                        };
                 newColorMap.set(colorList.at(index), element.label);
 
                 index++;
@@ -217,6 +230,11 @@ function Search() {
                     if (element.label === school) {
                         element.borderColor = color;
                         element.backgroundColor = color;
+                        element.segment.borderColor = (seg) => {
+                            return (
+                                seg.p0.skip || seg.p1.skip ? color : undefined
+                            )
+                        };
                         break;
                     }
                 }
@@ -271,6 +289,7 @@ function Search() {
                 setLineGraph(null);
                 setIsDataAvailable(false);
                 setGraphStyle(dataIsNotAvailable);
+
             } else {
                 lineGraph.data = processedData;
                 lineGraph.update();
