@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { heading, inputRow, input, button, graph } from "./Search-Styling.js";
-import { examList, yearList } from "../util.js";
+import { examList, yearList, optionList } from "../util.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -15,7 +15,7 @@ function Search() {
 
     const getSchoolList = async() => {
         try {
-            const url = 'http://localhost:5000/search/'
+            const url = 'http://localhost:5100/search/'
             const response = await fetch(url);
             const data = await response.json();
 
@@ -40,6 +40,7 @@ function Search() {
     // represents the user inputs
     const [schoolInput, setSchoolInput] = useState([]);
     const [examInput, setExamInput] = useState("");
+    const [optionInput, setOptionInput] = useState("");
 
     function formatInput(input) {
         var formattedInput = ""
@@ -59,7 +60,7 @@ function Search() {
         try {
             var schools = formatInput(schoolInput, "school");
     
-            const url = `http://localhost:5000/search/(${schools})/'${examInput}'`;
+            const url = `http://localhost:5100/search/(${schools})/'${examInput}'`;
             console.log(url);
             const response = await fetch(url);
             const rawData = await response.json();
@@ -77,16 +78,31 @@ function Search() {
 
         // iterate through each test result to organize the data in a map
         // group the data by its school name, which is the key
-        // each key is mapped to another map that maps a year to the year's mean score
+        // each key is mapped to another map that maps a year to the year's mean score or passing rate
         const gradesBySchool = new Map();
         data.forEach((item) => {
 
             const identifier = item.school_name;
-            if (gradesBySchool.get(identifier) === undefined) {
-                gradesBySchool.set(identifier, new Map().set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))))
+
+            if (optionInput === "Average Score") {
+
+                if (gradesBySchool.get(identifier) === undefined) {
+                    gradesBySchool.set(identifier, new Map().set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))))
+                } else {
+                    const currentMap = gradesBySchool.get(identifier);
+                    gradesBySchool.set(identifier, currentMap.set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))));
+                }
+
             } else {
-                const currentMap = gradesBySchool.get(identifier);
-                gradesBySchool.set(identifier, currentMap.set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))));
+
+
+                if (gradesBySchool.get(identifier) === undefined) {
+                    gradesBySchool.set(identifier, new Map().set(String(item.year), parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))))
+                } else {
+                    const currentMap = gradesBySchool.get(identifier);
+                    gradesBySchool.set(identifier, currentMap.set(String(item.year), parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))));
+                }
+
             }
             
         })
@@ -199,6 +215,22 @@ function Search() {
                         >
                         </Autocomplete>
 
+                        <Autocomplete
+                            id="tags-standard"
+                            options={optionList}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Option"
+                                >
+                                </TextField>
+                            )}
+                            onChange={(event, value) => {
+                                setOptionInput(value);
+                            }}
+                            style={input}
+                        >
+                        </Autocomplete>
                     </div>
                 }
 
