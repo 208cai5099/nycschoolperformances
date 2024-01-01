@@ -1,8 +1,16 @@
-export const heading = {
+export const notFoundMessage = {
+    display: "block",
     fontFamily: "Raleway",
+    textAlign: "center",
     marginTop: "10vh"
 }
 
+export const notFoundImage = {
+    height: "50vh",
+    width: "50vh",
+    marginLeft: "auto",
+    marginRight: "auto"
+}
 export const inputRow = {
     display: "flex"
 }
@@ -24,10 +32,20 @@ export const button = {
     maxWidth: "100px"
 }
 
-export const graph = {
+export const dataIsAvailable = {
     position: "relative",
+    marginTop: "10vh",
     marginLeft: "auto",
     marginRight: "auto",
     height: "50vh",
     width: "50%"
+}
+
+export const dataIsNotAvailable = {
+    position: "relative",
+    marginTop: "10vh",
+    marginLeft: "auto",
+    marginRight: "auto",
+    height: "0px",
+    width: "0px"
 }

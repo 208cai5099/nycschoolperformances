@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
-import { heading, inputRow, input, button, graph } from "./Search-Styling.js";
-import { examList, yearList, optionList } from "../util.js";
+import { inputRow, input, button, notFoundMessage, notFoundImage, dataIsAvailable, dataIsNotAvailable } from "./Search-Styling.js";
+import { examList, yearList, optionList, colorList } from "../util.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -12,6 +12,9 @@ function Search() {
 
     // represents the list of unique schools
     const [schoolList, setSchoolList] = useState([])
+
+    // represents the style of the graph
+    const [graphStyle, setGraphStyle] = useState(dataIsNotAvailable);
 
     const getSchoolList = async() => {
         try {
@@ -41,6 +44,8 @@ function Search() {
     const [schoolInput, setSchoolInput] = useState([]);
     const [examInput, setExamInput] = useState("");
     const [optionInput, setOptionInput] = useState("");
+    const [colorMap, setColorMap] = useState(new Map());
+    const [isDataAvailable, setIsDataAvailable] = useState(true);
 
     function formatInput(input) {
         var formattedInput = ""
@@ -52,9 +57,6 @@ function Search() {
         return formattedInput.slice(0, formattedInput.length - 2);
 
     }
-
-    // represent the processed data for graphing
-    const [dataPoints, setDataPoints] = useState({})
 
     const fetchData = async() => {
         try {
@@ -82,7 +84,7 @@ function Search() {
         const gradesBySchool = new Map();
         data.forEach((item) => {
 
-            const identifier = item.school_name;
+            const identifier = item.school_dbn.concat(": ", item.school_name);
 
             if (optionInput === "Average Score") {
 
@@ -107,16 +109,17 @@ function Search() {
             
         })
 
-        // console.log(gradesBySchoolAndExam);
+        console.log(gradesBySchool);
 
         // make the data for graphing
         const datasets = []
-
         gradesBySchool.forEach((value, key) => {
 
             const set = {
                 label: key,
-                data: []
+                data: [],
+                borderColor: null,
+                backgroundColor: null
             }
 
             yearList.forEach((year) => {
@@ -128,8 +131,100 @@ function Search() {
             })
 
             datasets.push(set);
-
         })
+
+        // map each color to a school
+        // update the map as needed as schools get added or removed
+        if (colorMap.size === 0) {
+            
+            var index = 0;
+            var newColorMap = new Map();
+
+            datasets.forEach((element) => {
+                element.borderColor = colorList.at(index);
+                element.backgroundColor = colorList.at(index);
+                newColorMap.set(colorList.at(index), element.label);
+
+                index++;
+            })
+
+            // assigns leftover colors to null schools
+            while (index < 10) {
+                newColorMap.set(colorList.at(index), null);
+                index++;
+
+            }
+
+            setColorMap(newColorMap);
+
+        } else {
+
+            // get a list of currently graphed schools
+            var currentSchoolList = [];
+            for (const [color, school] of colorMap) {
+                if (school !== null) {
+                    currentSchoolList.push(school);
+                }
+            }
+
+            // get a list of schools that now need to be graphed
+            var newSchoolList = [];
+            datasets.forEach((element) => {
+                newSchoolList.push(element.label);
+            })
+
+            // track which currently graphed schools need to be removed
+            // from colorMap to "free up" their colors
+            var toBeRemovedList = []
+            for (const school of currentSchoolList) {
+                if (newSchoolList.includes(school) === false) {
+                    toBeRemovedList.push(school);
+                }
+            }
+
+            // "free up" the colors that are assigned to schools that need
+            // to be removed
+            for (const [color, school] of colorMap) {
+                if (toBeRemovedList.includes(school) === true) {
+                    colorMap.set(color, null);
+                }
+            }
+
+            // get a list of schools that now need to be assigned colors
+            var toBeAssigned = [];
+            for (const school of newSchoolList) {
+                if (currentSchoolList.includes(school) === false) {
+                    toBeAssigned.push(school);
+                }
+            }
+
+            // assign colors to the schools without assigned colors
+            var newColorMap = colorMap;
+            while (toBeAssigned.length > 0) {
+
+                var label = toBeAssigned.pop();
+                for (const [color, school] of newColorMap) {
+                    if (school === null) {
+                        newColorMap.set(color, label);
+                        break;
+                    }
+                }
+            }
+
+            datasets.forEach((element) => {
+
+                for (const [color, school] of newColorMap) {
+                    if (element.label === school) {
+                        element.borderColor = color;
+                        element.backgroundColor = color;
+                        break;
+                    }
+                }
+            })
+
+            setColorMap(newColorMap);
+
+        }
 
         const processedData = {
             labels: yearList,
@@ -138,18 +233,15 @@ function Search() {
 
         return processedData;
 
-
-
     }
 
     const [lineGraph, setLineGraph] = useState(null);
 
     const graphData = async() => {
 
-        console.log(dataPoints);
         const rawData = await fetchData();
         const processedData = processData(rawData);
-
+        console.log(rawData);
         console.log(processedData);
 
         if (lineGraph === null) {
@@ -163,20 +255,60 @@ function Search() {
             )
     
             setLineGraph(graphInstance);
+            if (processedData.datasets.length === 0) {
+                setIsDataAvailable(false);
+                setGraphStyle(dataIsNotAvailable);
+            } else {
+                setIsDataAvailable(true);
+                setGraphStyle(dataIsAvailable);
+
+            }
+
         } else {
 
-            lineGraph.data = processedData;
-            lineGraph.update();
+            if (processedData.datasets.length === 0) {
+                lineGraph.destroy();
+                setLineGraph(null);
+                setIsDataAvailable(false);
+                setGraphStyle(dataIsNotAvailable);
+            } else {
+                lineGraph.data = processedData;
+                lineGraph.update();
+                setIsDataAvailable(true);
+                setGraphStyle(dataIsAvailable);
+            }
 
         }
-
-            
+ 
     }
 
     return (
         <div>
             <Stack spacing={3}>
-                <h1 style={heading}>Look up schools!</h1>
+
+                <div>
+                    {isDataAvailable === true ? null : 
+                        <div style={notFoundMessage} >
+                            <h1>No Data is Found </h1>
+                            <img src='https://cdn.pixabay.com/photo/2015/12/08/17/40/magnifying-glass-1083378_1280.png' alt='not found' style={notFoundImage} />
+                        </div>
+                    }
+
+                    <div style={graphStyle}>
+                        <canvas id="graph" />
+                    </div>
+                </div>
+
+                <Button 
+                    variant="contained" 
+                    style={button}
+                    endIcon={<QueryStatsIcon />}
+                    onClick={graphData}
+
+                >
+                    Search
+                </Button>
+
 
                 { schoolList.length === 0 ? null :
                     <div style={inputRow}>
@@ -187,7 +319,7 @@ function Search() {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="School Name"
+                                    label="School Name (Limit 10)"
                                 >
                                 </TextField>
                             )}
@@ -233,20 +365,6 @@ function Search() {
                         </Autocomplete>
                     </div>
                 }
-
-                <Button 
-                    variant="contained" 
-                    style={button}
-                    endIcon={<QueryStatsIcon />}
-                    onClick={graphData}
-
-                >
-                    Search
-                </Button>
-
-                <div style={graph}>
-                    <canvas id="graph" />
-                </div>
 
 
             </Stack>
