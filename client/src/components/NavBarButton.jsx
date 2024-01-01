@@ -12,8 +12,13 @@ function NavBarButton(props) {
     }
 
     function redirect() {
-        const url = `/${props.text.toLowerCase()}`;
-        navigator(url);
+        if (props.text === "Search") {
+            navigator("/disclaimer");
+        } else {
+            const url = `/${props.text.toLowerCase()}`;
+            navigator(url);
+        }
+
     }
 
     return (
