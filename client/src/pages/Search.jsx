@@ -1,10 +1,11 @@
 import { React, useState, useEffect } from "react";
-import { inputRow, input, button, notFoundMessage, notFoundImage, dataIsAvailable, dataIsNotAvailable } from "./Search-Styling.js";
+import { inputRow, input, button, notFoundMessage, notFoundImage, dataIsAvailable, dataIsNotAvailable, limitMessage } from "./Search-Styling.js";
 import { examList, yearList, optionList, colorList } from "../util.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Alert from "@mui/material/Alert";
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import Chart from "chart.js/auto"
 
@@ -42,10 +43,18 @@ function Search() {
 
     // represents the user inputs
     const [schoolInput, setSchoolInput] = useState([]);
+    const [schoolInputLabel, setSchoolInputLabel] = useState("School Name (Limit: 10)");
     const [examInput, setExamInput] = useState("");
     const [optionInput, setOptionInput] = useState("");
+
+    // represent the mapping of each color to a school
     const [colorMap, setColorMap] = useState(new Map());
+
+    // represents whether any data was found
     const [isDataAvailable, setIsDataAvailable] = useState(true);
+
+    // represents whether max 10 schools were inputted
+    const [schoolCount, setSchoolCount] = useState(0);
 
     function formatInput(input) {
         var formattedInput = ""
@@ -257,6 +266,10 @@ function Search() {
 
     const graphData = async() => {
 
+        console.log(schoolInput);
+        console.log(examInput);
+        console.log(optionInput);
+
         const rawData = await fetchData();
         const processedData = processData(rawData);
         console.log(rawData);
@@ -318,15 +331,21 @@ function Search() {
                     </div>
                 </div>
 
-                <Button 
+                { schoolCount <= 10 ? null :
+                    <Alert style={limitMessage} severity="info">Please enter a maximum of 10 schools.</Alert>
+                }
+
+                { (schoolCount > 10 || schoolInput < 1 || examInput.length === 0 || optionInput.length === 0) ? null :
+                    <Button 
                     variant="contained" 
                     style={button}
                     endIcon={<QueryStatsIcon />}
                     onClick={graphData}
+                    >
+                        Search
+                    </Button>
+                }
 
-                >
-                    Search
-                </Button>
 
 
                 { schoolList.length === 0 ? null :
@@ -338,13 +357,21 @@ function Search() {
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="School Name (Limit 10)"
+                                    label={schoolInputLabel}
                                 >
                                 </TextField>
                             )}
                             style={input}
                             onChange={(event, value) => {
                                 setSchoolInput(value);
+                                setSchoolCount(value.length);
+                                if (value.length > 0 && value.length <= 10) {
+                                    setSchoolInputLabel(`School Name (Remaining: ${10 - value.length})`);
+                                } else if (value.length === 0) {
+                                    setSchoolInputLabel("School Name (Limit: 10)");   
+                                } else if (value.length > 10) {
+                                    setSchoolInputLabel("School Name (Exceeded Limit)");   
+                                }
                             }}
                         >
                         </Autocomplete>
@@ -387,7 +414,6 @@ function Search() {
 
 
             </Stack>
-
 
         </div>
 

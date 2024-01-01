@@ -49,3 +49,9 @@ export const dataIsNotAvailable = {
     height: "0px",
     width: "0px"
 }
+
+export const limitMessage = {
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto"
+}
