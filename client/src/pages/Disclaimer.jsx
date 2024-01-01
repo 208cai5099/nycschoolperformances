@@ -24,8 +24,7 @@ function Disclaimer() {
             <CardContent>
                 <Typography style={text}>
                     The information provided on this site is for informational purposes only. The information 
-                    provided on this site is not intended to be used as advice for school selection and is not 
-                    representative of any school, organization, or entity.
+                    provided on this site is not intended to be used as advice or guidance for school application.
                 </Typography>
 
                 <Typography style={text}>

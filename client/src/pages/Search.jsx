@@ -352,7 +352,8 @@ function Search() {
                     <div style={inputRow}>
                         <Autocomplete 
                             multiple={true}
-                            id="tags-standard"
+                            limitTags={1}
+                            id="multiple-limit-tags"
                             options={schoolList}
                             renderInput={(params) => (
                                 <TextField
