@@ -6,8 +6,11 @@ area in order to earn their high school diploma. The NYC Department of Education
 we are creating a website that allows users to visualize a particular school's performance on the exams from 2015 to 2023.
 
 Frontend: React, Material UI
+
 Backend: PostgreSQL
 
 Data Source:
+
 NYC Department of Education InfoHub
+
 https://infohub.nyced.org/reports/students-and-schools/school-quality/information-and-data-overview
