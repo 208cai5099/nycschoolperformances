@@ -1,0 +1,60 @@
+.notFoundMessage {
+    display: block;
+    font-family: "Raleway";
+    text-align: center;
+}
+
+.notFoundImage {
+    height: 50vh;
+    width: 50vh;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.inputRow {
+    display: flex;
+    justify-content: space-evenly;
+    font-family: "Raleway";
+}
+
+.inputBox {
+    width: 20vw
+}
+
+.menu {
+    font-family: "Raleway";
+}
+
+.note {
+    font-family: "Raleway";
+    font-size: 10pt;
+    text-align: center
+}
+
+.buttonRow {
+    display: block;
+    font-family: "Raleway";
+    padding-bottom: 10px;
+}
+
+.dataIsAvailable {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50vh;
+    width: 50%
+}
+
+.dataIsNotAvailable {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    height: 0px;
+    width: 0px
+}
+
+.limitMessage {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto
+}

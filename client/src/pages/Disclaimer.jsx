@@ -1,9 +1,6 @@
-import React, {useState} from "react"
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { card, text, buttonRow, button } from "./Disclaimer-Styling.js"
+import React from "react";
+import { Panel, Button } from "rsuite";
+import "./Disclaimer.css";
 import { useNavigate } from "react-router-dom";
 
 function Disclaimer() {
@@ -20,28 +17,26 @@ function Disclaimer() {
 
     return (
 
-        <Card style={card}>
-            <CardContent>
-                <Typography style={text}>
+        <Panel className="panel" bordered={true}>
+                <p>
                     The information provided on this site is for informational purposes only. The information 
                     provided on this site is not intended to be used as advice or guidance for school application.
-                </Typography>
+                </p>
 
-                <Typography style={text}>
+                <p>
                     Press "Agree" to indicate that you understand this message.
-                </Typography>
-            </CardContent>
+                </p>
 
-            <div style={buttonRow}>
-                <Button style={button} onClick={redirectToHome}>
+            <div className="buttonRow">
+                <Button className="button" onClick={redirectToHome} appearance="ghost">
                     Go to Homepage
                 </Button>
 
-                <Button style={button} onClick={redirectToSearch}>
+                <Button className="button" onClick={redirectToSearch} appearance="ghost">
                     Agree
                 </Button>
             </div>
-        </Card>
+        </Panel>
 
     )
 }

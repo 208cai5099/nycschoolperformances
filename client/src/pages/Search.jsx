@@ -1,32 +1,30 @@
 import { React, useState, useEffect } from "react";
-import { inputRow, input, button, notFoundMessage, notFoundImage, dataIsAvailable, dataIsNotAvailable, limitMessage, note } from "./Search-Styling.js";
-import { examList, yearList, optionList, colorList } from "../util.js";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import "./Search.css";
+import { exams, yearList, options, colorList } from "../util.js";
 import Alert from "@mui/material/Alert";
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import Chart from "chart.js/auto"
+import { Button, InputPicker, TagPicker, Row, Col } from "rsuite";
 
 function Search() {
 
-    // represents the list of unique schools
+    // represents the list of unique schools, exams, and options
     const [schoolList, setSchoolList] = useState([])
+    const [examList, setExamList] = useState([]);
+    const [optionList, setOptionList] = useState([]);
 
-    // represents the style of the graph
-    const [graphStyle, setGraphStyle] = useState(dataIsNotAvailable);
-
-    const getSchoolList = async() => {
+    const makeSchoolList = async() => {
         try {
-            const url = 'http://localhost:5100/search/'
+            const url = 'http://localhost:5100/search/';
             const response = await fetch(url);
             const data = await response.json();
 
-            var allSchoolNames = []
+            var allSchoolNames = [];
 
             data.forEach((element) => {
-                allSchoolNames.push(element.school_name);
+                allSchoolNames.push({
+                    label: element.school_name,
+                    value: element.school_name
+                });
             })
 
             setSchoolList(allSchoolNames);
@@ -36,14 +34,43 @@ function Search() {
         }
     };
 
+    const makeExamList = () => {
+        var allExams = [];
+
+        exams.forEach((element) => {
+            allExams.push({
+                label: element,
+                value: element
+            })
+        })
+
+        setExamList(allExams);
+    }
+
+    const makeOptionList = () => {
+        var allOptions = [];
+
+        options.forEach((element) => {
+            allOptions.push({
+                label: element,
+                value: element
+            })
+        })
+
+        setOptionList(allOptions);
+
+    }
+
+
     // request to get list of unique school names
     useEffect(() => {
-        getSchoolList();
+        makeSchoolList();
+        makeExamList();
+        makeOptionList();
     }, []);
 
     // represents the user inputs
     const [schoolInput, setSchoolInput] = useState([]);
-    const [schoolInputLabel, setSchoolInputLabel] = useState("School Name (Limit: 10)");
     const [examInput, setExamInput] = useState("");
     const [optionInput, setOptionInput] = useState("");
 
@@ -318,11 +345,9 @@ function Search() {
             setLineGraph(graphInstance);
             if (processedData.datasets.length === 0) {
                 setIsDataAvailable(false);
-                setGraphStyle(dataIsNotAvailable);
                 setGraphDisplay(false);
             } else {
                 setIsDataAvailable(true);
-                setGraphStyle(dataIsAvailable);
                 setGraphDisplay(true);
             }
 
@@ -332,7 +357,6 @@ function Search() {
                 lineGraph.destroy();
                 setLineGraph(null);
                 setIsDataAvailable(false);
-                setGraphStyle(dataIsNotAvailable);
                 setGraphDisplay(false);
 
             } else {
@@ -354,7 +378,6 @@ function Search() {
                     }
                 }
                 setIsDataAvailable(true);
-                setGraphStyle(dataIsAvailable);
                 setGraphDisplay(true);
 
             }
@@ -365,23 +388,26 @@ function Search() {
 
     return (
         <div>
-            <Stack spacing={3}>
 
                 <div>
 
                     {isDataAvailable === true ? null : 
-                        <div style={notFoundMessage} >
+                        <div className="notFoundMessage" >
                             <h1>No Data is Found </h1>
-                            <img src='https://cdn.pixabay.com/photo/2015/12/08/17/40/magnifying-glass-1083378_1280.png' alt='not found' style={notFoundImage} />
+                            <img
+                                className="notFoundImage" 
+                                src='https://cdn.pixabay.com/photo/2015/12/08/17/40/magnifying-glass-1083378_1280.png'
+                                alt='not found'
+                            />
                         </div>
                     }
 
-                    <div style={graphStyle}>
+                    <div className={isDataAvailable === true ? "dataIsAvailable" : "dataIsNotAvailable"}>
                         <canvas id="graph" />
                     </div>
 
                     {graphDisplay === false ? null :
-                        <div style={note}>
+                        <div className="note">
                             <p> Click on data point for specific value and number of test takers </p>
                             <p> A dashed line indicates absence of data between two years </p>
                         </div>
@@ -391,86 +417,59 @@ function Search() {
                 </div>
 
                 { schoolCount <= 10 ? null :
-                    <Alert style={limitMessage} severity="info">Please enter a maximum of 10 schools.</Alert>
+                    <Alert className="limitMessage" severity="info">Please enter a maximum of 10 schools.</Alert>
                 }
 
                 { (schoolCount > 10 || schoolInput < 1 || examInput.length === 0 || optionInput.length === 0) ? null :
-                    <Button 
-                    variant="contained" 
-                    style={button}
-                    endIcon={<QueryStatsIcon />}
-                    onClick={graphData}
-                    >
-                        Search
-                    </Button>
-                }
-
-                { schoolList.length === 0 ? null :
-                    <div style={inputRow}>
-                        <Autocomplete 
-                            multiple={true}
-                            limitTags={1}
-                            id="multiple-limit-tags"
-                            options={schoolList}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label={schoolInputLabel}
-                                >
-                                </TextField>
-                            )}
-                            style={input}
-                            onChange={(event, value) => {
-                                setSchoolInput(value);
-                                setSchoolCount(value.length);
-                                if (value.length > 0 && value.length <= 10) {
-                                    setSchoolInputLabel(`School Name (Remaining: ${10 - value.length})`);
-                                } else if (value.length === 0) {
-                                    setSchoolInputLabel("School Name (Limit: 10)");   
-                                } else if (value.length > 10) {
-                                    setSchoolInputLabel("School Name (Exceeded Limit)");   
-                                }
-                            }}
+                    <div className="buttonRow">
+                        <Button
+                        appearance="primary"
+                        onClick={graphData}
                         >
-                        </Autocomplete>
-
-                        <Autocomplete
-                            id="tags-standard"
-                            options={examList}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Exam Name"
-                                >
-                                </TextField>
-                            )}
-                            onChange={(event, value) => {
-                                setExamInput(value);
-                            }}
-                            style={input}
-                        >
-                        </Autocomplete>
-
-                        <Autocomplete
-                            id="tags-standard"
-                            options={optionList}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Option"
-                                >
-                                </TextField>
-                            )}
-                            onChange={(event, value) => {
-                                setOptionInput(value);
-                            }}
-                            style={input}
-                        >
-                        </Autocomplete>
+                            Search
+                        </Button>
                     </div>
                 }
 
-            </Stack>
+                { schoolList.length === 0 ? null :
+                    <Row className="inputRow">
+                        <Col>
+                            <TagPicker
+                                className="inputBox"
+                                menuClassName="menu"
+                                data={schoolList}
+                                onChange={(value) => {
+                                    setSchoolInput(value);
+                                    setSchoolCount(value.length);
+                                }}
+                            />
+                        </Col>
+
+                        <Col>
+                            <InputPicker
+                                className="inputBox"
+                                menuClassName="menu"
+                                data={examList}
+                                onChange={(value) => {
+                                    setExamInput(value);
+                                }}
+                            />
+                        </Col>
+
+                        <Col>
+                            <InputPicker
+                                className="inputBox"
+                                menuClassName="menu"
+                                data={optionList}
+                                onChange={(value) => {
+                                    setOptionInput(value);
+                                }}
+                            />
+                        </Col>
+
+                    </Row>
+                }
+
         </div>
 
         

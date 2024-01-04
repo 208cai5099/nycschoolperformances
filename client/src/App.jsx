@@ -6,6 +6,7 @@ import Contact from './pages/Contact';
 import Methods from './pages/Methods'
 import Search from './pages/Search'
 import Disclaimer from './pages/Disclaimer';
+import 'rsuite/dist/rsuite-no-reset.min.css';
 
 function App() {
 
