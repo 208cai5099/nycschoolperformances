@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { inputRow, input, button, notFoundMessage, notFoundImage, dataIsAvailable, dataIsNotAvailable, limitMessage } from "./Search-Styling.js";
+import { inputRow, input, button, notFoundMessage, notFoundImage, dataIsAvailable, dataIsNotAvailable, limitMessage, note } from "./Search-Styling.js";
 import { examList, yearList, optionList, colorList } from "../util.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -56,6 +56,9 @@ function Search() {
     // represents whether max 10 schools were inputted
     const [schoolCount, setSchoolCount] = useState(0);
 
+    // represents whether a graph is currently displayed
+    const [graphDisplay, setGraphDisplay] = useState(false);
+
     function formatInput(input) {
         var formattedInput = ""
 
@@ -72,11 +75,8 @@ function Search() {
             var schools = formatInput(schoolInput, "school");
     
             const url = `http://localhost:5100/search/(${schools})/'${examInput}'`;
-            console.log(url);
             const response = await fetch(url);
             const rawData = await response.json();
-
-            console.log(rawData);
             
             return rawData;
 
@@ -91,17 +91,28 @@ function Search() {
         // group the data by its school name, which is the key
         // each key is mapped to another map that maps a year to the year's mean score or passing rate
         const gradesBySchool = new Map();
+
+        // also record the number of students tested for each test
+        const samplesBySchool = new Map();
+
         data.forEach((item) => {
 
             const identifier = item.school_dbn.concat(": ", item.school_name);
 
+            if (samplesBySchool.get(identifier) === undefined) {
+                samplesBySchool.set(identifier, new Map().set(String(item.year), item.total_tested));
+            } else {
+                const currentSamplesMap = samplesBySchool.get(identifier);
+                samplesBySchool.set(identifier, currentSamplesMap.set(String(item.year), item.total_tested));
+            }
+
             if (optionInput === "Average Score") {
 
                 if (gradesBySchool.get(identifier) === undefined) {
-                    gradesBySchool.set(identifier, new Map().set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))))
+                    gradesBySchool.set(identifier, new Map().set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))));
                 } else {
-                    const currentMap = gradesBySchool.get(identifier);
-                    gradesBySchool.set(identifier, currentMap.set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))));
+                    const currentGradesMap = gradesBySchool.get(identifier);
+                    gradesBySchool.set(identifier, currentGradesMap.set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))));
                 }
 
             } else {
@@ -117,8 +128,6 @@ function Search() {
             }
             
         })
-
-        console.log(gradesBySchool);
 
         // make the data for graphing
         const datasets = []
@@ -136,7 +145,8 @@ function Search() {
                             }
                         },
                 borderColor: null,
-                backgroundColor: null
+                backgroundColor: null,
+                pointRadius: 4
             }
 
             yearList.forEach((year) => {
@@ -258,7 +268,10 @@ function Search() {
             datasets: datasets
         }
 
-        return processedData;
+        return {
+            processedData: processedData,
+            samplesMap: samplesBySchool
+        }
 
     }
 
@@ -266,14 +279,9 @@ function Search() {
 
     const graphData = async() => {
 
-        console.log(schoolInput);
-        console.log(examInput);
-        console.log(optionInput);
-
         const rawData = await fetchData();
-        const processedData = processData(rawData);
-        console.log(rawData);
-        console.log(processedData);
+        const { processedData, samplesMap } = processData(rawData);
+
 
         if (lineGraph === null) {
             const graphInstance = new Chart(
@@ -281,18 +289,41 @@ function Search() {
                 {
                     type: "line",
                     data: processedData,
-                    options: {maintainAspectRatio: false}
+                    options: {
+                        maintainAspectRatio: false,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => {
+                                        const year = context.label;
+                                        const school = context.dataset.label;
+
+                                        console.log(context)
+                                        console.log(samplesMap);
+
+                                       if (samplesMap.get(school).get(year) === undefined) {
+                                        return "No Data"
+                                       } else {
+                                        return context.formattedValue.concat(" (test takers: ", `${samplesMap.get(school).get(year)})`)
+                                       }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+
             )
     
             setLineGraph(graphInstance);
             if (processedData.datasets.length === 0) {
                 setIsDataAvailable(false);
                 setGraphStyle(dataIsNotAvailable);
+                setGraphDisplay(false);
             } else {
                 setIsDataAvailable(true);
                 setGraphStyle(dataIsAvailable);
-
+                setGraphDisplay(true);
             }
 
         } else {
@@ -302,23 +333,42 @@ function Search() {
                 setLineGraph(null);
                 setIsDataAvailable(false);
                 setGraphStyle(dataIsNotAvailable);
+                setGraphDisplay(false);
 
             } else {
                 lineGraph.data = processedData;
                 lineGraph.update();
+                lineGraph.options.plugins.tooltip.callbacks = {
+                    label: (context) => {
+                        const year = context.label;
+                        const school = context.dataset.label;
+
+                        console.log(context)
+                        console.log(samplesMap);
+
+                       if (samplesMap.get(school).get(year) === undefined) {
+                        return "No Data"
+                       } else {
+                        return context.formattedValue.concat(" (test takers: ", `${samplesMap.get(school).get(year)})`)
+                       }
+                    }
+                }
                 setIsDataAvailable(true);
                 setGraphStyle(dataIsAvailable);
+                setGraphDisplay(true);
+
             }
 
         }
  
-    }
+    }    
 
     return (
         <div>
             <Stack spacing={3}>
 
                 <div>
+
                     {isDataAvailable === true ? null : 
                         <div style={notFoundMessage} >
                             <h1>No Data is Found </h1>
@@ -329,6 +379,15 @@ function Search() {
                     <div style={graphStyle}>
                         <canvas id="graph" />
                     </div>
+
+                    {graphDisplay === false ? null :
+                        <div style={note}>
+                            <p> Click on data point for specific value and number of test takers </p>
+                            <p> A dashed line indicates absence of data between two years </p>
+                        </div>
+                    }
+
+
                 </div>
 
                 { schoolCount <= 10 ? null :
@@ -345,8 +404,6 @@ function Search() {
                         Search
                     </Button>
                 }
-
-
 
                 { schoolList.length === 0 ? null :
                     <div style={inputRow}>
@@ -413,9 +470,7 @@ function Search() {
                     </div>
                 }
 
-
             </Stack>
-
         </div>
 
         

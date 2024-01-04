@@ -19,7 +19,12 @@ export const input = {
     width: "100%",
     marginLeft: "2vw",
     marginRight: "2vw",
+}
 
+export const note = {
+    fontFamily: "Raleway",
+    fontSize: "10pt",
+    textAlign: "center"
 }
 
 export const button = {
