@@ -1,10 +1,10 @@
-.layout {
+#contactLayout {
     display: flex;
     justify-content: space-evenly;
     font-family: "Raleway";
 }
 
 
-.body {
+.bio {
     font-size: 12pt;
 }

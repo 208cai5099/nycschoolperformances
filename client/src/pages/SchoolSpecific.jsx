@@ -127,29 +127,29 @@ function SchoolSpecific() {
             const identifier = item.school_dbn.concat(": ", item.school_name);
 
             if (samplesBySchool.get(identifier) === undefined) {
-                samplesBySchool.set(identifier, new Map().set(String(item.year), item.total_tested));
+                samplesBySchool.set(identifier, new Map().set(item.year, item.total_tested));
             } else {
                 const currentSamplesMap = samplesBySchool.get(identifier);
-                samplesBySchool.set(identifier, currentSamplesMap.set(String(item.year), item.total_tested));
+                samplesBySchool.set(identifier, currentSamplesMap.set(item.year, item.total_tested));
             }
 
             if (optionInput === "Average Score") {
 
                 if (gradesBySchool.get(identifier) === undefined) {
-                    gradesBySchool.set(identifier, new Map().set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))));
+                    gradesBySchool.set(identifier, new Map().set(item.year, parseFloat(parseFloat(item.mean_score).toFixed(2))));
                 } else {
                     const currentGradesMap = gradesBySchool.get(identifier);
-                    gradesBySchool.set(identifier, currentGradesMap.set(String(item.year), parseFloat(parseFloat(item.mean_score).toFixed(2))));
+                    gradesBySchool.set(identifier, currentGradesMap.set(item.year, parseFloat(parseFloat(item.mean_score).toFixed(2))));
                 }
 
             } else {
 
 
                 if (gradesBySchool.get(identifier) === undefined) {
-                    gradesBySchool.set(identifier, new Map().set(String(item.year), parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))))
+                    gradesBySchool.set(identifier, new Map().set(item.year, parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))))
                 } else {
                     const currentMap = gradesBySchool.get(identifier);
-                    gradesBySchool.set(identifier, currentMap.set(String(item.year), parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))));
+                    gradesBySchool.set(identifier, currentMap.set(item.year, parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))));
                 }
 
             }
@@ -309,6 +309,9 @@ function SchoolSpecific() {
         const rawData = await fetchData();
         const { processedData, samplesMap } = processData(rawData);
 
+        console.log(processedData);
+        console.log(samplesMap);
+
 
         if (lineGraph === null) {
             const graphInstance = new Chart(
@@ -322,7 +325,7 @@ function SchoolSpecific() {
                             tooltip: {
                                 callbacks: {
                                     label: (context) => {
-                                        const year = context.label;
+                                        const year = parseInt(context.label);
                                         const school = context.dataset.label;
 
                                        if (samplesMap.get(school).get(year) === undefined) {
@@ -361,7 +364,7 @@ function SchoolSpecific() {
                 lineGraph.update();
                 lineGraph.options.plugins.tooltip.callbacks = {
                     label: (context) => {
-                        const year = context.label;
+                        const year = parseInt(context.label);
                         const school = context.dataset.label;
 
                        if (samplesMap.get(school).get(year) === undefined) {

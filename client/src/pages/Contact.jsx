@@ -6,10 +6,10 @@ function Contact() {
 
     return (
 
-        <Row className="layout">
+        <Row id="contactLayout">
             <Col sm={10} md={10} lg={10}>
                 <Panel className="panel" header="Leven Cai" bordered={true}>
-                    <p className="body">
+                    <p className="bio">
                     I'm a current student in the Master of Computer and Information Technology program at University of Pennsylvania. I used to teach math and 
                     biology to middle school students in Brooklyn, followed by teaching biology to high school students in Manhattan. When I taught my former 
                     8th graders, I realized that it would be very helpful for families and students to have a central place to compare school's academic 

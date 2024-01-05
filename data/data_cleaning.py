@@ -41,12 +41,8 @@ target_df["id"] = [n for n in range(target_df.shape[0])]
 ## reorder the columns
 target_df = target_df.loc[:, ["id", "school_dbn", "school_name", "year", "regents_exam", "total_tested", "mean_score", "percent_65_or_above"]]
 
-# print(target_df.dtypes)
-# print(target_df.head())
-
-
 ## get all school names
-with open("school_names.txt", "w") as file:
+with open(r"C:\Users\zoo-b\Documents\nycschoolperformances\data\school_names.txt", "w") as file:
     for name in target_df["school_name"].unique():
 
         ## get the school's DBN
@@ -59,11 +55,11 @@ with open("school_names.txt", "w") as file:
 ## reformat some school names that are misspelled or truncated
 ## map original name to its reformatted name
 original_names = []
-with open("data\original_names.txt", "r") as file:
+with open(r"C:\Users\zoo-b\Documents\nycschoolperformances\data\original_names.txt", "r") as file:
     original_names.extend(file.readlines())
 
 corrected_names = []
-with open("data\new_names.txt", "r") as file:
+with open(r"C:\Users\zoo-b\Documents\nycschoolperformances\data\new_names.txt", "r") as file:
     corrected_names.extend(file.readlines())
 
 name_corrections_dict = {}
@@ -98,6 +94,17 @@ reformatted_exam_names = {"Common Core Algebra2" : "Common Core Algebra 2",
 
 exam_col = target_df["regents_exam"].apply(lambda x : updateValue(x, reformatted_exam_names))
 target_df["regents_exam"] = exam_col
+
+
+## in 2021, most Regents exams were cancelled except English, Algebra, LE, and Earth Science
+## two schools apparently took the Global History exam in 2021, which is prob a mistake
+## Remove the entries (one of them was already removed when filtering out the 's' above)
+unwanted_ids = target_df[(target_df["regents_exam"] == "Global History and Geography") & (target_df["year"] == 2021)]["id"]
+for id in unwanted_ids:
+    target_df = target_df[target_df["id"] != id]
+
+## reorder the id column after all the removals
+target_df["id"] = [n for n in range(target_df.shape[0])]
 
 ## export the cleaned dataset
 target_df.to_csv("data_by_school.csv", index = False)
