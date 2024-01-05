@@ -25,7 +25,7 @@ function NavigationBar() {
 
     return (
 
-        <Navbar className='navBar'>
+        <Navbar id='navBar'>
             <Nav>
                 <Nav.Item onSelect={redirectToHome}> Home </Nav.Item>
                 <Nav.Item onSelect={redirectToSearch}> Search </Nav.Item>
