@@ -8,7 +8,8 @@
     height: 50vh;
     width: 50vh;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
+    padding-bottom: 20px;
 }
 
 .inputRow {
@@ -34,6 +35,7 @@
 .buttonRow {
     display: block;
     font-family: "Raleway";
+    padding-top: 20px;
     padding-bottom: 10px;
 }
 
@@ -51,10 +53,4 @@
     margin-right: auto;
     height: 0px;
     width: 0px
-}
-
-.limitMessage {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto
 }

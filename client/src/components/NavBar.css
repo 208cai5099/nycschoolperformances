@@ -1,0 +1,8 @@
+.navBar {
+    display: flex;
+    justify-content: center;
+    background-color: #6CADDC;
+    font-family: "Raleway";
+    font-size: 16pt;
+    color: white
+}

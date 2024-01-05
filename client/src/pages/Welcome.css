@@ -1,0 +1,26 @@
+.title {
+    display: block;
+    text-align: center;
+    font-family: "Raleway";
+    font-size: 1.5rem;
+    margin-top: 10vh
+}
+
+.school {
+    margin-left: auto;
+    margin-right: auto;
+    height: 50vh;
+    width: 50%
+}
+
+.highlight {
+    color: #25519E;
+    font-weight: 900
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%
+}

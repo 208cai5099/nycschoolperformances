@@ -1,9 +1,9 @@
 import { React, useState, useEffect } from "react";
 import "./Search.css";
 import { exams, yearList, options, colorList } from "../util.js";
-import Alert from "@mui/material/Alert";
 import Chart from "chart.js/auto"
-import { Button, InputPicker, TagPicker, Row, Col } from "rsuite";
+import { IconButton, InputPicker, TagPicker, Message, Row, Col } from "rsuite";
+import LineChartIcon from '@rsuite/icons/LineChart';
 
 function Search() {
 
@@ -325,9 +325,6 @@ function Search() {
                                         const year = context.label;
                                         const school = context.dataset.label;
 
-                                        console.log(context)
-                                        console.log(samplesMap);
-
                                        if (samplesMap.get(school).get(year) === undefined) {
                                         return "No Data"
                                        } else {
@@ -366,9 +363,6 @@ function Search() {
                     label: (context) => {
                         const year = context.label;
                         const school = context.dataset.label;
-
-                        console.log(context)
-                        console.log(samplesMap);
 
                        if (samplesMap.get(school).get(year) === undefined) {
                         return "No Data"
@@ -416,24 +410,14 @@ function Search() {
 
                 </div>
 
-                { schoolCount <= 10 ? null :
-                    <Alert className="limitMessage" severity="info">Please enter a maximum of 10 schools.</Alert>
-                }
-
-                { (schoolCount > 10 || schoolInput < 1 || examInput.length === 0 || optionInput.length === 0) ? null :
-                    <div className="buttonRow">
-                        <Button
-                        appearance="primary"
-                        onClick={graphData}
-                        >
-                            Search
-                        </Button>
-                    </div>
-                }
-
                 { schoolList.length === 0 ? null :
                     <Row className="inputRow">
                         <Col>
+
+                            { schoolCount <= 10 ? null :
+                                <Message className="note" type="info" header="Exceeded limit">Please enter a maximum of 10 schools. </Message>
+                            }
+
                             <TagPicker
                                 className="inputBox"
                                 menuClassName="menu"
@@ -443,6 +427,8 @@ function Search() {
                                     setSchoolCount(value.length);
                                 }}
                             />
+
+                            
                         </Col>
 
                         <Col>
@@ -454,6 +440,20 @@ function Search() {
                                     setExamInput(value);
                                 }}
                             />
+
+                            { (schoolCount > 10 || schoolInput < 1 || examInput === null || optionInput === null || examInput.length === 0 || optionInput.length === 0) ? null :
+                                <div className="buttonRow">
+                                    <IconButton
+                                        appearance="primary"
+                                        icon={<LineChartIcon />}
+                                        placement="right"
+                                        onClick={graphData}
+                                    >
+                                        Search
+                                    </IconButton>
+                                </div>
+                            }
+
                         </Col>
 
                         <Col>
@@ -462,6 +462,7 @@ function Search() {
                                 menuClassName="menu"
                                 data={optionList}
                                 onChange={(value) => {
+
                                     setOptionInput(value);
                                 }}
                             />
