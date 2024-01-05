@@ -11,7 +11,7 @@ function NavigationBar() {
         navigator("/home");
     }
 
-    function redirectToSearch() {
+    function redirectToExplore() {
         navigator("/disclaimer");
     }
 
@@ -28,7 +28,7 @@ function NavigationBar() {
         <Navbar id='navBar'>
             <Nav>
                 <Nav.Item onSelect={redirectToHome}> Home </Nav.Item>
-                <Nav.Item onSelect={redirectToSearch}> Search </Nav.Item>
+                <Nav.Item onSelect={redirectToExplore}> Explore </Nav.Item>
                 <Nav.Item onSelect={redirectToMethods}> Methods </Nav.Item>
                 <Nav.Item onSelect={redirectToContact}> Contact </Nav.Item>
             </Nav>

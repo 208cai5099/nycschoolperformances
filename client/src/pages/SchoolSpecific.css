@@ -33,7 +33,8 @@
 }
 
 .buttonRow {
-    display: block;
+    display: flex;
+    justify-content: space-evenly;
     font-family: "Raleway";
     padding-top: 20px;
     padding-bottom: 10px;

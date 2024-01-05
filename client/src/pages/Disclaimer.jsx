@@ -7,8 +7,8 @@ function Disclaimer() {
 
     var navigator = useNavigate();
 
-    function redirectToSearch() {
-        navigator("/search");
+    function redirectToExplore() {
+        navigator("/explore");
     }
 
     function redirectToHome() {
@@ -32,7 +32,7 @@ function Disclaimer() {
                     Go to Homepage
                 </Button>
 
-                <Button className="button" onClick={redirectToSearch} appearance="ghost">
+                <Button className="button" onClick={redirectToExplore} appearance="ghost">
                     Agree
                 </Button>
             </div>

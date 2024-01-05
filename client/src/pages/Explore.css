@@ -1,0 +1,31 @@
+.optionsMessage {
+    display: block;
+    text-align: center;
+    font-family: "Raleway";
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.pictureRow {
+    display: flex;
+    justify-content: center;
+}
+
+.schoolButton {
+    background-image: url("https://cdn.pixabay.com/photo/2021/11/09/00/15/building-6780404_1280.png");
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+    border-radius: 30%;
+    margin-right: 2rem;
+
+}
+
+.cityButton {
+    background-image: url("https://cdn.pixabay.com/photo/2016/09/28/02/14/apple-1699633_1280.png");
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+    border-radius: 30%;
+    margin-left: 2rem;
+}

@@ -12,3 +12,14 @@
 // Section 3: Users get to see performance comparisons pre-COVID and post-COVID
 // Users are presented with dropdown menu for test
 // Once selected, a boxplot is shown for pre-COVID and post-COVID
+
+import React from "react";
+
+function Citywide() {
+    return (
+        <h1>fjewpiofjewpofkjoewfkew</h1>
+    )
+
+}
+
+export default Citywide;

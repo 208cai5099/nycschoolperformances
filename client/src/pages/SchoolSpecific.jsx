@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from "react";
-import "./Search.css";
+import "./SchoolSpecific.css";
 import { exams, yearList, options, colorList } from "../util.js";
 import Chart from "chart.js/auto"
 import { IconButton, InputPicker, TagPicker, Message, Row, Col } from "rsuite";
 import LineChartIcon from '@rsuite/icons/LineChart';
 
-function Search() {
+function SchoolSpecific() {
 
     // represents the list of unique schools, exams, and options
     const [schoolList, setSchoolList] = useState([])
@@ -479,4 +479,4 @@ function Search() {
 
 }
 
-export default Search;
+export default SchoolSpecific;
