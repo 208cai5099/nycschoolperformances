@@ -1,6 +1,7 @@
 import React from "react";
 import "./Explore.css"
 import { useNavigate } from 'react-router-dom';
+import { Panel, FlexboxGrid, Row, Col } from "rsuite";
 
 function Explore() {
 
@@ -20,12 +21,39 @@ function Explore() {
                 Pick an Option:
             </h1>
 
-            <div className="pictureRow">
-                <button className="schoolButton" onClick={redirectToSchoolSpecific}/>
+                <Row className="exploreOptionsRow">
+                    <Col>
+                        <Panel className="panel" bordered={true} shaded={true}>
 
-                <button className="cityButton" onClick={redirectToCitywide}/>
+                            <h3>School-Based</h3>
 
-            </div>
+                            <button className="schoolButton" onClick={redirectToSchoolSpecific}/>
+
+                            <p>
+                                Click the icon above to visualize a specific school's performance 
+                                on a designated Regents exam over time. 
+                            </p>
+
+                        </Panel>
+                    </Col>
+
+                        <Col>
+                        <Panel className="panel" bordered={true} shaded={true}>
+
+                            <h3>Citywide</h3>
+
+                            <button className="cityButton" onClick={redirectToCitywide}/>
+                        
+                            <p>
+                                Click the icon above to learn about general performance trends 
+                                across <span id="thebigapple">"The Big Apple"</span> that is New York City.
+                            </p>                        
+                        
+                        </Panel>
+                    </Col>
+                </Row>
+
+
         </div>
     )
 

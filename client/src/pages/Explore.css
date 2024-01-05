@@ -6,9 +6,9 @@
     font-weight: bold;
 }
 
-.pictureRow {
+.exploreOptionsRow {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .schoolButton {
@@ -17,7 +17,7 @@
     height: 200px;
     width: 200px;
     border-radius: 30%;
-    margin-right: 2rem;
+    margin-bottom: 20px;
 
 }
 
@@ -27,5 +27,16 @@
     height: 200px;
     width: 200px;
     border-radius: 30%;
-    margin-left: 2rem;
+    margin-bottom: 20px;
+    background-color: #F7F7F7;
+}
+
+.panel {
+    width: 30vw;
+    text-align: center;
+}
+
+#thebigapple {
+    color: #F6655A;
+    font-weight: bold;
 }
