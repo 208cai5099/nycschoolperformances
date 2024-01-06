@@ -4,8 +4,8 @@ export const exams = [
                         "Integrated Algebra",
                         "Geometry",
                         "Algebra 2 (Trigonometry)",
-                        "Common Core Geometry",
                         "Common Core Algebra",
+                        "Common Core Geometry",
                         "Common Core Algebra 2",
                         "Living Environment",
                         "Chemistry",
@@ -24,3 +24,24 @@ export const yearList = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
 export const options = ["Average Score", "Passing Rate"]
 
 export const colorList = ["#7BD3EA", "#A1EEBD", "#F6F7C4", "#F6D6D6", "#FF90BC", "#F9F9E0", "#8ACDD7", "#8294C4", "#DBDFEA", "#FD8A8A"]
+
+export const testColors = new Map([
+    ["English", "#0F1035"],
+    ["Common Core English", "#365486"],
+    ["Integrated Algebra", "#7D0A0A"],
+    ["Geometry", "#EE9322"],
+    ["Algebra 2 (Trigonometry)", "#F31559"],
+    ["Common Core Geometry", "#E9B824"],
+    ["Common Core Algebra", "#BF3131"],
+    ["Common Core Algebra 2", "#FF52A2"],
+    ["Living Environment", "#65B741"],
+    ["Chemistry", "#FFB534"],
+    ["Earth Science", "#76453B"],
+    ["Physics", "#4CB9E7"],
+    ["Global History and Geography", "#994D1C"],
+    ["US History and Government", "#E48F45"],
+    ["Chinese", "#1D2B53"],
+    ["French", "#7E2553"],
+    ["Italian", "#FF004D"],
+    ["Spanish", "#F2AFEF"]
+])

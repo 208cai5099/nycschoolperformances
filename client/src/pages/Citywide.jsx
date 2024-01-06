@@ -13,9 +13,11 @@ import React, { useState } from "react";
 import "./Citywide.css"
 import { Checkbox, CheckboxGroup, Col } from "rsuite";
 import Chart from "chart.js/auto"
-import { yearList } from "../util";
+import { yearList, testColors } from "../util";
 
 function Citywide() {
+
+    const [graph, setGraph] = useState(null);
 
     function formatInput(input) {
         var result = "";
@@ -52,67 +54,72 @@ function Citywide() {
 
     const processAverage = (rawData) => {
 
-        // make a nested map
-        // the outer map pairs a test to a year
-        // the inner map pairs a year to the exam's avg score for that year
-        var gradesByTest = new Map();
+        if (rawData !== undefined) {
+            // make a nested map
+            // the outer map pairs a test to a year
+            // the inner map pairs a year to the exam's avg score for that year
+            var gradesByTest = new Map();
 
-        // repeat process for number of test takers
-        var samplesByTest = new Map();
+            // repeat process for number of test takers
+            var samplesByTest = new Map();
 
-        rawData.forEach((element) => {
-            if (gradesByTest.get(element.regents_exam) === undefined) {
-                gradesByTest.set(element.regents_exam, new Map().set(element.year, parseFloat(parseFloat(element.avg).toFixed(2))));
-            } else {
-                const currentGradesMap = gradesByTest.get(element.regents_exam);
-                gradesByTest.set(element.regents_exam, currentGradesMap.set(element.year, parseFloat(parseFloat(element.avg).toFixed(2))));
-            }
-
-            if (samplesByTest.get(element.regents_exam) === undefined) {
-                samplesByTest.set(element.regents_exam, new Map().set(element.year, parseInt(element.sum)));
-            } else {
-                const currentSamplesMap = samplesByTest.get(element.regents_exam);
-                samplesByTest.set(element.regents_exam, currentSamplesMap.set(element.year, parseInt(element.sum)));
-            }
-        })
-
-        const datasets = []
-
-        gradesByTest.forEach((value, key) => {
-            const set = {
-                label: key,
-                data: [],
-                spanGaps: true,
-                segment: {
-                            borderDash: (seg) => {
-                                return (
-                                    seg.p0.skip || seg.p1.skip ? [18,6] : undefined
-                                )
-                            }
-                        },
-                // borderColor: null,
-                // backgroundColor: null,
-                pointRadius: 4
-            }
-
-            yearList.forEach((year) => {
-                if (value.get(year) === undefined) {
-                    set.data.push(NaN);
+            rawData.forEach((element) => {
+                if (gradesByTest.get(element.regents_exam) === undefined) {
+                    gradesByTest.set(element.regents_exam, new Map().set(element.year, parseFloat(parseFloat(element.avg).toFixed(2))));
                 } else {
-                    set.data.push(value.get(year));
+                    const currentGradesMap = gradesByTest.get(element.regents_exam);
+                    gradesByTest.set(element.regents_exam, currentGradesMap.set(element.year, parseFloat(parseFloat(element.avg).toFixed(2))));
+                }
+
+                if (samplesByTest.get(element.regents_exam) === undefined) {
+                    samplesByTest.set(element.regents_exam, new Map().set(element.year, parseInt(element.sum)));
+                } else {
+                    const currentSamplesMap = samplesByTest.get(element.regents_exam);
+                    samplesByTest.set(element.regents_exam, currentSamplesMap.set(element.year, parseInt(element.sum)));
                 }
             })
 
-            datasets.push(set);
+            const datasets = []
 
-        })
+            gradesByTest.forEach((value, key) => {
 
-        const processedData = {
-            labels: yearList,
-            datasets: datasets
+                console.log(testColors.get(key));
+                
+                const set = {
+                    label: key,
+                    data: [],
+                    spanGaps: true,
+                    segment: {
+                                borderDash: (seg) => {
+                                    return (
+                                        seg.p0.skip || seg.p1.skip ? [18,6] : undefined
+                                    )
+                                }
+                            },
+                    borderColor: testColors.get(key),
+                    backgroundColor: testColors.get(key),
+                    pointRadius: 4
+                }
+
+                yearList.forEach((year) => {
+                    if (value.get(year) === undefined) {
+                        set.data.push(NaN);
+                    } else {
+                        set.data.push(value.get(year));
+                    }
+                })
+
+                datasets.push(set);
+
+            })
+
+            const processedData = {
+                labels: yearList,
+                datasets: datasets
+            }
+
+            return processedData;
         }
-
-        return processedData;
 
     }
 
@@ -122,14 +129,20 @@ function Citywide() {
 
         console.log(processedData);
 
+        if (graph !== null) {
+            graph.destroy();
+        }
+
+
         const graphInstance = new Chart(
             document.getElementById("citywide-average"),
-             {
+                {
                 type: "line",
                 data: processedData
-             }
+                }
         )
 
+        setGraph(graphInstance);
 
     }
 
@@ -170,7 +183,7 @@ function Citywide() {
 
                             <Checkbox value="Common Core Geometry">Common Core Geometry</Checkbox>
 
-                            <Checkbox value="Algebra 2/Trigonometry">Algebra 2 (Trigonometry) (old)</Checkbox>
+                            <Checkbox value="Algebra 2 (Trigonometry)">Algebra 2 (Trigonometry) (old)</Checkbox>
 
                             <Checkbox value="Common Core Algebra 2">Common Core Algebra 2</Checkbox>
                         </Col>
