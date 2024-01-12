@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./PerformanceByBorough.css"
 import { Checkbox, CheckboxGroup, Col } from "rsuite";
 import Chart from "chart.js/auto"
-import { yearList, testColors } from "../util";
+import { yearList, testColors, boroughList } from "../util";
 
 function PerformanceByBorough() {
 
@@ -37,81 +37,65 @@ function PerformanceByBorough() {
 
                 console.log(rawData);
 
-                return rawData;
+                return {
+                    rawData: rawData,
+                    examsInput: exams
+                };
             }
         } catch (error) {
             console.error(error.message);
         }
     };
 
-    const processAverage = (rawData) => {
+    const processAverage = (rawData, examInput) => {
 
         if (rawData !== undefined) {
-            // make a nested map
-            // the outer map pairs a test to an inner map
-            // the inner map pairs a year to the exam's avg score for that year
-            var gradesByTest = new Map();
 
-            // repeat process for number of test takers
-            var samplesByTest = new Map();
+            // an outer map pairs a test to an inner map
+            // each inner map pairs a borough to the borough's average score for the test
+            const gradesByTest = new Map();
+            examInput.forEach((exam) => {
+                gradesByTest.set(exam, new Map());
+            })
 
+            // iterate through each data entry
             rawData.forEach((element) => {
-                if (gradesByTest.get(element.regents_exam) === undefined) {
-                    gradesByTest.set(element.regents_exam, new Map().set(element.year, parseFloat(parseFloat(element.avg).toFixed(2))));
-                } else {
-                    const currentGradesMap = gradesByTest.get(element.regents_exam);
-                    gradesByTest.set(element.regents_exam, currentGradesMap.set(element.year, parseFloat(parseFloat(element.avg).toFixed(2))));
-                }
 
-                if (samplesByTest.get(element.regents_exam) === undefined) {
-                    samplesByTest.set(element.regents_exam, new Map().set(element.year, parseInt(element.sum)));
-                } else {
-                    const currentSamplesMap = samplesByTest.get(element.regents_exam);
-                    samplesByTest.set(element.regents_exam, currentSamplesMap.set(element.year, parseInt(element.sum)));
-                }
+                // get the inner map
+                const currentGradesMap = gradesByTest.get(element.regents_exam);
+
+                // update inner map with a borough's avg score for the exam
+                gradesByTest.set(element.regents_exam, currentGradesMap.set(element.borough, parseFloat(element.avg_score)))
+
             })
 
             const datasets = []
 
-            gradesByTest.forEach((value, key) => {
-                
-                const set = {
-                    label: key,
+            // iterate through each exam to create an object containing the avg scores
+            examInput.forEach((exam) => {
+
+                // represents the data to be graphed for a given exam
+                const examData = {
+                    label: exam,
                     data: [],
-                    spanGaps: true,
-                    segment: {
-                                borderDash: (seg) => {
-                                    return (
-                                        seg.p0.skip || seg.p1.skip ? [18,6] : undefined
-                                    )
-                                }
-                            },
-                    borderColor: testColors.get(key),
-                    backgroundColor: testColors.get(key),
-                    pointRadius: 4
+                    borderColor: testColors.get(exam),
+                    backgroundColor: testColors.get(exam)
                 }
 
-                yearList.forEach((year) => {
-                    if (value.get(year) === undefined) {
-                        set.data.push(NaN);
-                    } else {
-                        set.data.push(value.get(year));
-                    }
+                // push the avg scores into the data array
+                boroughList.forEach((boroughName) => {
+                    examData.data.push(gradesByTest.get(exam).get(boroughName))
                 })
 
-                datasets.push(set);
-
+                // push the newly created data object to the running array
+                datasets.push(examData);
             })
 
-            const processedData = {
-                labels: yearList,
+            return {
+                labels: boroughList,
                 datasets: datasets
             }
 
-            return {
-                processedData: processedData,
-                samplesByTest: samplesByTest
-            };
         }
 
     }
@@ -120,73 +104,61 @@ function PerformanceByBorough() {
 
         if (value.length > 0) {
 
-            const rawData = await fetchAverage(value);
-            const { processedData, samplesByTest } = processAverage(rawData);
+            // extract the input exams chosen by user and the raw data
+            const { rawData, examsInput } = await fetchAverage(value);
 
-            console.log(samplesByTest);
-
-            console.log(processedData);
+            // process the data into the proper format
+            const processedData = processAverage(rawData, examsInput);
 
             if (graph !== null) {
                 graph.destroy();
             }
 
-
             const graphInstance = new Chart(
                 document.getElementById("average-borough"),
-                    {
-                    type: "line",
+
+                {
+                    type: "bar",
                     data: processedData,
                     options: {
-                        maintainAspectRatio: false,
                         plugins: {
                             tooltip: {
                                 callbacks: {
 
                                     // context contains the info for the tooltip label
+                                    // append a "%"" mark to the end of the label
                                     label: (context) => {
-
-                                        // extract the exam name and year
-                                        const examName = context.dataset.label;
-                                        const year = parseInt(context.label);
-
-                                        // look up the number of test takers
-                                        if (samplesByTest.get(examName).get(year) === undefined) {
-                                            return "No Data"
-                                        } else {
-                                            return context.formattedValue.concat(" (test takers: ", `${samplesByTest.get(examName).get(year)}`)
-                                        }
+                                        return context.formattedValue.concat("%");
                                     }
                                 }
                             }
                         }
                     }
-                    }
+                }
             )
 
             setGraph(graphInstance);
+
         } else {
-
             if (graph !== null) {
-                graph.clear();
+                graph.destroy();
             }
-
         }
-
+    
     }
 
     return (
         <div>
             <div className="description">
-                <h3>Average Exam Scores by Borough </h3>
+                <h3>Average Exam Scores by Borough from 2015 to 2023 </h3>
 
                 <p>
                     Use the following checkboxes to explore the average score of a particular
-                    exam across all schools that administered it.
+                    exam across the boroughs.
                 </p>
 
                     <CheckboxGroup inline={true} name="exams" onChange={(value) => {
-                        fetchAverage(value)
+                        graphAverage(value)
                     }}>
 
                         <Col>

@@ -151,7 +151,7 @@ function PerformanceOverTime() {
                                         if (samplesByTest.get(examName).get(year) === undefined) {
                                             return "No Data"
                                         } else {
-                                            return context.formattedValue.concat(" (test takers: ", `${samplesByTest.get(examName).get(year)}`)
+                                            return context.formattedValue.concat("% (test takers: ", `${samplesByTest.get(examName).get(year)}`)
                                         }
                                     }
                                 }
@@ -165,7 +165,7 @@ function PerformanceOverTime() {
         } else {
 
             if (graph !== null) {
-                graph.clear();
+                graph.destroy();
             }
 
         }
@@ -175,7 +175,7 @@ function PerformanceOverTime() {
     return (
         <div>
             <div className="description">
-                <h3>Average Exam Scores from 2015 to 2023 </h3>
+                <h3>Citywide Average Scores from 2015 to 2023 </h3>
 
                 <p>
                     Use the following checkboxes to explore the average score of a particular

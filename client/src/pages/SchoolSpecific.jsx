@@ -331,7 +331,7 @@ function SchoolSpecific() {
                                        if (samplesMap.get(school).get(year) === undefined) {
                                         return "No Data"
                                        } else {
-                                        return context.formattedValue.concat(" (test takers: ", `${samplesMap.get(school).get(year)})`)
+                                        return context.formattedValue.concat("% (test takers: ", `${samplesMap.get(school).get(year)})`)
                                        }
                                     }
                                 }
@@ -370,7 +370,7 @@ function SchoolSpecific() {
                        if (samplesMap.get(school).get(year) === undefined) {
                         return "No Data"
                        } else {
-                        return context.formattedValue.concat(" (test takers: ", `${samplesMap.get(school).get(year)})`)
+                        return context.formattedValue.concat("% (test takers: ", `${samplesMap.get(school).get(year)})`)
                        }
                     }
                 }
