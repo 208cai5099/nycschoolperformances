@@ -40,7 +40,7 @@ server.get("/search/:school/:exam", async (request, response) => {
 })
 
 // create a GET request to calculate citywide average scores of given tests
-server.get("/search-average/:exam", async (request, response) => {
+server.get("/citywide-average/:exam", async (request, response) => {
     try {
         const { exam } = request.params;
         console.log(request.params);
@@ -55,6 +55,36 @@ server.get("/search-average/:exam", async (request, response) => {
                             regents_exam, year
                         ORDER BY
                             regents_exam, year`;
+
+        console.log(query);
+
+        const results = await pool.query(query)
+        response.json(results.rows);
+
+    } catch (error) {
+        console.error(error.message);
+    }
+
+})
+
+// create a GET request to calculate borough averages of given tests
+server.get("/borough-average/:exam", async (request, response) => {
+    try {
+        const { exam } = request.params;
+        console.log(request.params);
+
+        const query =   `SELECT
+                            borough,
+                            regents_exam,
+                            ROUND(AVG(mean_score), 2) AS avg_score
+                        FROM
+                            schools 
+                        WHERE
+                            regents_exam IN ${exam}
+                        GROUP BY
+                            borough, regents_exam
+                        ORDER BY
+                            regents_exam, borough`;
 
         console.log(query);
 

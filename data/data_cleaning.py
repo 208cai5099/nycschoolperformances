@@ -38,9 +38,6 @@ target_df = target_df.astype({"school_dbn" : "str",
 ## add a column of ID numbers for each record
 target_df["id"] = [n for n in range(target_df.shape[0])]
 
-## reorder the columns
-target_df = target_df.loc[:, ["id", "school_dbn", "school_name", "year", "regents_exam", "total_tested", "mean_score", "percent_65_or_above"]]
-
 ## get all school names
 with open(r"C:\Users\zoo-b\Documents\nycschoolperformances\data\school_names.txt", "w") as file:
     for name in target_df["school_name"].unique():
@@ -102,6 +99,30 @@ target_df["regents_exam"] = exam_col
 unwanted_ids = target_df[(target_df["regents_exam"] == "Global History and Geography") & (target_df["year"] == 2021)]["id"]
 for id in unwanted_ids:
     target_df = target_df[target_df["id"] != id]
+
+## add a borough column
+borough_list = []
+for dbn in target_df["school_dbn"]:
+
+    if "X" in dbn:
+        borough_list.append("Bronx")
+    
+    elif "K" in dbn:
+        borough_list.append("Brooklyn")
+    
+    elif "R" in dbn:
+        borough_list.append("Staten Island")
+    
+    elif "Q" in dbn:
+        borough_list.append("Queens")
+    
+    elif "M" in dbn:
+        borough_list.append("Manhattan")
+
+target_df["borough"] = borough_list
+
+## reorder the columns
+target_df = target_df.loc[:, ["id", "borough", "school_dbn", "school_name", "year", "regents_exam", "total_tested", "mean_score", "percent_65_or_above"]]
 
 ## reorder the id column after all the removals
 target_df["id"] = [n for n in range(target_df.shape[0])]

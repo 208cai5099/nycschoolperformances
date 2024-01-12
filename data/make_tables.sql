@@ -1,5 +1,6 @@
 CREATE TABLE schools (
 	id SERIAL PRIMARY KEY,
+	borough VARCHAR(15),
 	school_dbn VARCHAR(10),
 	school_name VARCHAR(100),
 	year SMALLINT,
