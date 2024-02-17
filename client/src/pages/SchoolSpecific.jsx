@@ -399,16 +399,15 @@ function SchoolSpecific() {
                         </div>
                     }
 
+                    {graphDisplay === false ? null :
+                        <div className="note">
+                            <p> Click on data point for specific value and number of test takers. A dashed line indicates absence of data between two years </p>
+                        </div>
+                    }
+
                     <div className={isDataAvailable === true ? "dataIsAvailable" : "dataIsNotAvailable"}>
                         <canvas id="graph" />
                     </div>
-
-                    {graphDisplay === false ? null :
-                        <div className="note">
-                            <p> Click on data point for specific value and number of test takers </p>
-                            <p> A dashed line indicates absence of data between two years </p>
-                        </div>
-                    }
 
 
                 </div>

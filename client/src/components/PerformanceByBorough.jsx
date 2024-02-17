@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "./PerformanceByBorough.css"
 import { Checkbox, CheckboxGroup, Col } from "rsuite";
 import Chart from "chart.js/auto"
-import { yearList, testColors, boroughList } from "../util";
+import { testColors, boroughList } from "../util";
 
 function PerformanceByBorough() {
 
     const [graph, setGraph] = useState(null);
+    const [graphDisplay, setGraphDisplay] = useState(false);
 
     function formatInput(input) {
         var result = "";
@@ -54,8 +55,14 @@ function PerformanceByBorough() {
             // an outer map pairs a test to an inner map
             // each inner map pairs a borough to the borough's average score for the test
             const gradesByTest = new Map();
+
+            // an outer map pairs a test to an inner map
+            // each inner map pairs a borough to the borough's number of test takers
+            const testTakersByTest = new Map();
+
             examInput.forEach((exam) => {
                 gradesByTest.set(exam, new Map());
+                testTakersByTest.set(exam, new Map());
             })
 
             // iterate through each data entry
@@ -66,6 +73,11 @@ function PerformanceByBorough() {
 
                 // update inner map with a borough's avg score for the exam
                 gradesByTest.set(element.regents_exam, currentGradesMap.set(element.borough, parseFloat(element.avg_score)))
+
+                // repeat for the number of test takers
+                const currentTestTakersMap = testTakersByTest.get(element.regents_exam);
+
+                testTakersByTest.set(element.regents_exam, currentTestTakersMap.set(element.borough, parseInt(element.test_takers)));
 
             })
 
@@ -93,7 +105,8 @@ function PerformanceByBorough() {
 
             return {
                 labels: boroughList,
-                datasets: datasets
+                datasets: datasets,
+                testTakersMap: testTakersByTest
             }
 
         }
@@ -128,7 +141,10 @@ function PerformanceByBorough() {
                                     // context contains the info for the tooltip label
                                     // append a "%"" mark to the end of the label
                                     label: (context) => {
-                                        return context.formattedValue.concat("%");
+                                        const borough = context.label;
+                                        const exam = context.dataset.label;
+                                        const testTakers = processedData.testTakersMap.get(exam).get(borough)
+                                        return context.formattedValue.concat("% (test takers: ", `${testTakers})`);
                                     }
                                 }
                             }
@@ -138,10 +154,12 @@ function PerformanceByBorough() {
             )
 
             setGraph(graphInstance);
+            setGraphDisplay(true);
 
         } else {
             if (graph !== null) {
                 graph.destroy();
+                setGraphDisplay(false);
             }
         }
     
@@ -150,11 +168,11 @@ function PerformanceByBorough() {
     return (
         <div>
             <div className="description">
-                <h3>Average Exam Scores by Borough from 2015 to 2023 </h3>
+                <h3>Average Exam Scores by Borough </h3>
 
                 <p>
-                    Use the following checkboxes to explore the average score of a particular
-                    exam across the boroughs.
+                    Use the following checkboxes to explore the average scores of particular
+                    exams across the boroughs (averages are based on all data from 2015 to 2023).
                 </p>
 
                     <CheckboxGroup inline={true} name="exams" onChange={(value) => {
@@ -225,6 +243,12 @@ function PerformanceByBorough() {
                     </CheckboxGroup>
 
             </div>
+
+            {graphDisplay === false ? null :
+                <div className="note">
+                    <p> Click on data point for specific value and number of test takers. A dashed line indicates absence of data between two years </p>
+                </div>
+            }
 
             <div className="graph">
                 <canvas id="average-borough"/>

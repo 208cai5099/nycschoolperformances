@@ -76,7 +76,8 @@ server.get("/borough-average/:exam", async (request, response) => {
         const query =   `SELECT
                             borough,
                             regents_exam,
-                            ROUND(AVG(mean_score), 2) AS avg_score
+                            ROUND(AVG(mean_score), 2) AS avg_score,
+                            SUM(total_tested) AS test_takers
                         FROM
                             schools 
                         WHERE

@@ -7,6 +7,7 @@ import { yearList, testColors } from "../util";
 function PerformanceOverTime() {
 
     const [graph, setGraph] = useState(null);
+    const [graphDisplay, setGraphDisplay] = useState(false);
 
     function formatInput(input) {
         var result = "";
@@ -162,10 +163,12 @@ function PerformanceOverTime() {
             )
 
             setGraph(graphInstance);
+            setGraphDisplay(true);
         } else {
 
             if (graph !== null) {
                 graph.destroy();
+                setGraphDisplay(false);
             }
 
         }
@@ -178,8 +181,8 @@ function PerformanceOverTime() {
                 <h3>Citywide Average Scores from 2015 to 2023 </h3>
 
                 <p>
-                    Use the following checkboxes to explore the average score of a particular
-                    exam across all schools that administered it.
+                    Use the following checkboxes to explore the citywide average scores of 
+                    particular exams organized by years.
                 </p>
 
                     <CheckboxGroup inline={true} name="exams" onChange={(value) => {
@@ -250,10 +253,17 @@ function PerformanceOverTime() {
                     </CheckboxGroup>
 
             </div>
+            
+            {graphDisplay === false ? null :
+                <div className="note">
+                    <p> Click on data point for specific value and number of test takers. A dashed line indicates absence of data between two years </p>
+                </div>
+            }
 
             <div className="graph">
                 <canvas id="average-time"/>
             </div>
+
         </div>
 
     )
