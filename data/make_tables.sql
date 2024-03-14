@@ -1,4 +1,4 @@
-CREATE TABLE schools (
+CREATE TABLE regents (
 	id SERIAL PRIMARY KEY,
 	borough VARCHAR(15),
 	school_dbn VARCHAR(10),
