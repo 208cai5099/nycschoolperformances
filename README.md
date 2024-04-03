@@ -7,6 +7,8 @@ we are creating a website that allows users to visualize a particular school's p
 
 Frontend: React, Material UI
 
+Platform Hosting: Vercel
+
 Backend: PostgreSQL
 
 Data Source:
