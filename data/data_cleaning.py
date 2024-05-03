@@ -38,17 +38,6 @@ target_df = target_df.astype({"school_dbn" : "str",
 ## add a column of ID numbers for each record
 target_df["id"] = [n for n in range(target_df.shape[0])]
 
-## get all school names
-with open(r"C:\Users\zoo-b\Documents\nycschoolperformances\data\school_names.txt", "w") as file:
-    for name in target_df["school_name"].unique():
-
-        ## get the school's DBN
-        dbn = target_df[target_df["school_name"] == name]["school_dbn"].unique()
-
-        file.write(f"{dbn}: {name}\n")
-    
-    file.close()
-
 ## reformat some school names that are misspelled or truncated
 ## map original name to its reformatted name
 original_names = []

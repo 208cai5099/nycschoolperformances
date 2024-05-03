@@ -1,0 +1,35 @@
+CREATE TABLE regents (
+	id SERIAL PRIMARY KEY,
+	borough VARCHAR(15),
+	school_dbn VARCHAR(10),
+	school_name VARCHAR(100),
+	year SMALLINT,
+	regents_exam VARCHAR(50),
+	total_tested SMALLINT,
+	mean_score FLOAT8,
+	percent_65_or_above FLOAT8
+);
+
+CREATE TABLE schools (
+	id SERIAL PRIMARY KEY,
+	schools VARCHAR(110)
+);
+
+CREATE TABLE borough_avg (
+	id SERIAL PRIMARY KEY,
+	borough VARCHAR(15),
+	regents_exam VARCHAR(50),
+	total_tested INT4,
+	mean_score FLOAT8,
+	percent_65_or_above FLOAT8
+);
+
+CREATE TABLE yearly_avg (
+	id SERIAL PRIMARY KEY,
+	borough VARCHAR(15),
+	year SMALLINT,
+	regents_exam VARCHAR(50),
+	total_tested INT4,
+	mean_score FLOAT8,
+	percent_65_or_above FLOAT8
+);

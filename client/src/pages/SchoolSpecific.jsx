@@ -4,6 +4,7 @@ import { exams, yearList, options, colorList } from "../util.js";
 import Chart from "chart.js/auto"
 import { IconButton, InputPicker, TagPicker, Message, Row, Col } from "rsuite";
 import LineChartIcon from '@rsuite/icons/LineChart';
+import supabase from '../config/supabase.js'
 
 function SchoolSpecific() {
 
@@ -13,26 +14,27 @@ function SchoolSpecific() {
     const [optionList, setOptionList] = useState([]);
 
     const makeSchoolList = async() => {
+
         try {
-            const url = 'http://localhost:5100/search/';
-            const response = await fetch(url);
-            const data = await response.json();
+            const response = await supabase
+            .from("regents")
+            .select()
 
-            var allSchoolNames = [];
+            var schoolNames = new Set();
 
-            data.forEach((element) => {
-                allSchoolNames.push({
-                    label: element.school_name,
-                    value: element.school_name
-                });
+            response.data.forEach((element) => {
+                schoolNames.add(element.school_name)
             })
 
-            setSchoolList(allSchoolNames);
+            console.log(schoolNames);
+
+            setSchoolList(new Array(schoolNames));
 
         } catch (error) {
-            console.error(error.message);
+            console.log(error.message);
         }
-    };
+
+    }
 
     const makeExamList = () => {
         var allExams = [];
@@ -46,6 +48,7 @@ function SchoolSpecific() {
 
         setExamList(allExams);
     }
+
 
     const makeOptionList = () => {
         var allOptions = [];
@@ -308,10 +311,6 @@ function SchoolSpecific() {
 
         const rawData = await fetchData();
         const { processedData, samplesMap } = processData(rawData);
-
-        console.log(processedData);
-        console.log(samplesMap);
-
 
         if (lineGraph === null) {
             const graphInstance = new Chart(
