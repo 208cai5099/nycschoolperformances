@@ -15,23 +15,25 @@ function SchoolSpecific() {
 
     const makeSchoolList = async() => {
 
-        try {
-            const response = await supabase
-            .from("regents")
-            .select()
+        const {data, error} = await supabase
+        .from("schools")
+        .select("schools")
 
-            var schoolNames = new Set();
+        if (error !== null) {
+            console.log(error)
+        } else {
 
-            response.data.forEach((element) => {
-                schoolNames.add(element.school_name)
+            var schoolNames = [];
+
+            data.forEach((element) => {
+                schoolNames.push({
+                    label: element.schools,
+                    value: element.schools
+                })
             })
+    
+            setSchoolList(schoolNames);
 
-            console.log(schoolNames);
-
-            setSchoolList(new Array(schoolNames));
-
-        } catch (error) {
-            console.log(error.message);
         }
 
     }
@@ -89,30 +91,44 @@ function SchoolSpecific() {
     // represents whether a graph is currently displayed
     const [graphDisplay, setGraphDisplay] = useState(false);
 
-    function formatInput(input) {
-        var formattedInput = ""
+    function getSchoolDBN() {
 
-        input.forEach((element) => {
-            formattedInput = formattedInput.concat("'", element.slice(8, element.length), "'", ", ");
+        var inputDBN = [];
+
+        schoolInput.forEach((element) => {
+
+            inputDBN.push(element.slice(0, 6))
+
         })
 
-        return formattedInput.slice(0, formattedInput.length - 2);
+        return inputDBN;
 
     }
 
     const fetchData = async() => {
-        try {
-            var schools = formatInput(schoolInput, "school");
-    
-            const url = `http://localhost:5100/search/(${schools})/'${examInput}'`;
-            const response = await fetch(url);
-            const rawData = await response.json();
-            
-            return rawData;
 
-        } catch (error) {
-            console.error(error.message);
+        const inputDBN = getSchoolDBN();
+
+        var columns = null;
+        if (optionInput === "Average Score") {
+            columns = 'school_dbn, school_name, year, regents_exam, total_tested, mean_score'
+        } else {
+            columns = 'school_dbn, school_name, year, regents_exam, total_tested, percent_65_or_above'
         }
+        
+        const { data, error } = await supabase
+        .from("regents")
+        .select(columns)
+        .in("school_dbn", inputDBN)
+        .eq("regents_exam", examInput)
+
+        if (error !== null) {
+            console.log("error");
+        } else {
+            console.log(data);
+            return data;
+        }
+
     };
 
     function processData(data) {
@@ -138,21 +154,24 @@ function SchoolSpecific() {
 
             if (optionInput === "Average Score") {
 
+                const avgScore = parseFloat(parseFloat(item.mean_score).toFixed(2));
+
                 if (gradesBySchool.get(identifier) === undefined) {
-                    gradesBySchool.set(identifier, new Map().set(item.year, parseFloat(parseFloat(item.mean_score).toFixed(2))));
+                    gradesBySchool.set(identifier, new Map().set(item.year, avgScore));
                 } else {
                     const currentGradesMap = gradesBySchool.get(identifier);
-                    gradesBySchool.set(identifier, currentGradesMap.set(item.year, parseFloat(parseFloat(item.mean_score).toFixed(2))));
+                    gradesBySchool.set(identifier, currentGradesMap.set(item.year, avgScore));
                 }
 
             } else {
 
+                const passingRate = parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))
 
                 if (gradesBySchool.get(identifier) === undefined) {
-                    gradesBySchool.set(identifier, new Map().set(item.year, parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))))
+                    gradesBySchool.set(identifier, new Map().set(item.year, passingRate))
                 } else {
                     const currentMap = gradesBySchool.get(identifier);
-                    gradesBySchool.set(identifier, currentMap.set(item.year, parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))));
+                    gradesBySchool.set(identifier, currentMap.set(item.year, passingRate));
                 }
 
             }
@@ -264,10 +283,10 @@ function SchoolSpecific() {
             var newColorMap = colorMap;
             while (toBeAssigned.length > 0) {
 
-                var label = toBeAssigned.pop();
+                var newSchool = toBeAssigned.pop();
                 for (const [color, school] of newColorMap) {
                     if (school === null) {
-                        newColorMap.set(color, label);
+                        newColorMap.set(color, newSchool);
                         break;
                     }
                 }
