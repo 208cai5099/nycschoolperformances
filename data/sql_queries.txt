@@ -36,3 +36,16 @@ CREATE TABLE yearly_avg (
 	mean_score FLOAT8,
 	percent_65_or_above FLOAT8
 );
+
+/**Create a list of all pairs of school dbn and school name**/
+SELECT
+  schools
+FROM
+  (SELECT
+    DISTINCT CONCAT(CONCAT(school_dbn, ': '), school_name) AS schools,
+    RIGHT(LEFT(school_dbn, 3), 1) AS borough
+  FROM
+    regents
+  ORDER BY
+    borough, schools
+  ) AS tb1;
