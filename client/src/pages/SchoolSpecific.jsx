@@ -154,7 +154,7 @@ function SchoolSpecific() {
 
             if (optionInput === "Average Score") {
 
-                const avgScore = parseFloat(parseFloat(item.mean_score).toFixed(2));
+                const avgScore = parseFloat(item.mean_score).toFixed(2);
 
                 if (gradesBySchool.get(identifier) === undefined) {
                     gradesBySchool.set(identifier, new Map().set(item.year, avgScore));
@@ -165,7 +165,7 @@ function SchoolSpecific() {
 
             } else {
 
-                const passingRate = parseFloat(parseFloat(item.percent_65_or_above).toFixed(2))
+                const passingRate = parseFloat(item.percent_65_or_above).toFixed(2)
 
                 if (gradesBySchool.get(identifier) === undefined) {
                     gradesBySchool.set(identifier, new Map().set(item.year, passingRate))

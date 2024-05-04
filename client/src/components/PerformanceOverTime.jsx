@@ -3,44 +3,29 @@ import "./PerformanceOverTime.css"
 import { Checkbox, CheckboxGroup, Col } from "rsuite";
 import Chart from "chart.js/auto"
 import { yearList, testColors } from "../util";
+import supabase from "../config/supabase"
 
 function PerformanceOverTime() {
 
     const [graph, setGraph] = useState(null);
     const [graphDisplay, setGraphDisplay] = useState(false);
 
-    function formatInput(input) {
-        var result = "";
-
-        input.forEach((element) => {
-            if (result === "") {
-                result = result.concat("'", element, "'");
-            } else {
-                result = result.concat(", '", element, "'");
-            }
-        
-        })
-        
-        return result;
-
-    }
-
     const fetchAverage = async(exams) => {
-        try {
 
-            if (exams !== null && exams.length > 0) {
+        const {data, error} = await supabase
+        .from("yearly_avg")
+        .select("year, regents_exam, total_tested, mean_score")
+        .in("regents_exam", exams)
 
-                const examInput = formatInput(exams);
-        
-                const url = `http://localhost:5100/citywide-average/(${examInput})`;
-                const response = await fetch(url);
-                const rawData = await response.json();
-                return rawData;
-            }
-        } catch (error) {
-            console.error(error.message);
+        if (error !== null) {
+            console.log(error);
+        } else {
+            console.log(data);
+            return data;
         }
+
     };
+
 
     const processAverage = (rawData) => {
 
@@ -55,17 +40,17 @@ function PerformanceOverTime() {
 
             rawData.forEach((element) => {
                 if (gradesByTest.get(element.regents_exam) === undefined) {
-                    gradesByTest.set(element.regents_exam, new Map().set(element.year, parseFloat(parseFloat(element.avg).toFixed(2))));
+                    gradesByTest.set(element.regents_exam, new Map().set(element.year, parseFloat(element.mean_score.toFixed(2))));
                 } else {
                     const currentGradesMap = gradesByTest.get(element.regents_exam);
-                    gradesByTest.set(element.regents_exam, currentGradesMap.set(element.year, parseFloat(parseFloat(element.avg).toFixed(2))));
+                    gradesByTest.set(element.regents_exam, currentGradesMap.set(element.year, parseFloat(element.mean_score.toFixed(2))));
                 }
 
                 if (samplesByTest.get(element.regents_exam) === undefined) {
-                    samplesByTest.set(element.regents_exam, new Map().set(element.year, parseInt(element.sum)));
+                    samplesByTest.set(element.regents_exam, new Map().set(element.year, parseInt(element.total_tested)));
                 } else {
                     const currentSamplesMap = samplesByTest.get(element.regents_exam);
-                    samplesByTest.set(element.regents_exam, currentSamplesMap.set(element.year, parseInt(element.sum)));
+                    samplesByTest.set(element.regents_exam, currentSamplesMap.set(element.year, parseInt(element.total_tested)));
                 }
             })
 

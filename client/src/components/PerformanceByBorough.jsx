@@ -3,49 +3,27 @@ import "./PerformanceByBorough.css"
 import { Checkbox, CheckboxGroup, Col } from "rsuite";
 import Chart from "chart.js/auto"
 import { testColors, boroughList } from "../util";
+import supabase from "../config/supabase"
 
 function PerformanceByBorough() {
 
     const [graph, setGraph] = useState(null);
     const [graphDisplay, setGraphDisplay] = useState(false);
 
-    function formatInput(input) {
-        var result = "";
-
-        input.forEach((element) => {
-            if (result === "") {
-                result = result.concat("'", element, "'");
-            } else {
-                result = result.concat(", '", element, "'");
-            }
-        
-        })
-        
-        return result;
-
-    }
-
     const fetchAverage = async(exams) => {
-        try {
 
-            if (exams !== null && exams.length > 0) {
+        const {data, error} = await supabase
+        .from("borough_avg")
+        .select("borough, regents_exam, total_tested, mean_score")
+        .in("regents_exam", exams)
 
-                const examInput = formatInput(exams);
-        
-                const url = `http://localhost:5100/borough-average/(${examInput})`;
-                const response = await fetch(url);
-                const rawData = await response.json();
-
-                console.log(rawData);
-
-                return {
-                    rawData: rawData,
-                    examsInput: exams
-                };
-            }
-        } catch (error) {
-            console.error(error.message);
+        if (error !== null) {
+            console.log(error);
+        } else {
+            console.log(data);
+            return {rawData: data, examsInput: exams};
         }
+
     };
 
     const processAverage = (rawData, examInput) => {
@@ -72,12 +50,12 @@ function PerformanceByBorough() {
                 const currentGradesMap = gradesByTest.get(element.regents_exam);
 
                 // update inner map with a borough's avg score for the exam
-                gradesByTest.set(element.regents_exam, currentGradesMap.set(element.borough, parseFloat(element.avg_score)))
+                gradesByTest.set(element.regents_exam, currentGradesMap.set(element.borough, element.mean_score.toFixed(2)))
 
                 // repeat for the number of test takers
                 const currentTestTakersMap = testTakersByTest.get(element.regents_exam);
 
-                testTakersByTest.set(element.regents_exam, currentTestTakersMap.set(element.borough, parseInt(element.test_takers)));
+                testTakersByTest.set(element.regents_exam, currentTestTakersMap.set(element.borough, element.total_tested));
 
             })
 
@@ -120,8 +98,12 @@ function PerformanceByBorough() {
             // extract the input exams chosen by user and the raw data
             const { rawData, examsInput } = await fetchAverage(value);
 
+            console.log(rawData);
+
             // process the data into the proper format
             const processedData = processAverage(rawData, examsInput);
+
+            console.log(processedData);
 
             if (graph !== null) {
                 graph.destroy();
