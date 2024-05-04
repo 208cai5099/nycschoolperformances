@@ -2,10 +2,7 @@ import pandas as pd
 
 cleaned_df = pd.read_csv(r"C:\Users\zoo-b\Documents\nycschoolperformances\data\data_by_school.csv")
 
-## get unique boroughs
-boroughs = cleaned_df["borough"].unique()
-
-## calculate average score on each test ini each year
+## calculate citywide average score on each test every year
 yearly_avg = {"year" : [], "regents_exam" : [], "total_tested" : [], "mean_score": [], "percent_65_or_above" : []}
 
 for year in sorted(cleaned_df["year"].unique()):
@@ -27,6 +24,9 @@ yearly_avg_df = yearly_avg_df.dropna()
 
 ## calculate average score on each test across all the years
 borough_avg = {"borough" : [], "regents_exam" : [], "total_tested" : [], "mean_score": [], "percent_65_or_above" : []}
+
+## get unique boroughs
+boroughs = cleaned_df["borough"].unique()
 
 for boro in boroughs:
 
@@ -51,3 +51,4 @@ borough_avg_df = borough_avg_df.dropna()
 ## save results as csv files
 yearly_avg_df.to_csv("yearly_avg.csv", index=False)
 borough_avg_df.to_csv("borough_avg.csv", index=False)
+

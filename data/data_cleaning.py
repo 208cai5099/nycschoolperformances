@@ -3,8 +3,6 @@ import pandas as pd
 ## get the overall data without any aggregations
 whole_df = pd.read_excel(r"C:\Users\zoo-b\Documents\NYCSchoolPerformances\data\regents_data.xlsx", sheet_name="All Students")
 
-# print(df.dtypes)
-
 # keep only school dbn, school name, year, exam, mean score, percent of 65% or above, and number of test takers
 target_df = whole_df[["School DBN", "School Name", "Regents Exam", "Year", "Mean Score", "Total Tested", "Percent Scoring 65 or Above"]]
 
@@ -13,7 +11,6 @@ target_df = target_df.where(target_df != 's')
 
 # drop all rows with NaN
 target_df = target_df.dropna()
-# print(target_df.shape)
 
 # check for any more 's'
 if 's' in target_df["Mean Score"].unique():
@@ -53,7 +50,6 @@ name_corrections_dict = {}
 if len(original_names) != len(corrected_names):
     print("The number of corrections does not match number of incorrect names.")
 else:
-    # print(f"There are a total of {len(corrected_names)} corrections.")
     for i in range(len(corrected_names)):
         original_name = original_names[i][12:].strip().strip("\n")
         corrected_name = corrected_names[i][12:].strip().strip("\n")
