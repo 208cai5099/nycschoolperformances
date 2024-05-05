@@ -21,7 +21,7 @@ function App() {
           <NavigationBar />
         </div>
         <Routes>
-          <Route path="/" element={<Welcome />}></Route>
+          <Route path="/nycschoolperformances" element={<Welcome />}></Route>
           <Route path="/home" element={<Welcome />}></Route>
           <Route path="/school-specific" element={<SchoolSpecific />}></Route>
           <Route path="/methods" element={<Methods />}></Route>
