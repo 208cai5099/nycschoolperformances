@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/nycschoolperformances/static/css/main.ad89e8ca.css",
-    "main.js": "/nycschoolperformances/static/js/main.68a52887.js",
+    "main.js": "/nycschoolperformances/static/js/main.c8dc9c82.js",
     "static/js/289.516d36f0.chunk.js": "/nycschoolperformances/static/js/289.516d36f0.chunk.js",
     "index.html": "/nycschoolperformances/index.html",
     "main.ad89e8ca.css.map": "/nycschoolperformances/static/css/main.ad89e8ca.css.map",
-    "main.68a52887.js.map": "/nycschoolperformances/static/js/main.68a52887.js.map",
+    "main.c8dc9c82.js.map": "/nycschoolperformances/static/js/main.c8dc9c82.js.map",
     "289.516d36f0.chunk.js.map": "/nycschoolperformances/static/js/289.516d36f0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ad89e8ca.css",
-    "static/js/main.68a52887.js"
+    "static/js/main.c8dc9c82.js"
   ]
 }
