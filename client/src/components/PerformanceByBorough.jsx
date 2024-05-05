@@ -20,7 +20,6 @@ function PerformanceByBorough() {
         if (error !== null) {
             console.log(error);
         } else {
-            console.log(data);
             return {rawData: data, examsInput: exams};
         }
 
@@ -98,12 +97,8 @@ function PerformanceByBorough() {
             // extract the input exams chosen by user and the raw data
             const { rawData, examsInput } = await fetchAverage(value);
 
-            console.log(rawData);
-
             // process the data into the proper format
             const processedData = processAverage(rawData, examsInput);
-
-            console.log(processedData);
 
             if (graph !== null) {
                 graph.destroy();

@@ -20,7 +20,6 @@ function PerformanceOverTime() {
         if (error !== null) {
             console.log(error);
         } else {
-            console.log(data);
             return data;
         }
 
@@ -105,10 +104,6 @@ function PerformanceOverTime() {
 
             const rawData = await fetchAverage(value);
             const { processedData, samplesByTest } = processAverage(rawData);
-
-            console.log(samplesByTest);
-
-            console.log(processedData);
 
             if (graph !== null) {
                 graph.destroy();

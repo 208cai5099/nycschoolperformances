@@ -125,7 +125,6 @@ function SchoolSpecific() {
         if (error !== null) {
             console.log("error");
         } else {
-            console.log(data);
             return data;
         }
 
