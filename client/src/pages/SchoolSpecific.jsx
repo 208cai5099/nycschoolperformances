@@ -280,13 +280,13 @@ function SchoolSpecific() {
             }
 
             // assign colors to the schools without assigned colors
-            var newColorMap = colorMap;
+            var newColorAssignments = colorMap;
             while (toBeAssigned.length > 0) {
 
                 var newSchool = toBeAssigned.pop();
-                for (const [color, school] of newColorMap) {
+                for (const [color, school] of newColorAssignments) {
                     if (school === null) {
-                        newColorMap.set(color, newSchool);
+                        newColorAssignments.set(color, newSchool);
                         break;
                     }
                 }
@@ -294,7 +294,7 @@ function SchoolSpecific() {
 
             datasets.forEach((element) => {
 
-                for (const [color, school] of newColorMap) {
+                for (const [color, school] of newColorAssignments) {
                     if (element.label === school) {
                         element.borderColor = color;
                         element.backgroundColor = color;
@@ -308,7 +308,7 @@ function SchoolSpecific() {
                 }
             })
 
-            setColorMap(newColorMap);
+            setColorMap(newColorAssignments);
 
         }
 
@@ -453,7 +453,6 @@ function SchoolSpecific() {
 
                         <Col>
                             <InputPicker
-                                className="inputBox"
                                 menuClassName="menu"
                                 data={examList}
                                 onChange={(value) => {
@@ -478,7 +477,6 @@ function SchoolSpecific() {
 
                         <Col>
                             <InputPicker
-                                className="inputBox"
                                 menuClassName="menu"
                                 data={optionList}
                                 onChange={(value) => {
