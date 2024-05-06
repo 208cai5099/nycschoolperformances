@@ -54,15 +54,23 @@ function Methods() {
                 </h2>
 
                 <p>
-                    We are using <a href="https://supabase.com/" target="_blank">Supabase</a> as our backend. In our backend, the data are organized into four SQL tables: regents, schools, yearly_avg_, and borough_avg.
+                    We are using <a href="https://supabase.com/" target="_blank">Supabase</a> as our backend. In our backend, the data are organized into four SQL tables: regents, schools, yearly_avg, and borough_avg. <br />
 
-                    regents: stores every school's mean score and passing rate on the Regents exams
+                    <p></p>
 
-                    schools: stores every pair of school dbn and school name
+                    regents: stores every school's mean score and passing rate on the Regents exams <br />
 
-                    yearly_avg: stores every borough's yearly average scores on the Regents exams
+                    <p></p>
 
-                    borough_avg: stpres every borough's average scores on the Regents exams across all available years
+                    schools: stores every pair of school dbn and school name <br />
+
+                    <p></p>
+
+                    yearly_avg: stores every borough's yearly average scores on the Regents exams <br />
+
+                    <p></p>
+
+                    borough_avg: stores every borough's average scores on the Regents exams across all available years <br />
                 </p>
 
                 <h2>

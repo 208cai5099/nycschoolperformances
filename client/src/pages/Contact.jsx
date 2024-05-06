@@ -14,7 +14,10 @@ function Contact() {
                     biology to middle school students in Brooklyn, followed by teaching biology to high school students in Manhattan. When I taught my former 
                     8th graders, I realized that it would be very helpful for families and students to have a central place to compare school's academic 
                     performances. Now that I've learned a few things about programming, I thought it would be nice to put those skills into practice. Thus, this 
-                    website was born. Hope you enjoy using it!
+                    website was born. Hope you enjoy using it! <br />
+
+                    <p></p>
+
                     Email: 208cai5099@gmail.com
                     </p>
                 </Panel>
