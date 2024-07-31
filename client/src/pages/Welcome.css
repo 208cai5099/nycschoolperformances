@@ -2,15 +2,17 @@
     display: block;
     text-align: center;
     font-family: "Raleway";
-    font-size: 1.5rem;
-    margin-top: 10vh
+    font-size: 2vw;
+    margin-top: 1vh
 }
 
 .school {
+    display: flex;
     margin-left: auto;
     margin-right: auto;
-    height: 50vh;
-    width: 50%
+    max-height: 100%;
+    height: auto;
+    max-width: 50%
 }
 
 .highlight {
@@ -19,8 +21,9 @@
 }
 
 .footer {
-    position: absolute;
+    position: static;
     bottom: 0;
     text-align: center;
-    width: 100%
+    width: 100%;
+    font-size: 2vw;
 }

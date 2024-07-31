@@ -1,10 +1,11 @@
-#contactLayout {
-    display: flex;
-    justify-content: space-evenly;
+#panelLayout {
+    display: block;
     font-family: "Raleway";
+    font-size: 12pt;
 }
 
-
-.bio {
-    font-size: 12pt;
+.bioPanel {
+    padding: 1.5vw;
+    margin-bottom: 1.5vw;
+    margin-top: 1.5vw;;
 }
