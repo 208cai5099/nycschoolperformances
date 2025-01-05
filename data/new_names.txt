@@ -190,3 +190,11 @@
 ['30Q078']: P.S. | I.S. 78Q
 ['32K045']: P.S. | I.S. 45 Horace E. Greene
 ['32K384']: P.S. | I.S. 384 Frances E. Carter
+['84X539']: New Visions Charter High School for Advanced Math & Science I
+['84X202']: New Visions Charter High School for Advanced Math & Science II
+['84K738']: New Visions Charter High School for Advanced Math & Science III
+['84Q320']: New Visions Charter High School for Advanced Math & Science IV
+['84X553']: New Visions Charter High School for the Humanities I
+['84X208']: New Visions Charter High School for the Humanities II
+['84K739']: New Visions Charter High School for the Humanities III
+['84Q373']: New Visions Charter High School for the Humanities IV

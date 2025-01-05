@@ -1,12 +1,8 @@
-* {
-    font-family: "Raleway";
-}
-
-#citywide-heading {
+.citywide-heading {
     text-align: center;
 }
 
-#citywide-navbar {
-    margin-left: 5%;
-    margin-right: 5%;
+.citywide-description {
+    padding-left: 5%;
+    padding-right: 5%;
 }

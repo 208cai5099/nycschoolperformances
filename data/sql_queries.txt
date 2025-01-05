@@ -1,10 +1,38 @@
-/**makes a SQL table to store the whole Regents score dataset**/
+/**makes a SQL table to store the overall Regents performance data**/
 CREATE TABLE regents (
 	id SERIAL PRIMARY KEY,
 	borough VARCHAR(15),
 	school_dbn VARCHAR(10),
 	school_name VARCHAR(100),
 	year INT2,
+	regents_exam VARCHAR(50),
+	total_tested INT2,
+	mean_score FLOAT8,
+	percent_65_or_above FLOAT8
+);
+
+/**makes a SQL table to store the Regents performance data by ELL**/
+CREATE TABLE regents_by_ell (
+	id SERIAL PRIMARY KEY,
+	borough VARCHAR(15),
+	school_dbn VARCHAR(10),
+	school_name VARCHAR(100),
+	year INT2,
+	category VARCHAR(50),
+	regents_exam VARCHAR(50),
+	total_tested INT2,
+	mean_score FLOAT8,
+	percent_65_or_above FLOAT8
+);
+
+/**makes a SQL table to store the Regents performance data by SWD**/
+CREATE TABLE regents_by_swd (
+	id SERIAL PRIMARY KEY,
+	borough VARCHAR(15),
+	school_dbn VARCHAR(10),
+	school_name VARCHAR(100),
+	year INT2,
+	category VARCHAR(50),
 	regents_exam VARCHAR(50),
 	total_tested INT2,
 	mean_score FLOAT8,

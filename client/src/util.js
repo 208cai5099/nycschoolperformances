@@ -23,7 +23,7 @@ export const yearList = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
 export const options = ["Average Score", "Passing Rate"]
 
-export const colorList = ["#E9B824", "#FF004D", "#1D2B53", "#F2AFEF", "#FF90BC", "#7E2553", "#8ACDD7", "#8294C4", "#65B741", "#FD8A8A"]
+export const colorList = ["#6CADDC", "#F1A635", "#F3D043", "#F93637", "#7E84F7"]
 
 export const testColors = new Map([
     ["English", "#0F1035"],
