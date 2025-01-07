@@ -31,7 +31,7 @@ function Explore() {
 
                             <p>
                                 Click the icon above to visualize a specific school's performance 
-                                on a designated Regents exam over time. 
+                                on a particular Regents exam over time. 
                             </p>
 
                         </Panel>
@@ -46,7 +46,7 @@ function Explore() {
                         
                             <p>
                                 Click the icon above to learn about general performance trends 
-                                across <span id="thebigapple">"The Big Apple"</span> that is New York City.
+                                across <span id="thebigapple">"The Big Apple"</span> (New York City).
                             </p>                        
                         
                         </Panel>

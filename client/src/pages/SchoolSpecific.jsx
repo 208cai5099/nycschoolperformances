@@ -418,7 +418,10 @@ function SchoolSpecific() {
 
                     {graphDisplay === false ? null :
                         <div className="note">
-                            <p> Click on data point for specific value and number of test takers. A dashed line indicates absence of data between two years </p>
+                            <p> Hover over a data point for specific value and number of test takers. A dashed line indicates absence of data. 
+                                <br></br>
+                                Note that any data from 2020 and 2021 were removed (see Methods).
+                            </p>
                         </div>
                     }
 

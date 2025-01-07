@@ -58,7 +58,7 @@ New Visions actually changed its name recently but stick to old names for now
 Three schools have two DBNs each: Aspirations Diploma Plus High School, Crotona Academy High School, Gotham Professional Arts Academy
 These schools probably moved
 '''
-def correct_names(df):
+def correct_school_names(df):
 
   ## map a pair of DBN and original name to corrected name
   original_names = []
@@ -91,18 +91,6 @@ def correct_names(df):
                                else corrections_dict[value])
 
   df.loc[:, "School Name"] = new_name
-
-  return df
-
-'''
-Rounds the percentages to the ones place
-'''
-def round_percents(df):
-
-  rounded_percents = []
-  for col in ['Percent Scoring Below 65', 'Percent Scoring 65 or Above', 'Percent Scoring 80 or Above',
-              'Percent meeting CUNY proficiency requirements', "Mean Score"]:
-              df.loc[:, col] = df[col].round(decimals=0)
 
   return df
 
@@ -199,6 +187,12 @@ def add_row_numbers(df):
    return df
 
 '''
+Sort the df by specific column(s)
+'''
+def sort_df(df, columns):
+   return df.sort_values(by=columns)
+
+'''
 Call on previous helper functions to load, clean, and process a sheet of data
 '''
 def load_and_process_sheet(filename, sheet):
@@ -208,30 +202,35 @@ def load_and_process_sheet(filename, sheet):
   df = change_dtypes(df)
   df = rename_exams(df)
   df = add_borough_col(df)
-  df = correct_names(df)
+  df = correct_school_names(df)
   df = filter_years(df)
   df = filter_exams(df)
   df = format_col(df)
-  df = add_row_numbers(df)
   return df
 
 # extract the general performance data from the All Students sheet
 filename = r"data\2015_to_2023_regents_data.xlsx"
 all_df = load_and_process_sheet(filename, "All Students")
-all_df = select_columns(all_df, ["id", "borough", "school_dbn", "school_name", "year", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
+all_df = select_columns(all_df, ["borough", "school_dbn", "school_name", "year", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
 all_df = all_df.rename(columns={"percent_scoring_65_or_above" : "percent_65_or_above"})
+all_df = sort_df(all_df, ["borough", "school_dbn", "school_name", "year", "regents_exam"])
+all_df = add_row_numbers(all_df)
 all_df.to_csv("overall_regents.csv", index=False)
 
 # extract the data from the By ELL Status sheet
 ell_df = load_and_process_sheet(filename, "By ELL Status")
-ell_df = select_columns(ell_df, ["id", "borough", "school_dbn", "school_name", "year", "category", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
+ell_df = select_columns(ell_df, ["borough", "school_dbn", "school_name", "year", "category", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
 ell_df = ell_df.rename(columns={"percent_scoring_65_or_above" : "percent_65_or_above"})
+ell_df = sort_df(ell_df, ["borough", "school_dbn", "school_name", "year", "regents_exam", "category"])
+ell_df = add_row_numbers(ell_df)
 ell_df.to_csv("regents_by_ell.csv", index=False)
 
 # extract the data from the By SWD Status sheet
 swd_df = load_and_process_sheet(filename, "By SWD Status")
-swd_df = select_columns(swd_df, ["id", "borough", "school_dbn", "school_name", "year", "category", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
+swd_df = select_columns(swd_df, ["borough", "school_dbn", "school_name", "year", "category", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
 swd_df = swd_df.rename(columns={"percent_scoring_65_or_above" : "percent_65_or_above"})
+swd_df = sort_df(swd_df, ["borough", "school_dbn", "school_name", "year", "regents_exam", "category"])
+swd_df = add_row_numbers(swd_df)
 swd_df.to_csv("regents_by_swd.csv", index=False)
 
 # extract a csv file of every school's DBN and their name concatenated together

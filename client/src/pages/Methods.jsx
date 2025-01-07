@@ -20,22 +20,30 @@ function Methods() {
                 </p>
 
                 <p>
-                    The downloaded Excel dataset includes Regents results from 2015 to 2023. As explained in the notes within the Excel file, the dataset only takes into 
-                    account of a student's highest score on a specific exam in a given year. For example, a student who took the Chemistry Regents exam
-                    more than once in 2016 would only have their highest grade be factored into their school's mean score and other metrics in
-                    the year 2016. The Excel dataset aggregated the results by multiple categories, such as gender, English Language Learner status, and
-                    Students with Disabilities status. We used the non-aggregated sheet labeled "All Students".
+                    The downloaded Excel dataset includes Regents results from 2015 to 2023. The Excel dataset aggregated the results by multiple categories, 
+                    such as gender, English Language Learner status, and Students with Disabilities status. We used the non-aggregated sheet labeled "All Students". 
+                    Each row in the sheet contains insightful information about a school's performance on a specific Regents exam in a particular year, such as 
+                    Mean Score, Total Tested, Percent Scoring 65 or Above, and so on. For example, the students in Fort Hamilton High School had a Mean Score 
+                    (average score) of 72.45% on the 2023 US History and Government exam. This website refers to the Mean Score as Average Score and the Percent 
+                    Scoring 65 or Above as Passing Rate.
                 </p>
 
                 <h2>
-                    Data Cleaning
+                    Data Wrangling
                 </h2>
 
                 <p>
-                    For our purposes, we extracted the following data: school DBN (unique school identifier), school name, year, regents exam, total 
-                    number of test takers, mean scores, and percent of students scoring 65% or above. We also noticed that some school names were
+                    For our purposes, we extracted the following data: School DBN (unique school identifier), School Name, Year, Regents Exam, Total 
+                    Tested (number of test takers), Mean Score, and Percent Scoring 65 or Above. We also noticed that some school names were
                     truncated or misspelled. So, we referenced the NYC DOE website as well as the schools' personal websites (if they exist) to confirm 
                     the full correct spelling of their names.
+                </p>
+
+                <p>
+                    In the 2010s, New York State began the Common Core standards. By 2017, the vast majority of test takers took the Common Core-aligned exams 
+                    instead of the exams aligned to the older standards (English, Integrated Algebra, Geometry, and Algebra 2/Trigonometry). To focus on more 
+                    current standards, the data from the older English and math exams are not shown on this website. Due to the removal of the older exam data, this 
+                    website will only show data from 2017 and onwards for all exams, including the science, history, and foreign language exams.
                 </p>
 
                 <p>
@@ -44,9 +52,8 @@ function Methods() {
                 </p>
 
                 <p>
-                    In 2021, only four Regents exams were offered due to COVID restrictions: Living Environment, Earth Science, Common Core Algebra, 
-                    and Common Core English. For some reason, the dataset listed two schools that took the Global History Regents. We suspect that this
-                    was a mistake, so we removed the scores from those two schools.
+                    Due to the COVID pandemic, the June and August 2020 Regents exams were canceled and the 2021 Regents exams were impacted. Any data  
+                    from those two years were removed, because those data might not provide a reliable measure of school performance.
                 </p>
 
                 <h2>
@@ -58,19 +65,19 @@ function Methods() {
 
                     <p></p>
 
-                    regents: stores every school's mean score and passing rate on the Regents exams <br />
+                    regents: stores every school's Mean Score and Passing Rate on the Regents exams <br />
 
                     <p></p>
 
-                    schools: stores every pair of school dbn and school name <br />
+                    schools: stores every pair of School DBN and School Name <br />
 
                     <p></p>
 
-                    yearly_avg: stores every borough's yearly average scores on the Regents exams <br />
+                    yearly_avg: stores every borough's yearly average Mean Score on every Regents exam from 2017 to 2023 (excluding 2020 and 2021)<br />
 
                     <p></p>
 
-                    borough_avg: stores every borough's average scores on the Regents exams across all available years <br />
+                    borough_avg: stores every borough's average Mean Score on every Regents exam from 2017 to 2023 (excluding 2020 and 2021) <br />
                 </p>
 
                 <h2>

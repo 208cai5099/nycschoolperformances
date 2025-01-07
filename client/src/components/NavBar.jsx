@@ -23,12 +23,17 @@ function NavigationBar() {
         navigator("/contact");
     }
 
+    function redirectToEDA() {
+        navigator("/eda");
+    }
+
     return (
 
         <Navbar id='navBar'>
             <Nav>
                 <Nav.Item onSelect={redirectToHome}> Home </Nav.Item>
                 <Nav.Item onSelect={redirectToExplore}> Explore </Nav.Item>
+                <Nav.Item onSelect={redirectToEDA}> Analysis </Nav.Item>
                 <Nav.Item onSelect={redirectToMethods}> Methods </Nav.Item>
                 <Nav.Item onSelect={redirectToContact}> Contact </Nav.Item>
             </Nav>

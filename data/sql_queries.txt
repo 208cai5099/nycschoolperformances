@@ -51,8 +51,7 @@ CREATE TABLE borough_avg (
 	borough VARCHAR(15),
 	regents_exam VARCHAR(50),
 	total_tested INT4,
-	mean_score FLOAT8,
-	percent_65_or_above FLOAT8
+	mean_score FLOAT8
 );
 
 /**makes a SQL table to store the yearly average scores/passing rates of the Regents tests across the boroughs**/
@@ -61,8 +60,7 @@ CREATE TABLE yearly_avg (
 	year INT2,
 	regents_exam VARCHAR(50),
 	total_tested INT4,
-	mean_score FLOAT8,
-	percent_65_or_above FLOAT8
+	mean_score FLOAT8
 );
 
 /**Create a list of all pairs of school dbn and school name**/

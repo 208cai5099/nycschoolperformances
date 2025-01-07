@@ -1,54 +1,32 @@
 import pandas as pd
 
-cleaned_df = pd.read_csv(r"C:\Users\zoo-b\Documents\nycschoolperformances\data\data_by_school.csv")
+all_df = pd.read_csv(r"overall_regents.csv")
 
-## calculate citywide average score on each test every year
-yearly_avg = {"year" : [], "regents_exam" : [], "total_tested" : [], "mean_score": [], "percent_65_or_above" : []}
+# calculate the yearly average Mean Score for each exam
+yearly_avg = all_df[["year", "regents_exam", "mean_score"]]
+yearly_avg = yearly_avg.groupby(by=["year", "regents_exam"], as_index=False).mean()
 
-for year in sorted(cleaned_df["year"].unique()):
+# calculate the total number of test takers for each exam every year
+yearly_test_takers = all_df[["year", "regents_exam", "total_tested"]]
+yearly_test_takers = yearly_test_takers.groupby(by=["year", "regents_exam"], as_index=False).sum()
 
-    for exam in sorted(cleaned_df["regents_exam"].unique()):
+# perform an inner join to combine the average Mean Scores and number of test takers
+yearly_df = yearly_avg.merge(right=yearly_test_takers, how="inner", on=["year", "regents_exam"])
+yearly_df = yearly_df.sort_values(by=["year", "regents_exam"])
+yearly_df["id"] = [i for i in range(yearly_df.shape[0])]
 
-        target_subset = cleaned_df[cleaned_df["year"] == year]
-        target_subset = target_subset[target_subset["regents_exam"] == exam]
+# calculate the average Mean Score for each exam in every borough
+borough_avg = all_df[["borough", "regents_exam", "mean_score"]]
+borough_avg = borough_avg.groupby(by=["borough", "regents_exam"], as_index=False).mean()
 
-        yearly_avg["year"].append(year)
-        yearly_avg["regents_exam"].append(exam)
+# calculate the number of test takers for each exam in every borough
+borough_test_takers = all_df[["borough", "regents_exam", "total_tested"]]
+borough_test_takers = borough_test_takers.groupby(by=["borough", "regents_exam"], as_index=False).sum()
 
-        yearly_avg["total_tested"].append(target_subset["total_tested"].sum())
-        yearly_avg["mean_score"].append(target_subset["mean_score"].mean())
-        yearly_avg["percent_65_or_above"].append(target_subset["percent_65_or_above"].mean())
+# perform an inner join to combine the average Mean Scores and number of test takers in each borough
+borough_df = borough_avg.merge(right=borough_test_takers, how="inner", on=["borough", "regents_exam"])
+borough_df = borough_df.sort_values(by=["borough", "regents_exam"])
+borough_df["id"] = [i for i in range(borough_df.shape[0])]
 
-yearly_avg_df = pd.DataFrame(yearly_avg)
-yearly_avg_df = yearly_avg_df.dropna()
-
-## calculate average score on each test across all the years
-borough_avg = {"borough" : [], "regents_exam" : [], "total_tested" : [], "mean_score": [], "percent_65_or_above" : []}
-
-## get unique boroughs
-boroughs = cleaned_df["borough"].unique()
-
-for boro in boroughs:
-
-    boro_subset = cleaned_df[cleaned_df["borough"] == boro]
-
-    boro_subset = boro_subset[["regents_exam", "total_tested", "mean_score", "percent_65_or_above"]]
-
-    for exam in sorted(boro_subset["regents_exam"].unique()):
-
-        target_subset = boro_subset[boro_subset["regents_exam"] == exam]
-
-        borough_avg["borough"].append(boro)
-        borough_avg["regents_exam"].append(exam)
-
-        borough_avg["total_tested"].append(target_subset["total_tested"].sum())
-        borough_avg["mean_score"].append(target_subset["mean_score"].mean())
-        borough_avg["percent_65_or_above"].append(target_subset["percent_65_or_above"].mean())
-
-borough_avg_df = pd.DataFrame(borough_avg)
-borough_avg_df = borough_avg_df.dropna()
-
-## save results as csv files
-yearly_avg_df.to_csv("yearly_avg.csv", index=False)
-borough_avg_df.to_csv("borough_avg.csv", index=False)
-
+yearly_df.to_csv("yearly_avg.csv", index=False)
+borough_df.to_csv("borough_avg.csv", index=False)
