@@ -8,11 +8,11 @@ function Disclaimer() {
     var navigator = useNavigate();
 
     function redirectToExplore() {
-        navigator("/explore");
+        navigator("/nycschoolperformances/explore");
     }
 
     function redirectToHome() {
-        navigator("/home");
+        navigator("/nycschoolperformances");
     }
 
     return (

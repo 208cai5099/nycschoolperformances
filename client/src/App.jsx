@@ -23,14 +23,13 @@ function App() {
         </div>
         <Routes>
           <Route path="/nycschoolperformances" element={<Welcome />}></Route>
-          <Route path="/home" element={<Welcome />}></Route>
-          <Route path="/school-specific" element={<SchoolSpecific />}></Route>
-          <Route path="/methods" element={<Methods />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/disclaimer" element={<Disclaimer />}></Route>
-          <Route path="/explore" element={<Explore />}></Route>
-          <Route path="/citywide" element={<Citywide />}></Route>
-          <Route path="/eda" element={<EDA />}></Route>
+          <Route path="/nycschoolperformances/school-specific" element={<SchoolSpecific />}></Route>
+          <Route path="/nycschoolperformances/methods" element={<Methods />}></Route>
+          <Route path="/nycschoolperformances/contact" element={<Contact />}></Route>
+          <Route path="/nycschoolperformances/disclaimer" element={<Disclaimer />}></Route>
+          <Route path="/nycschoolperformances/explore" element={<Explore />}></Route>
+          <Route path="/nycschoolperformances/citywide" element={<Citywide />}></Route>
+          <Route path="/nycschoolperformances/eda" element={<EDA />}></Route>
         </Routes>
       </Router>
     </div>

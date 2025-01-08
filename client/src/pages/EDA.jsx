@@ -12,8 +12,15 @@ import "./EDA.css"
 function EDA() {
 
     // create lists to store the traces for the Plotly graphs
-    const [examInput, setExamInput] = useState("Common Core English");
-    const [metricInput, setMetricInput] = useState("mean_score");
+    const [examInputAll, setExamInputAll] = useState("Common Core English");
+    const [examInputELL, setExamInputELL] = useState("Common Core English");
+    const [examInputSWD, setExamInputSWD] = useState("Common Core English");
+
+    const [metricInputAll, setMetricInputAll] = useState("mean_score");
+    const [metricInputELL, setMetricInputELL] = useState("mean_score");
+    const [metricInputSWD, setMetricInputSWD] = useState("mean_score");
+
+
     const [examArray, setExamArray] = useState([])
     const [metricArray, setMetricArray] = useState([])
     const [tracesAll, setTracesAll] = useState([]);
@@ -41,15 +48,28 @@ function EDA() {
     // send API request to grab data for a specific exam from general, SWD, or ELL table
     const requestData = async(table, exam, metric) => {
 
-        setExamInput(exam);
-        setMetricInput(metric);
+        console.log(exam)
+        console.log(metric)
 
         // set up the columns for the SELECT query
         var columns = metric;
-        if (table !== "regents") {
-            columns = "year, category, ".concat(metric)
-        } else{
+        if (table === "regents") {
+            
             columns = "year, ".concat(metric)
+            setExamInputAll(exam);
+            setMetricInputAll(metric);
+
+        } else if (table === "regents_by_ell") {
+
+            columns = "year, category, ".concat(metric)
+            setExamInputELL(exam);
+            setMetricInputELL(metric);
+
+        } else if (table === "regents_by_swd") {
+
+            columns = "year, category, ".concat(metric)
+            setExamInputSWD(exam);
+            setMetricInputSWD(metric);
         }
 
         const {data, error} = await supabase
@@ -75,8 +95,8 @@ function EDA() {
 
         // use maps to store the mean scores or passing rates
         // if general table, map a year to an array of values
-        // if ELL or SWD table, map every year to a second map
-        // the second map maps a SWD or ELL status to an array of mean scores or passing rates
+        // if ELL or SWD table, map a SWD or ELL Status to a second map
+        // the second map maps a year to an array of mean scores or passing rates
         var valuesMap = new Map();
 
         // parse data from the general table
@@ -116,10 +136,6 @@ function EDA() {
 
             // parse the data from the SWD or ELL table
 
-            // use a helper map to keep track of the year and status combinations already set up
-            // in the maps
-            var yearCategoryMap = new Map();
-
             data.forEach((record) => {
 
                 if (metric === "mean_score") {
@@ -128,37 +144,31 @@ function EDA() {
                     var value = record.percent_65_or_above;
                 }
 
-                // if we have not encountered this current year, map the year 
-                // to a nested map
-                if (typeof yearCategoryMap.get(record.year) === "undefined") {
+                // if we have not encountered this current status, map the status 
+                // to a nested map that maps the year to an array of values
+                if (valuesMap.get(record.category) === undefined) {
 
-                    var nestedMap = new Map([[record.category, [value]]]);
-                    valuesMap.set(record.year, nestedMap);
-
-                    yearCategoryMap.set(record.year, [record.category])
+                    var nestedMap = new Map([[record.year, [value]]]);
+                    valuesMap.set(record.category, nestedMap);
 
                 } else {
 
-                    const encounteredCategories = yearCategoryMap.get(record.year)
-
-                    // if we have encountered this current year but not the ELL or SWD status,
+                    // if we have encountered this current status but not the year,
                     // add an entry for it in the nested map
-                    if (encounteredCategories.includes(record.category) === false) {
-                        encounteredCategories.push(record.category)
+                    var nestedMap = valuesMap.get(record.category)
 
-                        var nestedMap = valuesMap.get(record.year)
-                        nestedMap.set(record.category, [value])
-                        valuesMap.set(record.year, nestedMap)
+                    if (nestedMap.get(record.year) === undefined) {
+                        nestedMap.set(record.year, [value])
+                        valuesMap.set(record.category, nestedMap)
 
                     } else {
 
-                        // if we have encountered this current year and ELL or SWD status,
-                        // include the current mean score or passing rate
-                        var nestedMap = valuesMap.get(record.year)
-                        var valuesArray = nestedMap.get(record.category)
+                        // if we have encountered this current status and year,
+                        // append the current mean score or passing rate
+                        var valuesArray = nestedMap.get(record.year)
                         valuesArray.push(value)
-                        nestedMap.set(record.category, valuesArray)
-                        valuesMap.set(record.year, nestedMap)
+                        nestedMap.set(record.year, valuesArray)
+                        valuesMap.set(record.category, nestedMap)
                     }
                 }
 
@@ -169,7 +179,8 @@ function EDA() {
         return valuesMap;
     }
 
-    function traceHelper(years) {
+    // receives an array of years with data and finds the years with no data
+    function findGapYears(years) {
 
         var startGapYear = null;
         var endGapYear = null;
@@ -189,19 +200,132 @@ function EDA() {
         return {start: startGapYear, end: endGapYear};
     }
 
+    // finds the median of an array and rounds it to 2 decimal places
+    function medianValue(valueArray) {
+        return round(median(valueArray), 2)
+    }
+
+    // receives a map that pairs a year to an array of values
+    // calculates the median value for each year
+    // returns arrays of years (X) and median values (Y) for plotting
+    function createYearValueArrays(yearlyValues, years, gapYearBounds) {
+
+        var [trace1_years, trace2_years, trace3_years, trace1_values, trace2_values, trace3_values] = [[], [], [], [], [], []];
+
+        for (let yr=min(years); yr <=max(years); yr++) {
+
+            const valueArray = yearlyValues.get(yr);
+
+            if (yr < gapYearBounds.start) {
+                trace1_years.push(yr);
+                trace1_values.push(medianValue(valueArray))
+
+            } else if (yr > gapYearBounds.end) {
+                trace3_years.push(yr);
+                trace3_values.push(medianValue(valueArray))
+            }
+
+            if ((yr >= gapYearBounds.start - 1) && (yr <= gapYearBounds.end + 1)) {
+                trace2_years.push(yr);
+
+                if ((yr === gapYearBounds.start - 1) || (yr === gapYearBounds.end + 1)) {
+                    trace2_values.push(medianValue(valueArray))
+                } else {
+                    trace2_values.push(null)
+                }
+            }
+        }
+
+        return [trace1_years, trace2_years, trace3_years, trace1_values, trace2_values, trace3_values];
+    }
+
+    // receives arrays of years (X) and values (Y)
+    // creates traces using the years and values
+    // returns the traces in an array
+    function createTraces(yearValueArrays, color, name=null) {
+
+        const [trace1_years, trace2_years, trace3_years, trace1_values, trace2_values, trace3_values] = yearValueArrays;
+
+        var traceArray = [];
+
+        // the first trace covers data before the gap
+        const trace1 = {
+            name: name,
+            type: 'lines+markers',
+            x: trace1_years,
+            y: trace1_values,
+            marker: {color: color, size: 10},
+            // hoverinfo: "none"
+        };
+
+        // the second trace covers data in the gap
+        const trace2 = {
+            name: name,
+            type: 'lines',
+            x: trace2_years,
+            y: trace2_values,
+            marker: {color: color, size: 10},
+            line: {
+                dash: "dot"
+            },
+            connectgaps: true
+            // hoverinfo: "none"
+        };
+
+        // the third trace covers data after the gap
+        const trace3 = {
+            name: name,
+            type: 'lines+markers',
+            x: trace3_years,
+            y: trace3_values,
+            marker: {color: color, size: 10},
+            // hoverinfo: "none"
+        };
+
+        traceArray.push(trace1)
+        traceArray.push(trace2)
+        traceArray.push(trace3)
+
+        return traceArray;
+
+    }
+
+    // return an array of years with data
+    function getAvailableYears(processedData, table) {
+
+        var yearIterator = null;
+
+        if (table === "regents") {
+            yearIterator = processedData.keys()
+        } else {
+            yearIterator = processedData.values().next().value.keys()
+        }
+
+        const years = yearIterator.toArray()
+
+        return years
+
+    }
+
     // calls on processData() and creates an array of Plotly traces
-    const createTraces = async(table, exam, metric) => {
+    const createTraceArray = async(table, exam, metric) => {
 
         if (exam !== null && metric !== null) {
 
+            // get the map of data
             const processedData = await processData(table, exam, metric);
             console.log(processedData)
 
-            var years = [];
-            var tracesArray = [];
+            // get the years with data
+            const years = getAvailableYears(processedData, table);
 
-            var categories = null;
-            
+            // every exam has a gap in the years (2020 and 2021)
+            // US History and Government has an extra gap year in 2022
+            // find the first and last years in the gap
+            const gapYearBounds = findGapYears(years);
+
+            // check whether the table is ELL or SWD
+            var categories = [];
             if (table === "regents_by_ell") {
                 categories = ["ELL", "English Proficient", "Former ELL"];
 
@@ -209,120 +333,52 @@ function EDA() {
                 categories = ["SWD", "Non-SWD"];
             }
 
-            processedData.forEach((value, key, map) => {
-                years.push(key)
-            })
-
-            // find the yearly median mean score or passing rate
             if (table === "regents") {
 
-                const gapYearBounds = traceHelper(years);
+                const yearValueArrays = createYearValueArrays(processedData, years, gapYearBounds);
+                const traceArray = createTraces(yearValueArrays, colorList.at(0));
 
-                var trace1_years = [];
-                var trace2_years = [];
-                var trace3_years = [];
-                var trace1_values = [];
-                var trace2_values = [];
-                var trace3_values = [];
-
-                for (let yr=min(years); yr <=max(years); yr++) {
-
-                    if (yr < gapYearBounds.start) {
-                        trace1_years.push(yr);
-                        trace1_values.push(round(median(processedData.get(yr)), 2))
-
-                    } else if (yr > gapYearBounds.end) {
-                        trace3_years.push(yr);
-                        trace3_values.push(round(median(processedData.get(yr)), 2))
-                    }
-
-                    if ((yr >= gapYearBounds.start - 1) && (yr <= gapYearBounds.end + 1)) {
-                        trace2_years.push(yr);
-
-                        if ((yr === gapYearBounds.start - 1) || (yr === gapYearBounds.end + 1)) {
-                            trace2_values.push(round(median(processedData.get(yr)), 2))
-                        } else {
-                            trace2_values.push(null)
-                        }
-                    }
-
-                }
-
-                const trace1 = {
-                    type: 'lines+markers',
-                    x: trace1_years,
-                    y: trace1_values,
-                    marker: {color: "#6CADDC", size: 10},
-                    // hoverinfo: "none"
-                };
-
-                const trace2 = {
-                    type: 'lines',
-                    x: trace2_years,
-                    y: trace2_values,
-                    marker: {color: "#6CADDC", size: 10},
-                    line: {
-                        dash: "dot"
-                    },
-                    connectgaps: true
-                    // hoverinfo: "none"
-                };
-
-                const trace3 = {
-                    type: 'lines+markers',
-                    x: trace3_years,
-                    y: trace3_values,
-                    marker: {color: "#6CADDC", size: 10},
-                    // hoverinfo: "none"
-                };
-
-                tracesArray.push(trace1)
-                tracesArray.push(trace2)
-                tracesArray.push(trace3)
-
-                setTracesAll(tracesArray);
+                setTracesAll(traceArray);
 
             } else {
 
-                years.forEach((yr) => {
+                var categories = [];
+                if (table === "regents_by_ell") {
+                    categories = ["ELL", "English Proficient", "Former ELL"]
+    
+                } else if (table === "regents_by_swd") {
+                    categories = ["SWD", "Non-SWD"]
+                }
 
-                    var nestedMap = processedData.get(yr);
-                    const trace = []
-        
-                    var index = 0;
-                    categories.forEach((cat) => {
-                        trace.push({
-                            name: cat,
-                            type: 'histogram',
-                            x: nestedMap.get(cat),
-                            xbins: {start: 0 , end: 100, size: 2},
-                            opacity: 0.5,
-                            marker: {color: colorList.at(index)},
-                            hoverinfo: "none"
-                        })
-                        index++;
+                var traceArray = [];
+                var index = 0;
+                categories.forEach((cat) => {
+
+                    const yearlyValues = processedData.get(cat);
+                    const yearValueArrays = createYearValueArrays(yearlyValues, years, gapYearBounds);
+                    const traces = createTraces(yearValueArrays, colorList.at(index), cat);
+                    index++;
+
+                    traces.forEach((trace) => {
+                        traceArray.push(trace)
                     })
-        
-                    tracesArray.push(trace);
                 })
 
                 if (table === "regents_by_ell") {
-                    setTracesELL(tracesArray);
-
+                    setTracesELL(traceArray)
                 } else {
-                    setTracesSWD(tracesArray);
+                    setTracesSWD(traceArray)
                 }
             }
         }
-
     }
 
     // request to get list of unique school names
     useEffect(() => {
         setInputArrays();
-        createTraces("regents", "Common Core English", "mean_score");
-        createTraces("regents_by_ell", "Common Core English", "mean_score");
-        createTraces("regents_by_swd", "Common Core English", "mean_score");
+        createTraceArray("regents", "Common Core English", "mean_score");
+        createTraceArray("regents_by_ell", "Common Core English", "mean_score");
+        createTraceArray("regents_by_swd", "Common Core English", "mean_score");
         setTracesReady(true);
     }, []);
 
@@ -401,7 +457,7 @@ function EDA() {
                                 menuClassName="menu"
                                 data={examArray}
                                 onChange={(value) => {
-                                    createTraces("regents", value, metricInput)
+                                    createTraceArray("regents", value, metricInputAll)
                                 }}
                                 defaultValue="Common Core English"
                                 placeholder="Common Core English"
@@ -414,7 +470,7 @@ function EDA() {
                                 menuClassName="menu"
                                 data={metricArray}
                                 onChange={(value) => {
-                                    createTraces("regents", examInput, value)
+                                    createTraceArray("regents", examInputAll, value)
                                 }}
                                 defaultValue="mean_score"
                                 placeholder="Mean Score"
@@ -429,22 +485,94 @@ function EDA() {
                 </p>
 
                 <HStack className="plot">
-                    <Plot data={tracesAll} layout={{width: 800, height: 400, showlegend: false, yaxis: {range: [0, 100]}}} config={{responsive: true}} className="plot"></Plot>
+                    <Plot data={tracesAll} layout={{width: 800, height: 400, showlegend: false, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>
                 </HStack>
 
+                <h2>
+                    Performance by ELL Status
+                </h2>
 
 
-                {/* <HStack>
-                    <VStack>
-                        {tracesReady === false ? null : <Plot data={tracesELL.at(0)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesELL.at(1)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesELL.at(2)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                    </VStack>
-                    <VStack>
-                        {tracesReady === false ? null : <Plot data={tracesELL.at(3)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesELL.at(4)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                    </VStack>
-                </HStack> */}
+                <Row className="input-row">
+                    <Col>
+                        <label><strong>Regents Exam</strong></label>
+                        <InputPicker
+                                menuClassName="menu"
+                                data={examArray}
+                                onChange={(value) => {
+                                    createTraceArray("regents_by_ell", value, metricInputELL)
+                                }}
+                                defaultValue="Common Core English"
+                                placeholder="Common Core English"
+                        />
+                    </Col>
+
+                    <Col>
+                        <label><strong>Metric</strong></label>
+                        <InputPicker
+                                menuClassName="menu"
+                                data={metricArray}
+                                onChange={(value) => {
+                                    createTraceArray("regents_by_ell", examInputELL, value)
+                                }}
+                                defaultValue="mean_score"
+                                placeholder="Mean Score"
+                        />
+                    </Col>
+                </Row>
+
+                <p className="note">
+                        Hover over a data point for specific value and number of test takers. A dashed line indicates absence of data. 
+                        <br></br>
+                        Note that any data from 2020 and 2021 were removed (see Methods).
+                </p>
+
+                <HStack className="plot">
+                    <Plot data={tracesELL} layout={{width: 800, height: 400, showlegend: false, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>
+                </HStack>
+
+                <h2>
+                    Performance by SWD Status
+                </h2>
+
+
+                <Row className="input-row">
+                    <Col>
+                        <label><strong>Regents Exam</strong></label>
+                        <InputPicker
+                                menuClassName="menu"
+                                data={examArray}
+                                onChange={(value) => {
+                                    createTraceArray("regents_by_swd", value, metricInputSWD)
+                                }}
+                                defaultValue="Common Core English"
+                                placeholder="Common Core English"
+                        />
+                    </Col>
+
+                    <Col>
+                        <label><strong>Metric</strong></label>
+                        <InputPicker
+                                menuClassName="menu"
+                                data={metricArray}
+                                onChange={(value) => {
+                                    createTraceArray("regents_by_swd", examInputSWD, value)
+                                }}
+                                defaultValue="mean_score"
+                                placeholder="Mean Score"
+                        />
+                    </Col>
+                </Row>
+
+                <p className="note">
+                        Hover over a data point for specific value and number of test takers. A dashed line indicates absence of data. 
+                        <br></br>
+                        Note that any data from 2020 and 2021 were removed (see Methods).
+                </p>
+
+                <HStack className="plot">
+                    <Plot data={tracesSWD} layout={{width: 800, height: 400, showlegend: false, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>
+                </HStack>
 
             </div>
 

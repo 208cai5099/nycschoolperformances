@@ -8,11 +8,11 @@ function Explore() {
     const navigator = useNavigate()
 
     function redirectToSchoolSpecific() {
-        navigator("/school-specific");
+        navigator("/nycschoolperformances/school-specific");
     }
 
     function redirectToCitywide() {
-        navigator("/citywide");
+        navigator("/nycschoolperformances/citywide");
     }
 
     return (

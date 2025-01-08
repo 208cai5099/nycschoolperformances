@@ -8,23 +8,23 @@ function NavigationBar() {
     var navigator = useNavigate();
 
     function redirectToHome() {
-        navigator("/home");
+        navigator("/nycschoolperformances");
     }
 
-    function redirectToExplore() {
-        navigator("/disclaimer");
+    function redirectToDisclaimer() {
+        navigator("/nycschoolperformances/disclaimer");
     }
 
     function redirectToMethods() {
-        navigator("/methods");
+        navigator("/nycschoolperformances/methods");
     }
 
     function redirectToContact() {
-        navigator("/contact");
+        navigator("/nycschoolperformances/contact");
     }
 
     function redirectToEDA() {
-        navigator("/eda");
+        navigator("/nycschoolperformances/eda");
     }
 
     return (
@@ -32,7 +32,7 @@ function NavigationBar() {
         <Navbar id='navBar'>
             <Nav>
                 <Nav.Item onSelect={redirectToHome}> Home </Nav.Item>
-                <Nav.Item onSelect={redirectToExplore}> Explore </Nav.Item>
+                <Nav.Item onSelect={redirectToDisclaimer}> Explore </Nav.Item>
                 <Nav.Item onSelect={redirectToEDA}> Analysis </Nav.Item>
                 <Nav.Item onSelect={redirectToMethods}> Methods </Nav.Item>
                 <Nav.Item onSelect={redirectToContact}> Contact </Nav.Item>
