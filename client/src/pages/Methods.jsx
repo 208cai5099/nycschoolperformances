@@ -35,15 +35,15 @@ function Methods() {
                 <p>
                     For our purposes, we extracted the following data: School DBN (unique school identifier), School Name, Year, Regents Exam, Total 
                     Tested (number of test takers), Mean Score, and Percent Scoring 65 or Above. We also noticed that some school names were
-                    truncated or misspelled. So, we referenced the NYC DOE website as well as the schools' personal websites (if they exist) to confirm 
+                    truncated or misspelled. So, we checked the NYC Department of Education website as well as the schools' personal websites (if they exist) to confirm 
                     the full correct spelling of their names.
                 </p>
 
                 <p>
-                    In the 2010s, New York State began the Common Core standards. By 2017, the vast majority of test takers took the Common Core-aligned exams 
-                    instead of the exams aligned to the older standards (English, Integrated Algebra, Geometry, and Algebra 2/Trigonometry). To focus on more 
-                    current standards, the data from the older English and math exams are not shown on this website. Due to the removal of the older exam data, this 
-                    website will only show data from 2017 and onwards for all exams, including the science, history, and foreign language exams.
+                    In the 2010s, New York State began implementing English and math Regents exams that are aligned to the Common Core standards. By 2017, the vast 
+                    majority of test takers took the Common Core-aligned exams instead of the exams aligned to the older standards. To focus on more current standards, 
+                    the data from the older English and math exams are not shown on this website. Furthermore, this website will only show data from 2017 and onwards for 
+                    all exams, including the science, history, and foreign language exams.
                 </p>
 
                 <p>
@@ -61,23 +61,23 @@ function Methods() {
                 </h2>
 
                 <p>
-                    We are using <a href="https://supabase.com/" target="_blank">Supabase</a> as our backend. In our backend, the data are organized into four SQL tables: regents, schools, yearly_avg, and borough_avg. <br />
+                    We are using <a href="https://supabase.com/" target="_blank">Supabase</a> as our backend. In our backend, the data are organized as four SQL tables: regents, yearly_avg, borough_avg, and schools. <br />
 
                     <p></p>
 
-                    regents: stores every school's Mean Score and Passing Rate on the Regents exams <br />
+                    regents: stores every school's Mean Score and Passing Rate on the Regents exams from 2017 to 2023 (excluding 2020 and 2021)<br />
 
                     <p></p>
 
-                    schools: stores every pair of School DBN and School Name <br />
+                    yearly_avg: stores the citywide average Mean Score on the Regents exams from 2017 to 2023 (excluding 2020 and 2021)<br />
 
                     <p></p>
 
-                    yearly_avg: stores every borough's yearly average Mean Score on every Regents exam from 2017 to 2023 (excluding 2020 and 2021)<br />
+                    borough_avg: stores every borough's average Mean Score on the Regents exams from 2017 to 2023 (excluding 2020 and 2021) <br />
 
                     <p></p>
 
-                    borough_avg: stores every borough's average Mean Score on every Regents exam from 2017 to 2023 (excluding 2020 and 2021) <br />
+                    schools: stores School DBN and School Name <br />
                 </p>
 
                 <h2>
@@ -85,8 +85,8 @@ function Methods() {
                 </h2>
 
                 <p>
-                    For our visualizations, we used <a href="https://www.chartjs.org/docs/latest/" target="_blank">Chart.js</a> to produce the line and bar charts in the Explore page. Once user submits their inputs, the
-                    requested data is fetched from our database and processed for visualization.
+                    We use <a href="https://www.chartjs.org/docs/latest/" target="_blank">Chart.js</a> to produce the line and bar charts on the Explore page. Once the user submits their inputs, the
+                    requested data is fetched from our Supabase database and processed for visualization.
                 </p>
             </div>
 

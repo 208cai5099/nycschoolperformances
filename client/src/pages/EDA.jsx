@@ -3,23 +3,46 @@
 
 import React, { useState, useEffect } from "react";
 import supabase from '../config/supabase.js'
-import { colorList } from "../util.js";
+import { exams, colorList } from "../util.js";
 import Plot from 'react-plotly.js';
-import { VStack, HStack } from 'rsuite';
+import { Col, Row, HStack, InputPicker } from 'rsuite';
+import { median, round, min, max } from 'mathjs';
 import "./EDA.css"
 
 function EDA() {
 
     // create lists to store the traces for the Plotly graphs
-    const [exam, setExam] = useState("Common Core English");
-    const [metric, setMetric] = useState("mean_score");
+    const [examInput, setExamInput] = useState("Common Core English");
+    const [metricInput, setMetricInput] = useState("mean_score");
+    const [examArray, setExamArray] = useState([])
+    const [metricArray, setMetricArray] = useState([])
     const [tracesAll, setTracesAll] = useState([]);
     const [tracesELL, setTracesELL] = useState([]);
     const [tracesSWD, setTracesSWD] = useState([]);
     const [tracesReady, setTracesReady] = useState(false);
 
+    const setInputArrays = () => {
+
+        var placeholder = [];
+
+        exams.forEach((test) => {
+            placeholder.push({label: test, value: test})
+        })
+
+        setExamArray(placeholder);
+
+        setMetricArray([
+            {label: "Mean Score", value: "mean_score"},
+            {label: "Passing Rate", value: "percent_65_or_above"}
+        ]);
+
+    }
+
     // send API request to grab data for a specific exam from general, SWD, or ELL table
-    const requestData = async(table) => {
+    const requestData = async(table, exam, metric) => {
+
+        setExamInput(exam);
+        setMetricInput(metric);
 
         // set up the columns for the SELECT query
         var columns = metric;
@@ -46,9 +69,9 @@ function EDA() {
     };
 
     // calls on requestData() and processes the data into maps
-    const processData = async(table) => {
+    const processData = async(table, exam, metric) => {
 
-        const data = await requestData(table);
+        const data = await requestData(table, exam, metric);
 
         // use maps to store the mean scores or passing rates
         // if general table, map a year to an array of values
@@ -146,99 +169,169 @@ function EDA() {
         return valuesMap;
     }
 
-    // calls on processData() and creates an array of Plotly traces
-    const createTraces = async(table) => {
+    function traceHelper(years) {
 
-        const processedData = await processData(table);
+        var startGapYear = null;
+        var endGapYear = null;
 
-        var years = [];
-        var tracesArray = [];
-
-        var categories = null;
-        
-        if (table === "regents_by_ell") {
-            categories = ["ELL", "English Proficient", "Former ELL"];
-
-        } else if (table === "regents_by_swd") {
-            categories = ["SWD", "Non-SWD"];
-        }
-
-        processedData.forEach((value, key, map) => {
-            years.push(key)
-        })
-
-        if (table === "regents") {
-
-            years.forEach((yr) => {
-
-                var valuesArray = processedData.get(yr);
-
-                const trace = {
-                    name: yr.toString(),
-                    type: 'histogram',
-                    x: valuesArray,
-                    xbins: {start: 0 , end: 100, size: 2},
-                    opacity: 0.5,
-                    marker: {color: "#6CADDC"},
-                    hoverinfo: "none"
-                };
-
-                tracesArray.push([trace]);
-
-            })
-
-            setTracesAll(tracesArray);
-
-        } else {
-
-            years.forEach((yr) => {
-
-                var nestedMap = processedData.get(yr);
-                const trace = []
-    
-                var index = 0;
-                categories.forEach((cat) => {
-                    trace.push({
-                        name: cat,
-                        type: 'histogram',
-                        x: nestedMap.get(cat),
-                        xbins: {start: 0 , end: 100, size: 2},
-                        opacity: 0.5,
-                        marker: {color: colorList.at(index)},
-                        hoverinfo: "none"
-                    })
-                    index++;
-                })
-    
-                tracesArray.push(trace);
-            })
-
-            if (table === "regents_by_ell") {
-                setTracesELL(tracesArray);
-
-            } else {
-                setTracesSWD(tracesArray);
+        // find the consecutive years without any data
+        for (let yr = min(years); yr <= max(years); yr++) {
+            if ((years.includes(yr) === false) && (startGapYear === null)) {
+                startGapYear = yr;
+            } else if ((years.includes(yr) === false) && (startGapYear !== null)) {
+                continue
+            } else if ((years.includes(yr) === true) && (startGapYear !== null)) {
+                endGapYear = yr - 1;
+                break;
             }
         }
 
-        console.log(tracesArray)
+        return {start: startGapYear, end: endGapYear};
+    }
+
+    // calls on processData() and creates an array of Plotly traces
+    const createTraces = async(table, exam, metric) => {
+
+        if (exam !== null && metric !== null) {
+
+            const processedData = await processData(table, exam, metric);
+            console.log(processedData)
+
+            var years = [];
+            var tracesArray = [];
+
+            var categories = null;
+            
+            if (table === "regents_by_ell") {
+                categories = ["ELL", "English Proficient", "Former ELL"];
+
+            } else if (table === "regents_by_swd") {
+                categories = ["SWD", "Non-SWD"];
+            }
+
+            processedData.forEach((value, key, map) => {
+                years.push(key)
+            })
+
+            // find the yearly median mean score or passing rate
+            if (table === "regents") {
+
+                const gapYearBounds = traceHelper(years);
+
+                var trace1_years = [];
+                var trace2_years = [];
+                var trace3_years = [];
+                var trace1_values = [];
+                var trace2_values = [];
+                var trace3_values = [];
+
+                for (let yr=min(years); yr <=max(years); yr++) {
+
+                    if (yr < gapYearBounds.start) {
+                        trace1_years.push(yr);
+                        trace1_values.push(round(median(processedData.get(yr)), 2))
+
+                    } else if (yr > gapYearBounds.end) {
+                        trace3_years.push(yr);
+                        trace3_values.push(round(median(processedData.get(yr)), 2))
+                    }
+
+                    if ((yr >= gapYearBounds.start - 1) && (yr <= gapYearBounds.end + 1)) {
+                        trace2_years.push(yr);
+
+                        if ((yr === gapYearBounds.start - 1) || (yr === gapYearBounds.end + 1)) {
+                            trace2_values.push(round(median(processedData.get(yr)), 2))
+                        } else {
+                            trace2_values.push(null)
+                        }
+                    }
+
+                }
+
+                const trace1 = {
+                    type: 'lines+markers',
+                    x: trace1_years,
+                    y: trace1_values,
+                    marker: {color: "#6CADDC", size: 10},
+                    // hoverinfo: "none"
+                };
+
+                const trace2 = {
+                    type: 'lines',
+                    x: trace2_years,
+                    y: trace2_values,
+                    marker: {color: "#6CADDC", size: 10},
+                    line: {
+                        dash: "dot"
+                    },
+                    connectgaps: true
+                    // hoverinfo: "none"
+                };
+
+                const trace3 = {
+                    type: 'lines+markers',
+                    x: trace3_years,
+                    y: trace3_values,
+                    marker: {color: "#6CADDC", size: 10},
+                    // hoverinfo: "none"
+                };
+
+                tracesArray.push(trace1)
+                tracesArray.push(trace2)
+                tracesArray.push(trace3)
+
+                setTracesAll(tracesArray);
+
+            } else {
+
+                years.forEach((yr) => {
+
+                    var nestedMap = processedData.get(yr);
+                    const trace = []
+        
+                    var index = 0;
+                    categories.forEach((cat) => {
+                        trace.push({
+                            name: cat,
+                            type: 'histogram',
+                            x: nestedMap.get(cat),
+                            xbins: {start: 0 , end: 100, size: 2},
+                            opacity: 0.5,
+                            marker: {color: colorList.at(index)},
+                            hoverinfo: "none"
+                        })
+                        index++;
+                    })
+        
+                    tracesArray.push(trace);
+                })
+
+                if (table === "regents_by_ell") {
+                    setTracesELL(tracesArray);
+
+                } else {
+                    setTracesSWD(tracesArray);
+                }
+            }
+        }
 
     }
 
     // request to get list of unique school names
     useEffect(() => {
-        createTraces("regents");
-        createTraces("regents_by_ell");
-        createTraces("regents_by_swd");
+        setInputArrays();
+        createTraces("regents", "Common Core English", "mean_score");
+        createTraces("regents_by_ell", "Common Core English", "mean_score");
+        createTraces("regents_by_swd", "Common Core English", "mean_score");
         setTracesReady(true);
     }, []);
 
     return (
         <div>
 
-            <h1 id="eda-heading">Brief Exploratory Analysis of NYC Regents Performance</h1>
+            <h1 className="eda-heading">Brief Exploratory Analysis of NYC Regents Performance</h1>
 
-            <div id="eda-description">
+            <div className="eda-description">
                 <h2>
                     Introduction
                 </h2>
@@ -300,19 +393,48 @@ function EDA() {
                     General Performance Across the City
                 </h2>
 
-                <HStack>
-                    <VStack>
-                        {tracesReady === false ? null : <Plot data={tracesAll.at(0)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesAll.at(1)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesAll.at(2)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                    </VStack>
-                    <VStack>
-                        {tracesReady === false ? null : <Plot data={tracesAll.at(3)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesAll.at(4)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                    </VStack>
+
+                <Row className="input-row">
+                    <Col>
+                        <label><strong>Regents Exam</strong></label>
+                        <InputPicker
+                                menuClassName="menu"
+                                data={examArray}
+                                onChange={(value) => {
+                                    createTraces("regents", value, metricInput)
+                                }}
+                                defaultValue="Common Core English"
+                                placeholder="Common Core English"
+                        />
+                    </Col>
+
+                    <Col>
+                        <label><strong>Metric</strong></label>
+                        <InputPicker
+                                menuClassName="menu"
+                                data={metricArray}
+                                onChange={(value) => {
+                                    createTraces("regents", examInput, value)
+                                }}
+                                defaultValue="mean_score"
+                                placeholder="Mean Score"
+                        />
+                    </Col>
+                </Row>
+
+                <p className="note">
+                        Hover over a data point for specific value and number of test takers. A dashed line indicates absence of data. 
+                        <br></br>
+                        Note that any data from 2020 and 2021 were removed (see Methods).
+                </p>
+
+                <HStack className="plot">
+                    <Plot data={tracesAll} layout={{width: 800, height: 400, showlegend: false, yaxis: {range: [0, 100]}}} config={{responsive: true}} className="plot"></Plot>
                 </HStack>
 
-                <HStack>
+
+
+                {/* <HStack>
                     <VStack>
                         {tracesReady === false ? null : <Plot data={tracesELL.at(0)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
                         {tracesReady === false ? null : <Plot data={tracesELL.at(1)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
@@ -322,19 +444,7 @@ function EDA() {
                         {tracesReady === false ? null : <Plot data={tracesELL.at(3)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
                         {tracesReady === false ? null : <Plot data={tracesELL.at(4)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
                     </VStack>
-                </HStack>
-
-                <HStack>
-                    <VStack>
-                        {tracesReady === false ? null : <Plot data={tracesSWD.at(0)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesSWD.at(1)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesSWD.at(2)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                    </VStack>
-                    <VStack>
-                        {tracesReady === false ? null : <Plot data={tracesSWD.at(3)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                        {tracesReady === false ? null : <Plot data={tracesSWD.at(4)} layout={{showlegend: true, xaxis: {range: [0, 100]}, yaxis: {range: [0, 100]}}} config={{responsive: true}}></Plot>}
-                    </VStack>
-                </HStack>
+                </HStack> */}
 
             </div>
 
