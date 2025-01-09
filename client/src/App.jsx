@@ -8,7 +8,6 @@ import Explore from './pages/Explore'
 import Disclaimer from './pages/Disclaimer';
 import SchoolSpecific from './pages/SchoolSpecific';
 import Citywide from './pages/Citywide'
-import EDA from './pages/EDA'
 
 import 'rsuite/dist/rsuite-no-reset.min.css';
 
@@ -29,7 +28,6 @@ function App() {
           <Route path="/nycschoolperformances/disclaimer" element={<Disclaimer />}></Route>
           <Route path="/nycschoolperformances/explore" element={<Explore />}></Route>
           <Route path="/nycschoolperformances/citywide" element={<Citywide />}></Route>
-          <Route path="/nycschoolperformances/eda" element={<EDA />}></Route>
         </Routes>
       </Router>
     </div>

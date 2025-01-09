@@ -11,32 +11,34 @@ CREATE TABLE regents (
 	percent_65_or_above FLOAT8
 );
 
-/**makes a SQL table to store the Regents performance data by ELL**/
-CREATE TABLE regents_by_ell (
+/**makes a SQL table to store the Regents performance data by borough**/
+CREATE TABLE regents_median_by_borough (
 	id SERIAL PRIMARY KEY,
-	borough VARCHAR(15),
-	school_dbn VARCHAR(10),
-	school_name VARCHAR(100),
 	year INT2,
 	category VARCHAR(50),
 	regents_exam VARCHAR(50),
-	total_tested INT2,
-	mean_score FLOAT8,
-	percent_65_or_above FLOAT8
+	median_mean_score FLOAT8,
+	median_percent_65_or_above FLOAT8
+);
+
+/**makes a SQL table to store the Regents performance data by ELL**/
+CREATE TABLE regents_median_by_ell (
+	id SERIAL PRIMARY KEY,
+	year INT2,
+	category VARCHAR(50),
+	regents_exam VARCHAR(50),
+	median_mean_score FLOAT8,
+	median_percent_65_or_above FLOAT8
 );
 
 /**makes a SQL table to store the Regents performance data by SWD**/
-CREATE TABLE regents_by_swd (
+CREATE TABLE regents_median_by_swd (
 	id SERIAL PRIMARY KEY,
-	borough VARCHAR(15),
-	school_dbn VARCHAR(10),
-	school_name VARCHAR(100),
 	year INT2,
 	category VARCHAR(50),
 	regents_exam VARCHAR(50),
-	total_tested INT2,
-	mean_score FLOAT8,
-	percent_65_or_above FLOAT8
+	median_mean_score FLOAT8,
+	median_percent_65_or_above FLOAT8
 );
 
 /**makes a SQL table to store every unique pair of school dbn and name**/

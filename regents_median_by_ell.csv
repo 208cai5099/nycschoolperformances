@@ -1,0 +1,202 @@
+year,category,regents_exam,median_mean_score,median_percent_65_or_above,id
+2017,ELL,Chemistry,61.304985,38.87043,0
+2017,ELL,Chinese,91.57143,100.0,1
+2017,ELL,Common Core Algebra,60.4,41.666668,2
+2017,ELL,Common Core Algebra 2,68.666664,67.741936,3
+2017,ELL,Common Core English,53.883522,41.885963,4
+2017,ELL,Common Core Geometry,53.18182,16.666666,5
+2017,ELL,Earth Science,50.809525,16.666666,6
+2017,ELL,French,75.333336,87.5,7
+2017,ELL,Global History and Geography,53.73077,25.0,8
+2017,ELL,Living Environment,55.488808,25.0,9
+2017,ELL,Physics,71.57143,81.818184,10
+2017,ELL,Spanish,85.41304,100.0,11
+2017,ELL,US History and Government,57.071426,36.038963,12
+2017,English Proficient,Chemistry,63.80478,48.24418,13
+2017,English Proficient,Chinese,82.82758,95.68965,14
+2017,English Proficient,Common Core Algebra,69.011826,72.19359,15
+2017,English Proficient,Common Core Algebra 2,64.20588,56.643356,16
+2017,English Proficient,Common Core English,72.653656,80.60365,17
+2017,English Proficient,Common Core Geometry,58.9375,33.80282,18
+2017,English Proficient,Earth Science,61.988636,44.519516,19
+2017,English Proficient,French,72.51724,85.71429,20
+2017,English Proficient,Global History and Geography,62.833332,51.515152,21
+2017,English Proficient,Italian,80.13231,96.4375,22
+2017,English Proficient,Living Environment,68.369995,67.92453,23
+2017,English Proficient,Physics,68.734695,64.70588,24
+2017,English Proficient,Spanish,79.96296,90.196075,25
+2017,English Proficient,US History and Government,71.06061,71.111115,26
+2017,Former ELL,Chemistry,66.27481,55.328796,27
+2017,Former ELL,Chinese,88.009346,97.47899,28
+2017,Former ELL,Common Core Algebra,71.1629,80.304184,29
+2017,Former ELL,Common Core Algebra 2,66.56439,66.025635,30
+2017,Former ELL,Common Core English,74.934425,87.5,31
+2017,Former ELL,Common Core Geometry,60.542374,41.717793,32
+2017,Former ELL,Earth Science,65.067795,54.285713,33
+2017,Former ELL,French,76.83333,94.60145,34
+2017,Former ELL,Global History and Geography,66.088455,59.00974,35
+2017,Former ELL,Italian,81.71429,100.0,36
+2017,Former ELL,Living Environment,69.90242,72.9021,37
+2017,Former ELL,Physics,70.317856,71.42857,38
+2017,Former ELL,Spanish,86.68155,100.0,39
+2017,Former ELL,US History and Government,73.077774,77.77778,40
+2018,ELL,Chemistry,60.458557,33.922558,41
+2018,ELL,Chinese,93.22222,100.0,42
+2018,ELL,Common Core Algebra,57.62439,33.695652,43
+2018,ELL,Common Core Algebra 2,59.17143,39.565216,44
+2018,ELL,Common Core English,51.263157,36.50794,45
+2018,ELL,Common Core Geometry,51.667763,21.825397,46
+2018,ELL,Earth Science,51.833332,25.0,47
+2018,ELL,French,82.37334,96.66667,48
+2018,ELL,Global History and Geography,55.16546,28.0,49
+2018,ELL,Living Environment,55.35294,24.793388,50
+2018,ELL,Physics,70.72222,70.83333,51
+2018,ELL,Spanish,83.94118,93.75,52
+2018,ELL,US History and Government,57.75524,37.5,53
+2018,English Proficient,Chemistry,62.35121,40.833336,54
+2018,English Proficient,Chinese,85.7972,99.09091,55
+2018,English Proficient,Common Core Algebra,66.168236,64.67001,56
+2018,English Proficient,Common Core Algebra 2,64.5387,60.6203,57
+2018,English Proficient,Common Core English,70.21186,75.64103,58
+2018,English Proficient,Common Core Geometry,59.076923,40.157482,59
+2018,English Proficient,Earth Science,65.84722,58.333332,60
+2018,English Proficient,French,81.89855,96.55173,61
+2018,English Proficient,Global History and Geography,66.1479,58.55401,62
+2018,English Proficient,Italian,72.71429,71.55556,63
+2018,English Proficient,Living Environment,68.64443,67.64171,64
+2018,English Proficient,Physics,68.666664,65.47619,65
+2018,English Proficient,Spanish,80.88333,90.767044,66
+2018,English Proficient,US History and Government,70.111115,69.565216,67
+2018,Former ELL,Chemistry,65.3766,52.786377,68
+2018,Former ELL,Chinese,93.86466,100.0,69
+2018,Former ELL,Common Core Algebra,69.01097,72.72727,70
+2018,Former ELL,Common Core Algebra 2,68.0,70.0,71
+2018,Former ELL,Common Core English,73.14286,83.333336,72
+2018,Former ELL,Common Core Geometry,61.978786,49.69136,73
+2018,Former ELL,Earth Science,67.346664,58.89894,74
+2018,Former ELL,French,84.2619,100.0,75
+2018,Former ELL,Global History and Geography,69.32576,68.49624,76
+2018,Former ELL,Italian,74.86667,88.23529,77
+2018,Former ELL,Living Environment,70.950356,75.0,78
+2018,Former ELL,Physics,68.649994,66.666664,79
+2018,Former ELL,Spanish,87.86667,100.0,80
+2018,Former ELL,US History and Government,73.083336,77.77778,81
+2019,ELL,Chemistry,54.916664,20.0,82
+2019,ELL,Chinese,89.69914,100.0,83
+2019,ELL,Common Core Algebra,59.160416,37.5,84
+2019,ELL,Common Core Algebra 2,61.94737,50.0,85
+2019,ELL,Common Core English,57.18919,46.153847,86
+2019,ELL,Common Core Geometry,51.89011,16.666666,87
+2019,ELL,Earth Science,49.308495,16.666666,88
+2019,ELL,French,79.375,90.0,89
+2019,ELL,Global History and Geography,58.363636,36.363636,90
+2019,ELL,Living Environment,54.436222,26.120857,91
+2019,ELL,Physics,71.6875,66.666664,92
+2019,ELL,Spanish,82.7,94.44444,93
+2019,ELL,US History and Government,54.98932,30.0,94
+2019,English Proficient,Chemistry,61.30392,44.189346,95
+2019,English Proficient,Chinese,83.76471,98.4127,96
+2019,English Proficient,Common Core Algebra,67.8184,66.666664,97
+2019,English Proficient,Common Core Algebra 2,64.53125,59.838707,98
+2019,English Proficient,Common Core English,73.63415,82.69231,99
+2019,English Proficient,Common Core Geometry,61.252174,45.0,100
+2019,English Proficient,Earth Science,62.19149,47.36842,101
+2019,English Proficient,French,82.5625,98.3871,102
+2019,English Proficient,Global History and Geography,67.64851,65.97872,103
+2019,English Proficient,Italian,80.190475,90.47619,104
+2019,English Proficient,Living Environment,68.948715,68.05556,105
+2019,English Proficient,Physics,68.28606,61.614777,106
+2019,English Proficient,Spanish,81.66261,91.666664,107
+2019,English Proficient,US History and Government,69.33926,67.5242,108
+2019,Former ELL,Chemistry,63.88889,49.090908,109
+2019,Former ELL,Chinese,91.64773,99.69512,110
+2019,Former ELL,Common Core Algebra,70.1579,76.190475,111
+2019,Former ELL,Common Core Algebra 2,67.94444,69.61539,112
+2019,Former ELL,Common Core English,76.82143,91.111115,113
+2019,Former ELL,Common Core Geometry,63.454193,53.944187,114
+2019,Former ELL,Earth Science,65.710526,56.25,115
+2019,Former ELL,French,84.08333,100.0,116
+2019,Former ELL,Global History and Geography,70.28571,73.333336,117
+2019,Former ELL,Italian,83.02778,100.0,118
+2019,Former ELL,Living Environment,71.05556,75.0,119
+2019,Former ELL,Physics,68.77778,64.70588,120
+2019,Former ELL,Spanish,87.916664,100.0,121
+2019,Former ELL,US History and Government,71.702705,72.72727,122
+2022,ELL,Chemistry,41.133926,0.0,123
+2022,ELL,Chinese,89.25665,100.0,124
+2022,ELL,Common Core Algebra,53.644333,18.573668,125
+2022,ELL,Common Core Algebra 2,45.666668,7.142857,126
+2022,ELL,Common Core English,48.18182,25.0,127
+2022,ELL,Common Core Geometry,41.545456,3.125,128
+2022,ELL,Earth Science,42.208332,6.6666665,129
+2022,ELL,Global History and Geography,60.35294,42.105263,130
+2022,ELL,Living Environment,53.090908,21.052631,131
+2022,ELL,Physics,42.084846,17.424242,132
+2022,ELL,Spanish,79.33929,86.95035,133
+2022,English Proficient,Chemistry,52.38333,14.285714,134
+2022,English Proficient,Chinese,78.52381,81.48148,135
+2022,English Proficient,Common Core Algebra,64.79452,55.357143,136
+2022,English Proficient,Common Core Algebra 2,52.275677,23.076923,137
+2022,English Proficient,Common Core English,70.356064,75.0,138
+2022,English Proficient,Common Core Geometry,47.515873,14.140982,139
+2022,English Proficient,Earth Science,55.5625,30.0,140
+2022,English Proficient,French,71.6125,77.77778,141
+2022,English Proficient,Global History and Geography,68.82825,69.44444,142
+2022,English Proficient,Italian,75.21429,85.71429,143
+2022,English Proficient,Living Environment,67.65278,64.28571,144
+2022,English Proficient,Physics,51.525425,26.956522,145
+2022,English Proficient,Spanish,78.5,83.333336,146
+2022,Former ELL,Chemistry,53.408043,19.259258,147
+2022,Former ELL,Chinese,90.44192,97.326385,148
+2022,Former ELL,Common Core Algebra,67.96,66.666664,149
+2022,Former ELL,Common Core Algebra 2,56.5,35.48387,150
+2022,Former ELL,Common Core English,74.6727,83.333336,151
+2022,Former ELL,Common Core Geometry,51.974537,22.9246,152
+2022,Former ELL,Earth Science,58.707146,38.194443,153
+2022,Former ELL,French,79.06333,90.27777,154
+2022,Former ELL,Global History and Geography,71.875,80.70175,155
+2022,Former ELL,Italian,78.0,92.22222,156
+2022,Former ELL,Living Environment,70.90179,73.0464,157
+2022,Former ELL,Physics,51.625,33.333332,158
+2022,Former ELL,Spanish,86.23077,97.36842,159
+2023,ELL,Chemistry,44.166668,0.0,160
+2023,ELL,Chinese,91.9427,100.0,161
+2023,ELL,Common Core Algebra,55.96112,28.571428,162
+2023,ELL,Common Core Algebra 2,45.22222,10.0,163
+2023,ELL,Common Core English,50.285713,25.925926,164
+2023,ELL,Common Core Geometry,46.25,6.6666665,165
+2023,ELL,Earth Science,48.0,13.636364,166
+2023,ELL,French,84.57143,85.71429,167
+2023,ELL,Global History and Geography,57.190475,30.76923,168
+2023,ELL,Living Environment,50.903816,16.666666,169
+2023,ELL,Physics,60.75,25.0,170
+2023,ELL,Spanish,81.28571,91.111115,171
+2023,ELL,US History and Government,58.566666,33.333332,172
+2023,English Proficient,Chemistry,56.52277,25.0,173
+2023,English Proficient,Chinese,79.1,83.333336,174
+2023,English Proficient,Common Core Algebra,65.214066,58.333332,175
+2023,English Proficient,Common Core Algebra 2,55.060608,28.054054,176
+2023,English Proficient,Common Core English,71.63248,74.07647,177
+2023,English Proficient,Common Core Geometry,54.024693,24.902723,178
+2023,English Proficient,Earth Science,61.35294,44.221104,179
+2023,English Proficient,French,81.94444,93.1783,180
+2023,English Proficient,Global History and Geography,67.92647,64.400925,181
+2023,English Proficient,Italian,76.1579,80.0,182
+2023,English Proficient,Living Environment,65.33214,56.71171,183
+2023,English Proficient,Physics,56.52941,31.25,184
+2023,English Proficient,Spanish,80.87649,89.17006,185
+2023,English Proficient,US History and Government,67.419586,66.666664,186
+2023,Former ELL,Chemistry,58.97,33.333332,187
+2023,Former ELL,Chinese,89.73529,96.969696,188
+2023,Former ELL,Common Core Algebra,69.20548,70.0,189
+2023,Former ELL,Common Core Algebra 2,57.249226,36.021507,190
+2023,Former ELL,Common Core English,74.86667,83.333336,191
+2023,Former ELL,Common Core Geometry,55.96875,28.869047,192
+2023,Former ELL,Earth Science,65.567375,53.846153,193
+2023,Former ELL,French,83.1875,100.0,194
+2023,Former ELL,Global History and Geography,71.75,77.622375,195
+2023,Former ELL,Italian,79.07692,87.5,196
+2023,Former ELL,Living Environment,69.33364,66.666664,197
+2023,Former ELL,Physics,62.944443,47.540985,198
+2023,Former ELL,Spanish,88.30357,100.0,199
+2023,Former ELL,US History and Government,70.74643,77.14286,200

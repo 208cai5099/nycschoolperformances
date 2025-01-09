@@ -1,7 +1,7 @@
 import React from "react";
 import "./Explore.css"
 import { useNavigate } from 'react-router-dom';
-import { Panel, FlexboxGrid, Row, Col } from "rsuite";
+import { Panel, Row, Col } from "rsuite";
 
 function Explore() {
 

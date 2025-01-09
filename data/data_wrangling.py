@@ -220,18 +220,31 @@ all_df.to_csv("overall_regents.csv", index=False)
 # extract the data from the By ELL Status sheet
 ell_df = load_and_process_sheet(filename, "By ELL Status")
 ell_df = select_columns(ell_df, ["borough", "school_dbn", "school_name", "year", "category", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
-ell_df = ell_df.rename(columns={"percent_scoring_65_or_above" : "percent_65_or_above"})
-ell_df = sort_df(ell_df, ["borough", "school_dbn", "school_name", "year", "regents_exam", "category"])
-ell_df = add_row_numbers(ell_df)
-ell_df.to_csv("regents_by_ell.csv", index=False)
 
 # extract the data from the By SWD Status sheet
 swd_df = load_and_process_sheet(filename, "By SWD Status")
 swd_df = select_columns(swd_df, ["borough", "school_dbn", "school_name", "year", "category", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
-swd_df = swd_df.rename(columns={"percent_scoring_65_or_above" : "percent_65_or_above"})
-swd_df = sort_df(swd_df, ["borough", "school_dbn", "school_name", "year", "regents_exam", "category"])
-swd_df = add_row_numbers(swd_df)
-swd_df.to_csv("regents_by_swd.csv", index=False)
+
+# calculate median mean score and passing rate of every exam by borough
+all_median_by_borough_df = all_df[["borough", "year", "regents_exam", "mean_score", "percent_65_or_above"]].groupby(by=["borough", "year", "regents_exam"], as_index=False).median()
+all_median_by_borough_df = all_median_by_borough_df.rename(columns={"borough" : "category", "mean_score" : "median_mean_score", "percent_65_or_above" : "median_percent_65_or_above"})
+all_median_by_borough_df = sort_df(all_median_by_borough_df, ["year", "category", "regents_exam"])
+all_median_by_borough_df = add_row_numbers(all_median_by_borough_df)
+all_median_by_borough_df.to_csv("regents_median_by_borough.csv", index=False)
+
+# calculate median mean score and passing rate of every exam by ELL status
+ell_median_df = ell_df[["year", "category", "regents_exam", "mean_score", "percent_scoring_65_or_above"]].groupby(by=["year", "category", "regents_exam"], as_index=False).median()
+ell_median_df = ell_median_df.rename(columns={"mean_score" : "median_mean_score", "percent_scoring_65_or_above" : "median_percent_65_or_above"})
+ell_median_df = sort_df(ell_median_df, ["year", "category", "regents_exam"])
+ell_median_df = add_row_numbers(ell_median_df)
+ell_median_df.to_csv("regents_median_by_ell.csv", index=False)
+
+# calculate median mean score and passing rate of every exam by SWD status
+swd_median_df = swd_df[["year", "category", "regents_exam", "mean_score", "percent_scoring_65_or_above"]].groupby(by=["year", "category", "regents_exam"], as_index=False).median()
+swd_median_df = swd_median_df.rename(columns={"mean_score" : "median_mean_score", "percent_scoring_65_or_above" : "median_percent_65_or_above"})
+swd_median_df = sort_df(swd_median_df, ["year", "category", "regents_exam"])
+swd_median_df = add_row_numbers(swd_median_df)
+swd_median_df.to_csv("regents_median_by_swd.csv", index=False)
 
 # extract a csv file of every school's DBN and their name concatenated together
 subset = all_df[["school_dbn", "school_name"]]
@@ -239,4 +252,4 @@ subset = subset.drop_duplicates()
 subset.loc[:, "schools"] = subset.loc[:, "school_dbn"].str.cat(others=subset.loc[:, "school_name"], sep=": ")
 subset = subset.drop(columns=["school_dbn", "school_name"])
 subset = add_row_numbers(subset)
-subset.to_csv("schools.csv", index=False)
+#subset.to_csv("schools.csv", index=False)

@@ -1,0 +1,346 @@
+category,year,regents_exam,median_mean_score,median_percent_65_or_above,id
+Bronx,2017,Chemistry,58.936172,30.712551,0
+Bronx,2017,Chinese,89.712,99.2,1
+Bronx,2017,Common Core Algebra,66.02073,62.7907,2
+Bronx,2017,Common Core Algebra 2,60.772728,41.11111,3
+Bronx,2017,Common Core English,68.03325,70.99671,4
+Bronx,2017,Common Core Geometry,57.625595,28.583332,5
+Bronx,2017,Earth Science,58.075,36.0,6
+Bronx,2017,French,64.90909,62.5,7
+Bronx,2017,Global History and Geography,59.265343,41.310272,8
+Bronx,2017,Italian,75.1,83.24324,9
+Bronx,2017,Living Environment,64.19029,54.44664,10
+Bronx,2017,Physics,60.16,39.285713,11
+Bronx,2017,Spanish,82.51724,90.0,12
+Bronx,2017,US History and Government,67.74898,63.171043,13
+Brooklyn,2017,Chemistry,59.846153,34.88372,14
+Brooklyn,2017,Chinese,86.91914,97.43308,15
+Brooklyn,2017,Common Core Algebra,68.94444,71.35678,16
+Brooklyn,2017,Common Core Algebra 2,60.49206,41.666668,17
+Brooklyn,2017,Common Core English,68.004234,72.38337,18
+Brooklyn,2017,Common Core Geometry,56.136364,25.0,19
+Brooklyn,2017,Earth Science,61.14607,41.935482,20
+Brooklyn,2017,French,75.171875,86.48772,21
+Brooklyn,2017,Global History and Geography,61.456284,46.060345,22
+Brooklyn,2017,Italian,80.28571,93.75,23
+Brooklyn,2017,Living Environment,66.61778,62.75128,24
+Brooklyn,2017,Physics,65.545456,50.0,25
+Brooklyn,2017,Spanish,79.582855,90.0,26
+Brooklyn,2017,US History and Government,67.8994,63.634586,27
+Manhattan,2017,Chemistry,63.498856,46.294643,28
+Manhattan,2017,Chinese,85.20225,95.652176,29
+Manhattan,2017,Common Core Algebra,70.7033,77.77778,30
+Manhattan,2017,Common Core Algebra 2,64.6875,56.25,31
+Manhattan,2017,Common Core English,74.5,83.561646,32
+Manhattan,2017,Common Core Geometry,61.3,40.89069,33
+Manhattan,2017,Earth Science,63.441177,48.837208,34
+Manhattan,2017,French,76.0921,87.09677,35
+Manhattan,2017,Global History and Geography,64.7579,56.666668,36
+Manhattan,2017,Italian,79.32972,94.22345,37
+Manhattan,2017,Living Environment,70.3352,73.93939,38
+Manhattan,2017,Physics,68.16327,61.29032,39
+Manhattan,2017,Spanish,85.87189,96.239746,40
+Manhattan,2017,US History and Government,73.04987,78.83632,41
+Queens,2017,Chemistry,64.9503,52.114353,42
+Queens,2017,Chinese,86.91052,95.872345,43
+Queens,2017,Common Core Algebra,74.30609,84.72023,44
+Queens,2017,Common Core Algebra 2,66.14862,64.24668,45
+Queens,2017,Common Core English,74.168915,81.25644,46
+Queens,2017,Common Core Geometry,62.13669,47.181488,47
+Queens,2017,Earth Science,66.07366,57.30854,48
+Queens,2017,French,72.617615,79.28571,49
+Queens,2017,Global History and Geography,67.045456,63.374485,50
+Queens,2017,Italian,79.08833,95.161285,51
+Queens,2017,Living Environment,73.45424,80.62821,52
+Queens,2017,Physics,69.87541,68.13811,53
+Queens,2017,Spanish,82.84028,93.75,54
+Queens,2017,US History and Government,75.58442,82.75862,55
+Staten Island,2017,Chemistry,65.188736,54.79452,56
+Staten Island,2017,Chinese,59.625,37.5,57
+Staten Island,2017,Common Core Algebra,78.704765,94.50549,58
+Staten Island,2017,Common Core Algebra 2,68.708664,69.291336,59
+Staten Island,2017,Common Core English,78.90271,87.59157,60
+Staten Island,2017,Common Core Geometry,64.0958,52.96017,61
+Staten Island,2017,Earth Science,61.45043,46.461098,62
+Staten Island,2017,French,73.38333,63.333332,63
+Staten Island,2017,Global History and Geography,67.60266,65.84779,64
+Staten Island,2017,Italian,75.09524,86.48649,65
+Staten Island,2017,Living Environment,71.79762,75.6654,66
+Staten Island,2017,Physics,68.35714,60.60606,67
+Staten Island,2017,Spanish,80.52137,91.416306,68
+Staten Island,2017,US History and Government,78.129326,83.732056,69
+Bronx,2018,Chemistry,57.42857,23.809525,70
+Bronx,2018,Chinese,93.95876,100.0,71
+Bronx,2018,Common Core Algebra,63.251698,53.2971,72
+Bronx,2018,Common Core Algebra 2,61.845947,49.390244,73
+Bronx,2018,Common Core English,63.643837,63.392857,74
+Bronx,2018,Common Core Geometry,58.38889,35.571587,75
+Bronx,2018,Earth Science,62.944443,49.39759,76
+Bronx,2018,French,80.90476,100.0,77
+Bronx,2018,Global History and Geography,62.552765,47.668392,78
+Bronx,2018,Italian,81.5,100.0,79
+Bronx,2018,Living Environment,65.15025,58.062523,80
+Bronx,2018,Physics,63.0,43.47826,81
+Bronx,2018,Spanish,84.511566,95.19969,82
+Bronx,2018,US History and Government,67.32974,63.00752,83
+Brooklyn,2018,Chemistry,58.982956,33.333332,84
+Brooklyn,2018,Chinese,91.871796,100.0,85
+Brooklyn,2018,Common Core Algebra,66.260605,65.112656,86
+Brooklyn,2018,Common Core Algebra 2,61.140057,48.583794,87
+Brooklyn,2018,Common Core English,65.911766,66.666664,88
+Brooklyn,2018,Common Core Geometry,55.932037,29.467085,89
+Brooklyn,2018,Earth Science,64.825,53.125,90
+Brooklyn,2018,French,82.67653,96.33142,91
+Brooklyn,2018,Global History and Geography,64.25218,52.37014,92
+Brooklyn,2018,Italian,78.8,92.79279,93
+Brooklyn,2018,Living Environment,66.90196,63.41829,94
+Brooklyn,2018,Physics,64.53333,57.2,95
+Brooklyn,2018,Spanish,79.27273,86.95652,96
+Brooklyn,2018,US History and Government,67.92308,64.74359,97
+Manhattan,2018,Chemistry,64.23849,44.949493,98
+Manhattan,2018,Chinese,89.14456,99.40828,99
+Manhattan,2018,Common Core Algebra,68.833336,71.42857,100
+Manhattan,2018,Common Core Algebra 2,65.93315,60.76923,101
+Manhattan,2018,Common Core English,71.46875,78.75,102
+Manhattan,2018,Common Core Geometry,60.894737,45.736435,103
+Manhattan,2018,Earth Science,64.03269,52.136364,104
+Manhattan,2018,French,84.92064,98.16694,105
+Manhattan,2018,Global History and Geography,68.44827,62.92135,106
+Manhattan,2018,Italian,71.46154,69.23077,107
+Manhattan,2018,Living Environment,69.84849,71.25,108
+Manhattan,2018,Physics,64.77778,53.187405,109
+Manhattan,2018,Spanish,87.42857,97.05882,110
+Manhattan,2018,US History and Government,72.11243,74.10714,111
+Queens,2018,Chemistry,63.393444,49.122807,112
+Queens,2018,Chinese,88.47845,99.11504,113
+Queens,2018,Common Core Algebra,71.11485,78.16507,114
+Queens,2018,Common Core Algebra 2,67.10539,65.33467,115
+Queens,2018,Common Core English,71.57084,77.31296,116
+Queens,2018,Common Core Geometry,61.905975,48.12442,117
+Queens,2018,Earth Science,68.833336,62.34458,118
+Queens,2018,French,79.79524,91.78982,119
+Queens,2018,Global History and Geography,71.14964,69.44761,120
+Queens,2018,Italian,76.71154,90.47619,121
+Queens,2018,Living Environment,74.17904,78.947365,122
+Queens,2018,Physics,68.1,67.741936,123
+Queens,2018,Spanish,81.42857,89.26553,124
+Queens,2018,US History and Government,74.57133,78.67951,125
+Staten Island,2018,Chemistry,68.34545,69.09091,126
+Staten Island,2018,Chinese,67.111115,55.555557,127
+Staten Island,2018,Common Core Algebra,74.56322,81.60919,128
+Staten Island,2018,Common Core Algebra 2,70.33673,75.30864,129
+Staten Island,2018,Common Core English,76.20546,84.65398,130
+Staten Island,2018,Common Core Geometry,64.64754,56.05381,131
+Staten Island,2018,Earth Science,63.19043,50.241165,132
+Staten Island,2018,French,81.752426,90.69768,133
+Staten Island,2018,Global History and Geography,69.5226,66.50991,134
+Staten Island,2018,Italian,72.62165,73.17682,135
+Staten Island,2018,Living Environment,72.451614,77.41936,136
+Staten Island,2018,Physics,65.45989,61.497326,137
+Staten Island,2018,Spanish,78.65729,86.90476,138
+Staten Island,2018,US History and Government,73.666664,79.518074,139
+Bronx,2019,Chemistry,56.997726,25.998245,140
+Bronx,2019,Chinese,93.28261,98.91304,141
+Bronx,2019,Common Core Algebra,66.155685,63.636364,142
+Bronx,2019,Common Core Algebra 2,63.42591,50.0,143
+Bronx,2019,Common Core English,69.16658,73.25073,144
+Bronx,2019,Common Core Geometry,59.62507,40.909092,145
+Bronx,2019,Earth Science,59.076923,37.354652,146
+Bronx,2019,French,81.166664,99.1453,147
+Bronx,2019,Global History and Geography,64.496735,55.32995,148
+Bronx,2019,Italian,88.73913,100.0,149
+Bronx,2019,Living Environment,64.99292,55.94163,150
+Bronx,2019,Physics,59.82692,31.594398,151
+Bronx,2019,Spanish,83.63265,93.589745,152
+Bronx,2019,US History and Government,65.72131,59.74026,153
+Brooklyn,2019,Chemistry,58.763157,30.188679,154
+Brooklyn,2019,Chinese,88.50361,99.339935,155
+Brooklyn,2019,Common Core Algebra,67.7446,67.696495,156
+Brooklyn,2019,Common Core Algebra 2,61.663044,51.80124,157
+Brooklyn,2019,Common Core English,69.23684,73.63636,158
+Brooklyn,2019,Common Core Geometry,58.550537,37.07061,159
+Brooklyn,2019,Earth Science,61.973545,45.454544,160
+Brooklyn,2019,French,80.451126,91.21392,161
+Brooklyn,2019,Global History and Geography,64.83839,59.090908,162
+Brooklyn,2019,Italian,80.00444,94.15385,163
+Brooklyn,2019,Living Environment,67.03472,62.605934,164
+Brooklyn,2019,Physics,66.94005,53.789993,165
+Brooklyn,2019,Spanish,80.888885,89.47369,166
+Brooklyn,2019,US History and Government,66.12957,58.81783,167
+Manhattan,2019,Chemistry,63.587303,50.0,168
+Manhattan,2019,Chinese,88.964096,99.47917,169
+Manhattan,2019,Common Core Algebra,68.93964,70.10137,170
+Manhattan,2019,Common Core Algebra 2,65.39796,60.0,171
+Manhattan,2019,Common Core English,75.128204,84.90566,172
+Manhattan,2019,Common Core Geometry,60.74701,44.340424,173
+Manhattan,2019,Earth Science,60.294563,43.396225,174
+Manhattan,2019,French,86.09125,100.0,175
+Manhattan,2019,Global History and Geography,69.91416,70.90548,176
+Manhattan,2019,Italian,88.36364,100.0,177
+Manhattan,2019,Living Environment,69.957146,70.636826,178
+Manhattan,2019,Physics,66.5,50.0,179
+Manhattan,2019,Spanish,85.548676,96.98302,180
+Manhattan,2019,US History and Government,71.27358,69.47791,181
+Queens,2019,Chemistry,61.494553,44.963768,182
+Queens,2019,Chinese,89.73102,97.62278,183
+Queens,2019,Common Core Algebra,71.6861,78.070755,184
+Queens,2019,Common Core Algebra 2,66.62185,63.953487,185
+Queens,2019,Common Core English,75.5119,85.15337,186
+Queens,2019,Common Core Geometry,64.46514,54.44638,187
+Queens,2019,Earth Science,65.82927,59.59596,188
+Queens,2019,French,79.375,93.75,189
+Queens,2019,Global History and Geography,70.13572,72.969376,190
+Queens,2019,Italian,81.02429,90.70856,191
+Queens,2019,Living Environment,74.453125,79.91936,192
+Queens,2019,Physics,69.61539,64.583336,193
+Queens,2019,Spanish,83.02293,90.83095,194
+Queens,2019,US History and Government,72.99786,74.2818,195
+Staten Island,2019,Chemistry,69.6,70.0,196
+Staten Island,2019,Chinese,64.111115,55.555557,197
+Staten Island,2019,Common Core Algebra,73.63115,83.41097,198
+Staten Island,2019,Common Core Algebra 2,72.16832,83.333336,199
+Staten Island,2019,Common Core English,79.20943,87.99534,200
+Staten Island,2019,Common Core Geometry,66.70035,61.20582,201
+Staten Island,2019,Earth Science,58.48905,39.692307,202
+Staten Island,2019,French,84.5469,93.33333,203
+Staten Island,2019,Global History and Geography,68.4,70.149254,204
+Staten Island,2019,Italian,78.28386,89.00462,205
+Staten Island,2019,Living Environment,71.803276,73.23943,206
+Staten Island,2019,Physics,68.13793,62.068966,207
+Staten Island,2019,Spanish,81.36122,91.028915,208
+Staten Island,2019,US History and Government,73.8828,79.02778,209
+Bronx,2022,Chemistry,47.941177,6.060606,210
+Bronx,2022,Chinese,89.237114,95.87629,211
+Bronx,2022,Common Core Algebra,62.36709,48.660713,212
+Bronx,2022,Common Core Algebra 2,50.105263,15.254237,213
+Bronx,2022,Common Core English,65.39815,62.02532,214
+Bronx,2022,Common Core Geometry,44.729412,8.433735,215
+Bronx,2022,Earth Science,50.769463,22.227821,216
+Bronx,2022,French,65.61539,59.615383,217
+Bronx,2022,Global History and Geography,66.63636,62.962963,218
+Bronx,2022,Italian,77.85294,92.59259,219
+Bronx,2022,Living Environment,64.33292,54.192383,220
+Bronx,2022,Physics,39.717392,8.695652,221
+Bronx,2022,Spanish,80.44231,87.5,222
+Brooklyn,2022,Chemistry,48.535645,9.005377,223
+Brooklyn,2022,Chinese,83.91782,86.86574,224
+Brooklyn,2022,Common Core Algebra,64.353134,54.80082,225
+Brooklyn,2022,Common Core Algebra 2,50.020836,18.465908,226
+Brooklyn,2022,Common Core English,65.376724,62.673676,227
+Brooklyn,2022,Common Core Geometry,43.86884,7.6923075,228
+Brooklyn,2022,Earth Science,53.429626,27.493607,229
+Brooklyn,2022,French,68.98291,64.58333,230
+Brooklyn,2022,Global History and Geography,65.81706,60.0,231
+Brooklyn,2022,Italian,71.018936,73.279816,232
+Brooklyn,2022,Living Environment,66.00907,59.49164,233
+Brooklyn,2022,Physics,52.31207,32.70115,234
+Brooklyn,2022,Spanish,77.42857,83.333336,235
+Manhattan,2022,Chemistry,54.00817,16.666666,236
+Manhattan,2022,Chinese,85.82143,95.0,237
+Manhattan,2022,Common Core Algebra,64.78689,56.074768,238
+Manhattan,2022,Common Core Algebra 2,54.44,26.530613,239
+Manhattan,2022,Common Core English,70.88393,75.13441,240
+Manhattan,2022,Common Core Geometry,48.61252,18.032787,241
+Manhattan,2022,Earth Science,56.75286,33.863274,242
+Manhattan,2022,French,80.04584,90.27777,243
+Manhattan,2022,Global History and Geography,69.007324,69.42551,244
+Manhattan,2022,Italian,74.86667,76.666664,245
+Manhattan,2022,Living Environment,67.553345,64.00966,246
+Manhattan,2022,Physics,51.7027,24.193548,247
+Manhattan,2022,Spanish,84.26506,95.16729,248
+Queens,2022,Chemistry,55.01111,24.088196,249
+Queens,2022,Chinese,83.02651,90.09563,250
+Queens,2022,Common Core Algebra,67.56784,65.0,251
+Queens,2022,Common Core Algebra 2,54.362904,34.22222,252
+Queens,2022,Common Core English,72.652176,76.75805,253
+Queens,2022,Common Core Geometry,51.72326,23.404255,254
+Queens,2022,Earth Science,59.5,41.025642,255
+Queens,2022,French,73.49519,81.63461,256
+Queens,2022,Global History and Geography,71.47287,76.388885,257
+Queens,2022,Italian,75.80769,81.08108,258
+Queens,2022,Living Environment,72.05658,72.10433,259
+Queens,2022,Physics,50.17124,20.254343,260
+Queens,2022,Spanish,77.965515,83.333336,261
+Staten Island,2022,Chemistry,61.12291,41.558395,262
+Staten Island,2022,Chinese,67.95,55.0,263
+Staten Island,2022,Common Core Algebra,68.139534,75.92593,264
+Staten Island,2022,Common Core Algebra 2,59.259556,45.982643,265
+Staten Island,2022,Common Core English,67.212975,67.72093,266
+Staten Island,2022,Common Core Geometry,53.91427,30.218948,267
+Staten Island,2022,Earth Science,53.244095,31.06796,268
+Staten Island,2022,French,74.9798,80.55556,269
+Staten Island,2022,Global History and Geography,71.48,78.08219,270
+Staten Island,2022,Italian,71.960846,73.492065,271
+Staten Island,2022,Living Environment,71.46374,78.947365,272
+Staten Island,2022,Physics,53.21248,28.729603,273
+Staten Island,2022,Spanish,76.45679,82.71605,274
+Bronx,2023,Chemistry,51.93651,14.285714,275
+Bronx,2023,Chinese,88.69903,99.02913,276
+Bronx,2023,Common Core Algebra,63.463234,54.545456,277
+Bronx,2023,Common Core Algebra 2,51.730766,18.874645,278
+Bronx,2023,Common Core English,66.87,62.637363,279
+Bronx,2023,Common Core Geometry,51.551605,15.589617,280
+Bronx,2023,Earth Science,55.93651,30.06993,281
+Bronx,2023,French,75.166664,66.666664,282
+Bronx,2023,Global History and Geography,64.72987,55.960052,283
+Bronx,2023,Italian,82.14286,85.71429,284
+Bronx,2023,Living Environment,62.31847,48.33313,285
+Bronx,2023,Physics,46.333332,15.0,286
+Bronx,2023,Spanish,84.60667,93.75,287
+Bronx,2023,US History and Government,66.44464,60.7493,288
+Brooklyn,2023,Chemistry,51.78473,17.083332,289
+Brooklyn,2023,Chinese,89.18638,98.56631,290
+Brooklyn,2023,Common Core Algebra,65.59854,60.0,291
+Brooklyn,2023,Common Core Algebra 2,52.762787,24.55259,292
+Brooklyn,2023,Common Core English,66.44444,62.711864,293
+Brooklyn,2023,Common Core Geometry,51.852676,18.227108,294
+Brooklyn,2023,Earth Science,60.459076,44.142857,295
+Brooklyn,2023,French,84.56647,95.54112,296
+Brooklyn,2023,Global History and Geography,64.04,53.608246,297
+Brooklyn,2023,Italian,75.946236,81.2276,298
+Brooklyn,2023,Living Environment,64.132355,53.76344,299
+Brooklyn,2023,Physics,51.00833,27.248676,300
+Brooklyn,2023,Spanish,81.0,88.957054,301
+Brooklyn,2023,US History and Government,65.23158,57.723576,302
+Manhattan,2023,Chemistry,58.51351,30.508474,303
+Manhattan,2023,Chinese,89.1215,96.36364,304
+Manhattan,2023,Common Core Algebra,64.82149,56.984276,305
+Manhattan,2023,Common Core Algebra 2,55.30357,26.086956,306
+Manhattan,2023,Common Core English,72.894165,75.887344,307
+Manhattan,2023,Common Core Geometry,56.23077,29.411764,308
+Manhattan,2023,Earth Science,62.4058,48.35533,309
+Manhattan,2023,French,84.57143,96.15385,310
+Manhattan,2023,Global History and Geography,68.30653,66.666664,311
+Manhattan,2023,Italian,73.666664,88.888885,312
+Manhattan,2023,Living Environment,64.76599,56.574074,313
+Manhattan,2023,Physics,52.644447,28.240093,314
+Manhattan,2023,Spanish,86.61905,97.36842,315
+Manhattan,2023,US History and Government,66.38824,64.28571,316
+Queens,2023,Chemistry,59.595634,34.676113,317
+Queens,2023,Chinese,81.816666,86.60715,318
+Queens,2023,Common Core Algebra,68.59918,68.878784,319
+Queens,2023,Common Core Algebra 2,56.89803,38.77504,320
+Queens,2023,Common Core English,72.46645,74.45652,321
+Queens,2023,Common Core Geometry,56.50944,32.119843,322
+Queens,2023,Earth Science,64.60004,51.653908,323
+Queens,2023,French,79.0,89.655174,324
+Queens,2023,Global History and Geography,71.56952,74.87864,325
+Queens,2023,Italian,77.3125,81.25,326
+Queens,2023,Living Environment,68.75,64.59731,327
+Queens,2023,Physics,53.392044,30.113636,328
+Queens,2023,Spanish,82.44097,90.3125,329
+Queens,2023,US History and Government,70.20067,74.3116,330
+Staten Island,2023,Chemistry,61.173332,44.0,331
+Staten Island,2023,Chinese,66.48718,51.28205,332
+Staten Island,2023,Common Core Algebra,67.98876,67.41573,333
+Staten Island,2023,Common Core Algebra 2,60.839355,48.007576,334
+Staten Island,2023,Common Core English,76.516266,85.152115,335
+Staten Island,2023,Common Core Geometry,55.969635,29.496403,336
+Staten Island,2023,Earth Science,56.907047,30.800047,337
+Staten Island,2023,French,83.16411,100.0,338
+Staten Island,2023,Global History and Geography,72.04063,76.041664,339
+Staten Island,2023,Italian,73.59375,80.95238,340
+Staten Island,2023,Living Environment,71.52971,73.88609,341
+Staten Island,2023,Physics,58.394524,43.270588,342
+Staten Island,2023,Spanish,79.99501,88.799446,343
+Staten Island,2023,US History and Government,72.34375,81.11888,344
