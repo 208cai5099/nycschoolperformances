@@ -265,9 +265,10 @@ function Citywide() {
             <div className="citywide-description">
 
                 <p>
-                    On this page, you can explore general trends in the performance of NYC schools on the Regents exams based on two metric 
-                    measures: median Mean Score and median Passing Rate (see Methods). You can visualize the trends by <strong> borough</strong>, <strong>English Language 
-                    Learner (ELL)</strong> status, and <strong>Students with Disabilities (SWD)</strong> status.
+                    On this page, you can explore general trends in the performance of NYC students on the Regents exams based on two metric 
+                    measures: median Mean Score and median Passing Rate. Please note that the median values are not medians of actual student scores. 
+                    Instead, they are medians of Mean Scores and Passing Rates from all available schools (see Methods). You can visualize the performance trends 
+                    by <strong> borough</strong>, <strong>English Language Learner (ELL)</strong> status, and <strong>Students with Disabilities (SWD)</strong> status.
                 </p>
 
                 <h2>

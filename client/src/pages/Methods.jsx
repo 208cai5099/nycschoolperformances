@@ -52,7 +52,7 @@ function Methods() {
                 </p>
 
                 <h2>
-                    Data Collection
+                    Data Cleaning and Wrangling
                 </h2>
                 
                 <p>
@@ -62,63 +62,61 @@ function Methods() {
                 </p>
 
                 <p>
-                    The downloaded Excel dataset includes Regents results from 2015 to 2023. The Excel dataset aggregated the results by multiple categories, 
-                    such as gender, English Language Learner status, and Students with Disabilities status. We used the non-aggregated sheet labeled "All Students". 
-                    Each row in the sheet contains insightful information about a school's performance on a specific Regents exam in a particular year, such as 
-                    Mean Score, Total Tested, Percent Scoring 65 or Above, and so on. For example, the students in Fort Hamilton High School had a Mean Score 
-                    (average score) of 72.45% and a Passing Rate (Percent Scoring 65 or Above) of 77.67% on the 2023 US History and Government exam. This website 
-                    refers to the Percent Scoring 65 or Above as Passing Rate, because a grade of 65 or higher is typically considered sufficient to earn graduation credit.
+                    The downloaded Excel data file includes Regents results from 2015 to 2023. The Excel file contains sheets with non-aggregated data and data aggregated by multiple categories, 
+                    such as gender, English Language Learner (ELL) status, and Students with Disabilities (SWD) status. We used the non-aggregated sheet called "All Students" 
+                    and the aggregated sheets "By ELL Status" and "By SWD Status". Each row in the sheets contains insightful information about a school's performance on a specific 
+                    Regents exam in a particular year, such as Mean Score, Total Tested, Percent Scoring 65 or Above, and so on. For example, the students in Fort Hamilton 
+                    High School had a Mean Score (average score) of 72.45% and a Passing Rate (Percent Scoring 65 or Above) of 77.67% on the 2023 US History and Government 
+                    exam. The aggregated sheets, such as "By ELL Status", breaks down the results further by groups, such as ELL students, former ELL students, and English proficient students 
+                    (see example table in the section below).
                 </p>
 
-                <h2>
-                    Data Wrangling
-                </h2>
-
                 <p>
-                    For our purposes, we extracted the following data: School DBN (unique school identifier), School Name, Year, Regents Exam, Total 
-                    Tested (number of test takers), Mean Score, and Percent Scoring 65 or Above. We also noticed that some school names were
-                    truncated or misspelled. So, we checked the NYC Department of Education website as well as the schools' personal websites (if they exist) to confirm 
+                    For our purposes, we use Mean Score and Percent Scoring 65 or Above as measures of performance. This website refers to the Percent Scoring 65 or Above as 
+                    Passing Rate, because a grade of 65 or higher is usually considered sufficient to earn graduation credit.
+                </p>
+
+                <p>    
+                    We noticed that some school names were truncated or misspelled. So, we checked the NYC Department of Education website as well as the schools' personal websites (if they exist) to confirm 
                     the full correct spelling of their names.
                 </p>
 
                 <p>
                     In the 2010s, New York State began implementing English and math Regents exams that are aligned to the Common Core standards. By 2017, the vast 
                     majority of test takers took the Common Core-aligned exams instead of the exams aligned to the older standards. To focus on more current standards, 
-                    the data from the older English and math exams are not shown on this website. Furthermore, this website will only show data from 2017 and onwards for 
+                    the data from the non-Common Core English and math exams are not shown on this website. Furthermore, this website will only show data from 2017 and onwards for 
                     all exams, including the science, history, and foreign language exams.
                 </p>
 
                 <p>
                     We noticed that if a school had 5 or fewer students take an exam in a given year, the performance of the school for that exam in that
-                    specific year is labeled with an 's' to protect student privacy. We removed all such data from the dataset.
+                    specific year is labeled with an 's' to protect student privacy (see Data Limitations below).
                 </p>
 
                 <p>
                     Due to the COVID pandemic, the June and August 2020 Regents exams were canceled and the 2021 Regents exams were impacted. Any data  
-                    from those two years were removed, because those data might not provide a reliable measure of school performance.
+                    from those two years were removed, because those data might not provide a reliable representation of school performance across the city.
                 </p>
 
                 <h2>
-                    Measure of Exam Performance
+                    School-Based and Citywide Pages
                 </h2>
 
                 <p>                   
                     On the School-Based page, the user can select a school name, a Regents exam, and a metric (Mean Score or Passing Rate) to visualize. The chart will 
-                    show the school's Mean Score or Passing Rate on the selected exam from 2017 to 2023, if the data is available in the database.
+                    show the school's Mean Score or Passing Rate on the selected exam from 2017 to 2023, if the data is available in the database. The chart takes into 
+                    account of all available students, regardless of ELL or SWD status
                 </p>
 
                 <p>    
-                    On the Citywide page, the user can explore the trends in performance by borough, English Language Learner (ELL) status, and Students with Disabilities 
-                    (SWD) status. There are five boroughs in the city: Bronx, Brooklyn, Manhattan, Queens, and Staten Island. There are three types of ELL statuses: ELL, 
-                    former ELL, and English proficient. There are two types of SWD statuses: SWD and non-SWD. Please note that the downloaded data file does not contain students' 
-                    actual scores to protect student privacy. Instead, the file contains the Mean Score and Passing Rate of the ELL students, former ELL students, English 
-                    proficient students, SWD students, and non-SWD students in every school that had such students take the exams. To help measure the performance levels across 
-                    boroughs, ELL groups, and SWD groups, we used the median of the Mean Scores and Passing Rates in each group. 
+                    On the Citywide page, the user can explore the trends in performance by borough, ELL status, and SWD status. There are five boroughs in the city: Bronx, 
+                    Brooklyn, Manhattan, Queens, and Staten Island. There are three ELL groups: ELL, former ELL, and English proficient. There are two 
+                    SWD groups: SWD and non-SWD. To help measure the performance levels across boroughs, ELL groups, and SWD groups, we 
+                    used the median of the Mean Scores and Passing Rates in each group. 
                 </p>
 
                 <p>
-                    Here is an example to illustrate the idea of median Mean Score and median Passing Rate. Let's say NYC has only three schools with ELL, former ELL, and English 
-                    proficient students.
+                    Here is an example to illustrate the idea of median Mean Score and median Passing Rate. Let's say NYC has only three schools.
                 </p>
 
                 <HStack className="plot">
@@ -132,18 +130,28 @@ function Methods() {
                 </p>
 
                 <p>
-                    Using the dropdown menus on the Citywide page, the user can visualize the median Mean Score or median Passing Rate to track the performance among the boroughs, 
+                    Using the dropdown menus on the Citywide page, the user can visualize the median Mean Scores or median Passing Rates to track the performance among the boroughs, 
                     ELL groups, and SWD groups. For example, Brooklyn and Manhattan had median Mean Scores of 66.44% and 72.89%, respectively, on the Common Core English exam in 2023.
                 </p>
 
+                <h2>
+                    Data Limitations
+                </h2>
 
+                <p>
+                    The data file does not contain performance data for schools that had 5 or fewer students take an exam. Also, this restriction applies to the ELL and SWD groups. 
+                    If a school had 5 or fewer students from a specific group (ELL, former ELL, English proficient, SWD, or non-SWD) take an exam, their performance data is 
+                    unavailable in the sheets "By ELL Status" and "By SWD Status". In addition, the median Mean Scores and median Passing Rates shown on the Citywide page are not medians of actual student scores. 
+                    They are medians of Mean Scores (average scores) and Passing Rates from all available schools. Ideally, we would use the medians of actual student scores. However, 
+                    that data is unavailable. Due to the aforementioned limitations, the numerical values and written analysis on the Citywide page may not be totally accurate.
+                </p>
 
                 <h2>
                     Data Storage
                 </h2>
 
                 <p>
-                    We are using <a href="https://supabase.com/" target="_blank">Supabase</a> as our SQL-based backend. <br />
+                    We are using <a href="https://supabase.com/" target="_blank">Supabase</a> as our SQL-based backend to store the processed data.
                 </p>
 
                 <h2>
