@@ -26,7 +26,8 @@ function Citywide() {
     const [tracesELL, setTracesELL] = useState([]);
     const [tracesSWD, setTracesSWD] = useState([]);
 
-    const plotLayout = {width: 800, height: 400, showlegend: false, xaxis: {title: {text: "Year", font: {family: "Raleway", color: "black"}}}, yaxis: {title: {text: "Median Value"}, autorange: true}}
+    const plotLayout = {width: 800, height: 400, showlegend: false, xaxis: {title: {text: "Year", font: {family: "Raleway", color: "black"}}}, 
+    yaxis: {title: {text: "Median Metric Value", font: {family: "Raleway", color: "black"}}, autorange: true}}
 
     const setInputArrays = () => {
 
@@ -39,8 +40,8 @@ function Citywide() {
         setExamArray(placeholder);
 
         setMetricArray([
-            {label: "Mean Score", value: "median_mean_score"},
-            {label: "Passing Rate", value: "median_percent_65_or_above"}
+            {label: "Median Mean Score", value: "median_mean_score"},
+            {label: "Median Passing Rate", value: "median_percent_65_or_above"}
         ]);
 
     }
@@ -62,7 +63,6 @@ function Citywide() {
 
         } else {
 
-            // console.log(data)
             return data;
 
         }
@@ -131,22 +131,15 @@ function Citywide() {
 
         const data = await requestData(table, exam, metric);
 
-        // get a list of years with data
         // get a list of categories
-        var availableYears = [];
         var availableCategories = [];
         data.forEach((record) => {
-            if (availableYears.includes(record.year) === false) {
-                availableYears.push(record.year)
-            }
 
             if (availableCategories.includes(record.category) === false) {
                 availableCategories.push(record.category)
             }
-        })
 
-        // get first year in the gap and last year in the gap
-        const [startGapYear, endGapYear] = findGapYears(availableYears);
+        })
 
         // iterate through each category and 3 separate traces for each category
         // trace 1: covers the line plot before the gap
@@ -163,9 +156,21 @@ function Citywide() {
             var trace3_years = [];
             var trace3_values = [];
 
+            // store the records with the current category and their associated yers
+            var availableYears = [];
+            var relevantRecords = [];
             data.forEach((record) => {
+                if (record.category === cat) {
+                    relevantRecords.push(record)
+                    availableYears.push(record.year)
+                }
+            })
 
-                const category = record.category
+            // get first year in the gap and last year in the gap
+            const [startGapYear, endGapYear] = findGapYears(availableYears);
+
+            relevantRecords.forEach((record) => {
+
                 const year = record.year;
                 var value = null;
 
@@ -175,17 +180,17 @@ function Citywide() {
                     value = round(record.median_percent_65_or_above, 2);
                 }
 
-                if ((category === cat) && (year < startGapYear)) {
+                if (year < startGapYear) {
                     trace1_years.push(year)
                     trace1_values.push(value)
                 }
 
-                if ((category === cat) && (year >= startGapYear - 1) && (year <= endGapYear + 1)) {
+                if ((year >= startGapYear - 1) && (year <= endGapYear + 1)) {
                     trace2_years.push(year)
                     trace2_values.push(value)
                 }
 
-                if ((category === cat) && (year > endGapYear)) {
+                if (year > endGapYear) {
                     trace3_years.push(year)
                     trace3_values.push(value)
                 }
@@ -203,7 +208,6 @@ function Citywide() {
 
         })
 
-        // console.log(traceArray)
         return traceArray;
 
     }
@@ -216,12 +220,12 @@ function Citywide() {
             setExamInputAll(exam);
             setMetricInputAll(metric);
 
-        } else if (table === "regents_median_by_borough") {
+        } else if (table === "regents_median_by_ell") {
 
             setExamInputELL(exam);
             setMetricInputELL(metric);
 
-        } else if (table === "regents_median_by_borough") {
+        } else if (table === "regents_median_by_swd") {
 
             setExamInputSWD(exam);
             setMetricInputSWD(metric);
@@ -256,73 +260,23 @@ function Citywide() {
     return (
         <div>
 
-            <h1 className="citywide-heading">Brief Exploratory Analysis of NYC Regents Performance</h1>
+            <h1 className="citywide-heading">Overview of Citywide Regents Performance</h1>
 
             <div className="citywide-description">
-                <h2>
-                    Introduction
-                </h2>
 
                 <p>
-                    The New York State (NYS) Regents exams are assessments that test public school students' understanding of high school learning standards in English, math, science, social studies, and foreign languages. 
-                    Students generally must pass a certain number of Regents exams to graduate with a traditional high school diploma. Some middle schools in the state offer accelerated programs that teach the standards and 
-                    enable students to earn high school credit before matriculation into high school.
-                    In this analysis, I will explore the performances of New York City (NYC) public schools on the Regents exams. The analysis starts with an overview of the performance of NYC schools, then it delves more 
-                    into the differences in performance by English Language Learner (ELL) status and Students with Disability (SWD) status. The time period covered in this analysis is from 2017 to 2023 (excluding 2020 and 
-                    2021 due to COVID's impact on the exam administration). The goal is to identify interesting insights into the academic performance of students in the NYC public school system.
+                    On this page, you can explore general trends in the performance of NYC schools on the Regents exams based on two metric 
+                    measures: median Mean Score and median Passing Rate (see Methods). You can visualize the trends by <strong> borough</strong>, <strong>English Language 
+                    Learner (ELL)</strong> status, and <strong>Students with Disabilities (SWD)</strong> status.
                 </p>
 
                 <h2>
-                    Data Wrangling and Processing
-                </h2>
-
-                <p>
-                    The data used for this analysis is found in an Excel file on the <a href="https://infohub.nyced.org/reports/academics/test-results" target="_blank">NYC Public Schools InfoHub </a>. At the time of the analysis, 
-                    the Excel file included data from 2015 to 2023. The file organizes the data into multiple sheets. Each row in a sheet provides useful information about a school's performance on a particular exam in a given year, 
-                    including, but not limited to, <strong>Mean Score</strong> and <strong>Percent Scoring 65 or Above</strong>. The <strong>Mean Score</strong> is the average of the scores of the students who took the exam in a specific year (i.e. Fort Hamilton High 
-                    School students received a a mean or average score of 72.45 on the US History and Government exams in 2023). Since a grade of 65 is the minimum needed to earn high school graduation credit, this analysis will 
-                    refer to <strong>Percent Scoring 65 or Above</strong> as <strong>Passing Rate</strong>.
-                    
-                    For this analysis, we are focusing on only the following three sheets in the Excel file:
-                </p>
-
-                <ul>
-                    <li>
-                        <strong>All Students</strong>: contains information about every public school's overall performance on the exams in a given year
-                    </li>
-                    <li>
-                        <strong>By ELL Status</strong>: provides more fine-grain information by separating the performance data by ELL students, former ELL students, and English Proficient students (assumed to be students who never took ELL)*
-                    </li>
-                    <li>
-                        <strong>By SWD Status</strong>: provides more fine-grain information by separating the performance data by students with disabilities and students without disabilities*
-                    </li>
-                </ul>
-
-                <p>
-                    As stated in the <strong>Notes</strong> sheet of the Excel file, the performance of a school on an exam is redacted if no more than 5 students took the exam in a given year. The redacted records are removed.
-
-                    This analysis will focus on the following years: 2017, 2018, 2019, 2022, and 2023.
-
-                    Why?
-
-                    From 2015 to 2016, NYC was in the process of implementing English and math Regents exams aligned to the Common Core standards. Many students took exams aligned to the pre-Common Core standards, while some 
-                    students took the newer exams. The data from 2015 to 2016 are ignored to focus primarily on the Common Core exams*.
-                    Due to COVID, the Regents exams schedule was impacted. The 2020 Regents exams were cancelled, and the 2021 Regents exams were mostly cancelled. The 2021 data was removed due to low number of test takers and 
-                    cancellation of most of the exams.
-
-
-                    <i>*For more details about ELL and SWD status, see the <strong>Notes</strong> sheet in the Excel file.</i>
-                    <br></br>
-                    <i>**Note that a handful of students still took the pre-Common Core exams after 2016, but the vast majority took the Common Core exams.</i>
-                </p>
-
-                <h2>
-                    General Performance Across the City
+                    Performance by Borough
                 </h2>
 
                 <Row className="input-row">
                     <Col>
-                        <label><strong>Regents Exam</strong></label>
+                        <label className="padding-right"><strong>Regents Exam:</strong></label>
                         <InputPicker
                                 menuClassName="menu"
                                 data={examArray}
@@ -334,7 +288,7 @@ function Citywide() {
                     </Col>
 
                     <Col>
-                        <label><strong>Metric</strong></label>
+                        <label className="padding-right"><strong>Metric:</strong></label>
                         <InputPicker
                                 menuClassName="menu"
                                 data={metricArray}
@@ -347,7 +301,7 @@ function Citywide() {
                 </Row>
 
                 <p className="note">
-                        Hover over a data point for specific value and number of test takers. A dashed line indicates absence of data. 
+                        Hover over a data point for specific value. A dashed line indicates absence of data. 
                         <br></br>
                         Note that any data from 2020 and 2021 were removed (see Methods).
                 </p>
@@ -355,6 +309,19 @@ function Citywide() {
                 <HStack className="plot">
                     <Plot data={tracesAll} layout={plotLayout} config={{responsive: true}}></Plot>
                 </HStack>
+                
+                <p>
+                    From 2017 to 2019, Staten Island consistently outperformed the other boroughs on the Common Core English exam. It dropped in 2022, but it climbed back up in 2023.
+                    The median Passing Rate on the Common Core Algebra exam was over 65% in Staten Island and Queens in 2023, while the median Passing Rate was 60% or lower for the 
+                    other boroughs. Staten Island and Queens also appear to outperform the other boroughs on the Common Core Geometry and Common Core Algebra 2 exams. For instance, 
+                    the median Passing Rate was 18.87% in Bronx and 48.01% in Staten Island on the 2023 Common Core Algebra 2 exam. Similar to the English and math exams, the science exams dropped in performance 
+                    from 2019 to 2022 (likely due to the COVID pandemic's effect on learning). The Living Environment exam showed the smallest drop in performance out of all four 
+                    science exams. Meanwhile, the Global History and Geography exam demonstrated the opposite trend. The median Passing Rate increased in every borough from 2017 to 
+                    2023. Staten Island, Queens, and Bronx had an increase of over 10% in the median Passing Rate. In contrast, the US History and Government exam showed a downward 
+                    trend from 2017 to 2023. Out of all exams, the foreign language exams had some of the highest median Passing Rates. The Spanish exams had median Passing Rates of 
+                    over 80% in all the boroughs from 2017 to 2023, while the French and Italian exams had lower median Passing Rates. The Chinese exam had near perfect median Passing Rate 
+                    in every borough other than Staten Island.
+                </p>
 
                 <h2>
                     Performance by ELL Status
@@ -363,7 +330,7 @@ function Citywide() {
 
                 <Row className="input-row">
                     <Col>
-                        <label><strong>Regents Exam</strong></label>
+                        <label className="padding-right"><strong>Regents Exam:</strong></label>
                         <InputPicker
                                 menuClassName="menu"
                                 data={examArray}
@@ -375,7 +342,7 @@ function Citywide() {
                     </Col>
 
                     <Col>
-                        <label><strong>Metric</strong></label>
+                        <label className="padding-right"><strong>Metric:</strong></label>
                         <InputPicker
                                 menuClassName="menu"
                                 data={metricArray}
@@ -388,7 +355,7 @@ function Citywide() {
                 </Row>
 
                 <p className="note">
-                        Hover over a data point for specific value and number of test takers. A dashed line indicates absence of data. 
+                        Hover over a data point for specific value. A dashed line indicates absence of data. 
                         <br></br>
                         Note that any data from 2020 and 2021 were removed (see Methods).
                 </p>
@@ -397,14 +364,23 @@ function Citywide() {
                     <Plot data={tracesELL} layout={plotLayout} config={{responsive: true}}></Plot>
                 </HStack>
 
+                <p>
+                    Based on the performance data, former ELL students tend to outperform ELL students and English proficient students. The former ELL students had 
+                    median Mean Scores that surpassed those of English proficient students by roughly 2-4% every year from 2017 to 2023 on the Common Core English 
+                    exam. The gap is even larger between former ELL students and ELL students (roughly ~20%). Similar trends in performance among the 
+                    ELL status groups are seen in the other exams. In fact, former ELL students had nearly double, if not more than double, the median Passing Rates of 
+                    ELL students on the Global History and Geography exam in every year from 2017 to 2023. Former ELL students outperformed the other two groups on 
+                    math exams as well. The median Passing Rates of former ELL students surpassed those of English proficient students by 8-10% in every year 
+                    on all the math exams. The data implies a correlation between overcoming the language barrier and higher academic performance.
+                </p>
+
                 <h2>
                     Performance by SWD Status
                 </h2>
 
-
                 <Row className="input-row">
                     <Col>
-                        <label><strong>Regents Exam</strong></label>
+                        <label className="padding-right"><strong>Regents Exam:</strong></label>
                         <InputPicker
                                 menuClassName="menu"
                                 data={examArray}
@@ -416,7 +392,7 @@ function Citywide() {
                     </Col>
 
                     <Col>
-                        <label><strong>Metric</strong></label>
+                        <label className="padding-right"><strong>Metric:</strong></label>
                         <InputPicker
                                 menuClassName="menu"
                                 data={metricArray}
@@ -429,7 +405,7 @@ function Citywide() {
                 </Row>
 
                 <p className="note">
-                        Hover over a data point for specific value and number of test takers. A dashed line indicates absence of data. 
+                        Hover over a data point for specific value. A dashed line indicates absence of data. 
                         <br></br>
                         Note that any data from 2020 and 2021 were removed (see Methods).
                 </p>
@@ -437,6 +413,15 @@ function Citywide() {
                 <HStack className="plot">
                     <Plot data={tracesSWD} layout={plotLayout} config={{responsive: true}}></Plot>
                 </HStack>
+
+                <p>
+                    SWD and non-SWD students have a stark difference in their performances on the Regents exams. Non-SWD students consistently surpassed their 
+                    counterparts on every Regents exam. The median Mean Scores of non-SWD students were higher than those of SWD students by over 10% on the Common Core 
+                    English exam and Common Core Algebra exam every year. In fact, the non-SWD students had higher median Mean Scores than SWD students on each exam nearly every year. 
+                    The only time when SWD students had a higher median Mean Score was when SWD students had a median Mean Score that was higher by 0.3% on the 2018 Physics exam. 
+                    Nevertheless, the non-SWD students still had a slightly higher median Passing Rate on the 2018 Physics exam. Based on the overall patterns in the performances 
+                    between SWD and non-SWD students, there is a great need for special education support in NYC schools.
+                </p>
 
             </div>
 

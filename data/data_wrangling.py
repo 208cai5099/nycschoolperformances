@@ -211,7 +211,7 @@ def load_and_process_sheet(filename, sheet):
 # extract the general performance data from the All Students sheet
 filename = r"data\2015_to_2023_regents_data.xlsx"
 all_df = load_and_process_sheet(filename, "All Students")
-all_df = select_columns(all_df, ["borough", "school_dbn", "school_name", "year", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
+all_df = select_columns(all_df, ["borough", "school_dbn", "school_name", "year", "regents_exam", "mean_score", "percent_scoring_65_or_above"])
 all_df = all_df.rename(columns={"percent_scoring_65_or_above" : "percent_65_or_above"})
 all_df = sort_df(all_df, ["borough", "school_dbn", "school_name", "year", "regents_exam"])
 all_df = add_row_numbers(all_df)
@@ -219,7 +219,7 @@ all_df.to_csv("overall_regents.csv", index=False)
 
 # extract the data from the By ELL Status sheet
 ell_df = load_and_process_sheet(filename, "By ELL Status")
-ell_df = select_columns(ell_df, ["borough", "school_dbn", "school_name", "year", "category", "regents_exam", "total_tested", "mean_score", "percent_scoring_65_or_above"])
+ell_df = select_columns(ell_df, ["borough", "school_dbn", "school_name", "year", "category", "regents_exam", "mean_score", "percent_scoring_65_or_above"])
 
 # extract the data from the By SWD Status sheet
 swd_df = load_and_process_sheet(filename, "By SWD Status")
@@ -252,4 +252,4 @@ subset = subset.drop_duplicates()
 subset.loc[:, "schools"] = subset.loc[:, "school_dbn"].str.cat(others=subset.loc[:, "school_name"], sep=": ")
 subset = subset.drop(columns=["school_dbn", "school_name"])
 subset = add_row_numbers(subset)
-#subset.to_csv("schools.csv", index=False)
+subset.to_csv("schools.csv", index=False)

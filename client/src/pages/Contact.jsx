@@ -1,6 +1,6 @@
 import React from "react";
 import "./Contact.css"
-import { Panel, Row, Col} from "rsuite";
+import { Panel, Col} from "rsuite";
 
 function Contact() {
 

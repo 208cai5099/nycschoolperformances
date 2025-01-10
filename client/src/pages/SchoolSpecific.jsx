@@ -111,9 +111,9 @@ function SchoolSpecific() {
 
         var columns = null;
         if (optionInput === "Average Score") {
-            columns = 'school_dbn, school_name, year, regents_exam, total_tested, mean_score'
+            columns = 'school_dbn, school_name, year, regents_exam, mean_score'
         } else {
-            columns = 'school_dbn, school_name, year, regents_exam, total_tested, percent_65_or_above'
+            columns = 'school_dbn, school_name, year, regents_exam, percent_65_or_above'
         }
         
         const { data, error } = await supabase
@@ -137,19 +137,9 @@ function SchoolSpecific() {
         // each key is mapped to another map that maps a year to the year's mean score or passing rate
         const gradesBySchool = new Map();
 
-        // also record the number of students tested for each test
-        const samplesBySchool = new Map();
-
         data.forEach((item) => {
 
             const identifier = item.school_dbn.concat(": ", item.school_name);
-
-            if (samplesBySchool.get(identifier) === undefined) {
-                samplesBySchool.set(identifier, new Map().set(item.year, item.total_tested));
-            } else {
-                const currentSamplesMap = samplesBySchool.get(identifier);
-                samplesBySchool.set(identifier, currentSamplesMap.set(item.year, item.total_tested));
-            }
 
             if (optionInput === "Average Score") {
 
@@ -316,11 +306,7 @@ function SchoolSpecific() {
             datasets: datasets
         }
 
-        return {
-            processedData: processedData,
-            samplesMap: samplesBySchool
-        }
-
+        return processedData;
     }
 
     const [lineGraph, setLineGraph] = useState(null);
@@ -328,7 +314,7 @@ function SchoolSpecific() {
     const graphData = async() => {
 
         const rawData = await fetchData();
-        const { processedData, samplesMap } = processData(rawData);
+        const processedData = processData(rawData);
 
         if (lineGraph === null) {
             const graphInstance = new Chart(
@@ -342,14 +328,7 @@ function SchoolSpecific() {
                             tooltip: {
                                 callbacks: {
                                     label: (context) => {
-                                        const year = parseInt(context.label);
-                                        const school = context.dataset.label;
-
-                                       if (samplesMap.get(school).get(year) === undefined) {
-                                        return "No Data"
-                                       } else {
-                                        return context.formattedValue.concat("% (test takers: ", `${samplesMap.get(school).get(year)})`)
-                                       }
+                                        return context.formattedValue.concat("%")
                                     }
                                 }
                             }
@@ -381,14 +360,7 @@ function SchoolSpecific() {
                 lineGraph.update();
                 lineGraph.options.plugins.tooltip.callbacks = {
                     label: (context) => {
-                        const year = parseInt(context.label);
-                        const school = context.dataset.label;
-
-                       if (samplesMap.get(school).get(year) === undefined) {
-                        return "No Data"
-                       } else {
-                        return context.formattedValue.concat("% (test takers: ", `${samplesMap.get(school).get(year)})`)
-                       }
+                        return context.formattedValue.concat("%")
                     }
                 }
                 setIsDataAvailable(true);
@@ -418,7 +390,7 @@ function SchoolSpecific() {
 
                     {graphDisplay === false ? null :
                         <div className="note">
-                            <p> Hover over a data point for specific value and number of test takers. A dashed line indicates absence of data. 
+                            <p> Hover over a data point for specific value. A dashed line indicates absence of data. 
                                 <br></br>
                                 Note that any data from 2020 and 2021 were removed (see Methods).
                             </p>
