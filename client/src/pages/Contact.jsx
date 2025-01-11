@@ -12,11 +12,10 @@ function Contact() {
 
                     <h3>Zhuo Biao (Leven) Cai</h3>
                     <p>
-                    I'm a current student in the Master of Computer and Information Technology program at University of Pennsylvania. I used to teach math and 
-                    biology to middle school students in Brooklyn, followed by teaching biology to high school students in Manhattan. When I taught my former 
-                    8th graders, I realized that it would be very helpful for families and students to have a central place to compare school's academic 
-                    performances. Now that I've learned a few things about programming, I thought it would be nice to put those skills into practice. Thus, this 
-                    website was born. Hope you enjoy using it! <br />
+                    I'm a former math and science teacher. I started my teaching career by teaching 6th and 8th graders in Brooklyn, followed by 
+                    teaching high schoolers in Manhattan. When I was teaching, I realized that it would be very helpful for families and 
+                    students to have a tool to compare different schools' academic performances. Recently, I've been learning some web development skills. I thought 
+                    it would be nice to put those skills into practice. Thus, this website was born. Hope you enjoy using it! <br />
 
                     <p></p>
 
