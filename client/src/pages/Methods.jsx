@@ -143,7 +143,8 @@ function Methods() {
                     If a school had 5 or fewer students from a specific group (ELL, former ELL, English proficient, SWD, or non-SWD) take an exam, their performance data is 
                     unavailable in the sheets "By ELL Status" and "By SWD Status". In addition, the median Mean Scores and median Passing Rates shown on the Citywide page are not medians of actual student scores. 
                     They are medians of Mean Scores (average scores) and Passing Rates from all available schools. Ideally, we would use the medians of actual student scores. However, 
-                    that data is unavailable. Due to the aforementioned limitations, the numerical values and written analysis on the Citywide page may not be totally accurate.
+                    that data is unavailable. Due to the aforementioned limitations, the charts and written findings on the Citywide page about the performances of boroughs, ELL groups, and SWD groups 
+                    likely contain some degree of inaccuracy.
                 </p>
 
                 <h2>
