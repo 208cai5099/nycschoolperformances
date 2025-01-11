@@ -17,7 +17,7 @@ export const exams = [
 
 export const yearList = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
-export const options = ["Average Score", "Passing Rate"]
+export const options = ["Mean Score", "Passing Rate"]
 
 export const colorList = ["#FF9D23", "#FB4141", "#FADA7A", "#81BFDA", "#8174A0"]
 

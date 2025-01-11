@@ -110,7 +110,7 @@ function SchoolSpecific() {
         const inputDBN = getSchoolDBN();
 
         var columns = null;
-        if (optionInput === "Average Score") {
+        if (optionInput === "Mean Score") {
             columns = 'school_dbn, school_name, year, regents_exam, mean_score'
         } else {
             columns = 'school_dbn, school_name, year, regents_exam, percent_65_or_above'
@@ -141,7 +141,7 @@ function SchoolSpecific() {
 
             const identifier = item.school_dbn.concat(": ", item.school_name);
 
-            if (optionInput === "Average Score") {
+            if (optionInput === "Mean Score") {
 
                 const avgScore = parseFloat(item.mean_score).toFixed(2);
 
