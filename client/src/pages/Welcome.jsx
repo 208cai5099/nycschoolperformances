@@ -10,7 +10,7 @@ function Welcome() {
 
         <h1>Welcome!</h1>
 
-        <p>This website is designed to provide information about the performances of NYC schools on the annual NYS Regents exams. </p>
+        <p>This website is designed to provide information about the performances of NYC schools on the NYS Regents exams. </p>
         
         <p>Click <span className="highlight">Explore</span> to get started.</p>
 
